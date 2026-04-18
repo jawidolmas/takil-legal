@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>takıl — Hakkımızda</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0e0e0e;
+      --bg-card:   #131313;
+      --bg-high:   #1a1a1a;
+      --border:    #1f1f1f;
+      --accent:    #d7e5bb;
+      --accent-dim:#a8c48a;
+      --text-1:    #e4e2dd;
+      --text-2:    #888;
+      --text-3:    #555;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-1);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(14,14,14,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: var(--accent);
+      letter-spacing: -0.5px;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      font-size: 13px; font-weight: 500;
+      color: var(--text-2); text-decoration: none;
+      letter-spacing: 0.3px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(215,229,187,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(215,229,187,0.04) 0%, transparent 60%);
+    }
+
+    .hero-grid {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(215,229,187,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(215,229,187,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 0%, transparent 100%);
+    }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(215,229,187,0.08);
+      border: 1px solid rgba(215,229,187,0.15);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 12px; font-weight: 500;
+      color: var(--accent-dim);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      position: relative; z-index: 1;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.7); }
+    }
+
+    .hero h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(48px, 8vw, 96px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+      color: var(--text-1);
+      max-width: 800px;
+      position: relative; z-index: 1;
+      animation: fadeUp 0.8s ease 0.1s both;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      margin-top: 24px;
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--text-2);
+      max-width: 520px;
+      line-height: 1.6;
+      position: relative; z-index: 1;
+      animation: fadeUp 0.8s ease 0.2s both;
+    }
+
+    .hero-cta {
+      margin-top: 48px;
+      display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+      position: relative; z-index: 1;
+      animation: fadeUp 0.8s ease 0.3s both;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent); color: #0e0e0e;
+      font-size: 14px; font-weight: 600;
+      padding: 13px 28px; border-radius: 12px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(215,229,187,0.2);
+    }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: var(--text-2);
+      font-size: 14px; font-weight: 500;
+      padding: 13px 28px; border-radius: 12px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--text-3); color: var(--text-1); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 100px 24px;
+    }
+
+    .section-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--accent-dim);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(32px, 4vw, 48px);
+      line-height: 1.1;
+      letter-spacing: -1px;
+      color: var(--text-1);
+      margin-bottom: 20px;
+    }
+
+    .section-title em { font-style: italic; color: var(--accent); }
+
+    .section-body {
+      font-size: 16px; font-weight: 300;
+      color: var(--text-2);
+      max-width: 560px;
+      line-height: 1.75;
+    }
+
+    /* ── MISSION ── */
+    .mission {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .mission-visual {
+      position: relative;
+      height: 360px;
+    }
+
+    .mission-card {
+      position: absolute;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+    }
+
+    .mission-card-main {
+      width: 260px; top: 0; left: 0;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .mission-card-sm {
+      width: 200px; bottom: 20px; right: 0;
+      animation: float 6s ease-in-out 2s infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .card-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 16px; font-weight: 600;
+      color: var(--text-1); margin-bottom: 6px;
+    }
+
+    .card-meta {
+      font-size: 12px; color: var(--text-2);
+    }
+
+    .card-score {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(215,229,187,0.1);
+      border: 1px solid rgba(215,229,187,0.2);
+      border-radius: 100px;
+      padding: 4px 12px;
+      font-size: 12px; font-weight: 600;
+      color: var(--accent);
+      margin-top: 12px;
+    }
+
+    .card-pill {
+      display: inline-block;
+      background: var(--bg-high);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 11px; color: var(--text-2);
+      margin: 4px 4px 0 0;
+    }
+
+    /* ── STATS ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top: 80px;
+    }
+
+    .stat-item {
+      background: var(--bg-card);
+      padding: 40px 32px;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Instrument Serif', serif;
+      font-size: 52px;
+      line-height: 1;
+      color: var(--accent);
+      letter-spacing: -2px;
+    }
+
+    .stat-desc {
+      font-size: 13px;
+      color: var(--text-2);
+      margin-top: 8px;
+      font-weight: 400;
+    }
+
+    /* ── FEATURES ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top: 48px;
+    }
+
+    .feature-item {
+      background: var(--bg-card);
+      padding: 36px 28px;
+      transition: background 0.2s;
+    }
+
+    .feature-item:hover { background: var(--bg-high); }
+
+    .feature-icon {
+      display: block;
+      margin-bottom: 20px;
+      color: var(--text-2);
+    }
+
+    .feature-title {
+      font-size: 15px; font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 8px;
+    }
+
+    .feature-desc {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    /* ── FOUNDER ── */
+    .founder-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .founder-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .founder-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    .founder-avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-dim), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      color: #0e0e0e;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .founder-name {
+      font-size: 20px; font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 4px;
+    }
+
+    .founder-role {
+      font-size: 13px;
+      color: var(--accent-dim);
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .founder-bio {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .founder-tags {
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+
+    .founder-tag {
+      background: var(--bg-high);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 5px 12px;
+      font-size: 11px;
+      color: var(--text-2);
+      font-weight: 500;
+    }
+
+    .founder-story { }
+
+    .founder-story h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      color: var(--text-1);
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+
+    .founder-story p {
+      font-size: 15px;
+      color: var(--text-2);
+      line-height: 1.8;
+      margin-bottom: 16px;
+      font-weight: 300;
+    }
+
+    .founder-story p:last-child { margin-bottom: 0; }
+
+    /* ── OLMAS SYSTEMS ── */
+    .company-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 64px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .company-wrap::after {
+      content: 'OLMAS';
+      position: absolute;
+      right: -20px; bottom: -40px;
+      font-family: 'Instrument Serif', serif;
+      font-size: 160px;
+      color: rgba(215,229,187,0.03);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .company-header {
+      display: flex; align-items: center; gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .company-logo {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, rgba(215,229,187,0.15), rgba(215,229,187,0.05));
+      border: 1px solid rgba(215,229,187,0.2);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Instrument Serif', serif;
+      font-size: 20px;
+      color: var(--accent);
+    }
+
+    .company-name {
+      font-size: 18px; font-weight: 600;
+      color: var(--text-1);
+    }
+
+    .company-tagline {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 2px;
+    }
+
+    .company-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      position: relative; z-index: 1;
+    }
+
+    .company-item-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 8px;
+    }
+
+    .company-item-value {
+      font-size: 15px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    /* ── CONTACT ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top: 48px;
+    }
+
+    .contact-item {
+      background: var(--bg-card);
+      padding: 32px 28px;
+      transition: background 0.2s;
+    }
+
+    .contact-item:hover { background: var(--bg-high); }
+
+    .contact-type {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 10px;
+    }
+
+    .contact-value {
+      font-size: 14px; font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .contact-value:hover { text-decoration: underline; }
+
+    .contact-desc {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 6px;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 24px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 48px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-left {
+      font-family: 'Instrument Serif', serif;
+      font-size: 18px;
+      color: var(--accent);
+    }
+
+    .footer-links {
+      display: flex; gap: 24px;
+    }
+
+    .footer-links a {
+      font-size: 12px;
+      color: var(--text-3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text-2); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+      width: 100%;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+
+      section { padding: 64px 20px; }
+
+      .mission { grid-template-columns: 1fr; }
+      .mission-visual { display: none; }
+
+      .stats-row { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .founder-wrap { grid-template-columns: 1fr; gap: 40px; }
+      .company-wrap { padding: 32px 24px; }
+      .company-grid { grid-template-columns: 1fr; gap: 24px; }
+      .contact-grid { grid-template-columns: 1fr; }
+
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">takıl</a>
+    <div class="nav-links">
+      <a href="#mission">Misyon</a>
+      <a href="#features">Özellikler</a>
+      <a href="#founder">Kurucu</a>
+      <a href="#contact">İletişim</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-tag">OLMAS Systems</div>
+    <h1>Kampüste<br><em>gerçek bağlantılar</em><br>kuruyoruz.</h1>
+    <p class="hero-sub">
+      takıl, Eskişehir Osmangazi Üniversitesi öğrencileri için tasarlanmış
+      bir sosyal etkinlik platformudur. Etkinlik bul, katıl, organize et.
+    </p>
+    <div class="hero-cta">
+      <a href="#mission" class="btn-primary">Daha Fazla Keşfet</a>
+      <a href="#contact" class="btn-ghost">İletişime Geç</a>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- MISSION -->
+  <section id="mission">
+    <div class="mission">
+      <div class="mission-text">
+        <div class="section-label">Misyonumuz</div>
+        <h2 class="section-title">Üniversite<br>hayatını <em>anlamlı</em><br>kılmak.</h2>
+        <p class="section-body">
+          Üniversite yılları, hayatın en önemli dönemlerinden biri. Ancak doğru insanları bulmak,
+          etkinlikleri keşfetmek ve güvenilir bir topluluk inşa etmek her zaman kolay değil.
+          takıl tam da bu boşluğu doldurmak için var.
+        </p>
+        <p class="section-body" style="margin-top: 16px;">
+          Katılım puanı sistemi, güvenilir bir topluluk ortamı yaratır.
+          Her etkinlik, yeni bir bağlantı fırsatıdır.
+        </p>
+      </div>
+      <div class="mission-visual">
+        <div class="mission-card mission-card-main">
+          <div class="card-label">Aktif Etkinlik</div>
+          <div class="card-title">Kütüphane Çalışma Grubu</div>
+          <div class="card-meta">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:4px;opacity:0.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            OGÜ Merkez Kütüphane · 3 yer kaldı
+          </div>
+          <div class="card-score">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            8.7/10 organizatör
+          </div>
+        </div>
+        <div class="mission-card mission-card-sm">
+          <div class="card-label">İlgi Alanları</div>
+          <span class="card-pill">Çalışma</span>
+          <span class="card-pill">Teknoloji</span>
+          <span class="card-pill">Spor</span>
+          <span class="card-pill">Müzik</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div style="max-width:960px; margin: 0 auto; padding: 0 24px;">
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-num">OGÜ</div>
+        <div class="stat-desc">Eskişehir Osmangazi Üniversitesi öğrencilerine özel</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">8</div>
+        <div class="stat-desc">Farklı etkinlik kategorisi</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">0</div>
+        <div class="stat-desc">Reklam. Hiç. Asla.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" style="margin-top: 80px;" />
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="section-label">Platform</div>
+    <h2 class="section-title">Neden <em>takıl?</em></h2>
+    <div class="features-grid">
+      <div class="feature-item">
+        <span class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </span>
+        <div class="feature-title">Güven Sistemi</div>
+        <div class="feature-desc">Katılım puanı sistemi ile güvenilir kullanıcıları ön plana çıkarıyoruz. Organizatör değerlendirmeleri şeffaf ve manipülasyona kapalı.</div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </span>
+        <div class="feature-title">OGÜ'ye Özel</div>
+        <div class="feature-desc">Yalnızca geçerli OGÜ e-posta adresiyle kayıt. Kapalı topluluk yapısı, güvenli bir ortam sağlar.</div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </span>
+        <div class="feature-title">Anlık Duyurular</div>
+        <div class="feature-desc">Organizatörler katılımcılara doğrudan uygulama içi duyuru yapabilir. Kimse bir şeyi kaçırmaz.</div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+        </span>
+        <div class="feature-title">Engelle & Şikayet</div>
+        <div class="feature-desc">Rahatsız edici kullanıcıları anında engelleyebilir, şikayet edebilirsin. Ekibimiz 24 saat içinde inceler.</div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </span>
+        <div class="feature-title">Karanlık & Açık Tema</div>
+        <div class="feature-desc">Göz yormayan arayüz tasarımı. Gece ya da gündüz, tercihine göre.</div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </span>
+        <div class="feature-title">Gizlilik Önce</div>
+        <div class="feature-desc">Verilerini asla satmıyoruz, reklam şirketleriyle paylaşmıyoruz. KVKK uyumlu altyapı.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- FOUNDER -->
+  <section id="founder">
+    <div class="section-label">Kurucu</div>
+    <div class="founder-wrap">
+      <div>
+        <div class="founder-card">
+          <div class="founder-avatar">JO</div>
+          <div class="founder-name">Jawid OLMAS</div>
+          <div class="founder-role">Kurucu & Geliştirici · OLMAS Systems</div>
+          <div class="founder-bio">
+            Eskişehir Osmangazi Üniversitesi öğrencisi. takıl'ı sıfırdan tasarlayıp geliştirdi —
+            tasarımdan veritabanına, güvenlik mimarisinden App Store gönderimhazırlığına kadar.
+          </div>
+          <div class="founder-tags">
+            <span class="founder-tag">React Native</span>
+            <span class="founder-tag">Expo</span>
+            <span class="founder-tag">Supabase</span>
+            <span class="founder-tag">TypeScript</span>
+            <span class="founder-tag">PostgreSQL</span>
+            <span class="founder-tag">UI/UX</span>
+          </div>
+        </div>
+      </div>
+      <div class="founder-story">
+        <h3>"Kampüste doğru insanı bulmak zorunda olmamalıydı."</h3>
+        <p>
+          takıl fikri, bir üniversite öğrencisinin yaşadığı en basit hayal kırıklığından doğdu:
+          çalışma arkadaşı bulmak, birlikte spor yapmak ya da yeni insanlarla tanışmak için
+          hiçbir güvenilir platform yoktu.
+        </p>
+        <p>
+          Sosyal medya çok gürültülü, genel etkinlik uygulamaları ise üniversite hayatının
+          ihtiyaçlarına yabancı. Bir üniversiteye özel, güven odaklı, sade bir platform
+          gerekliydi. takıl tam olarak o platform.
+        </p>
+        <p>
+          OLMAS Systems çatısı altında geliştirilen takıl; güvenlik, gizlilik ve kullanıcı
+          deneyimini ön planda tutarak inşa edildi. Her satır kod, kampüs hayatını gerçekten
+          daha iyi yapmak için yazıldı.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- COMPANY -->
+  <section>
+    <div class="company-wrap">
+      <div class="company-header">
+        <div class="company-logo">O</div>
+        <div>
+          <div class="company-name">OLMAS Systems</div>
+          <div class="company-tagline">Türkiye · Güvenli Sistem Mimarisi</div>
+        </div>
+      </div>
+      <div class="company-grid">
+        <div>
+          <div class="company-item-label">Kuruluş</div>
+          <div class="company-item-value">2024, Bursa</div>
+        </div>
+        <div>
+          <div class="company-item-label">Odak Alanı</div>
+          <div class="company-item-value">Güvenli ödeme, kimlik, ulusal ve sosyal hizmet altyapısı oluşturmak</div>
+        </div>
+        <div>
+          <div class="company-item-label">Mevcut Ürün</div>
+          <div class="company-item-value">takıl — OGÜ Etkinlik Platformu</div>
+        </div>
+        <div>
+          <div class="company-item-label">Altyapı</div>
+          <div class="company-item-value">Supabase · AWS Frankfurt · PostgreSQL</div>
+        </div>
+        <div>
+          <div class="company-item-label">Veri Politikası</div>
+          <div class="company-item-value">KVKK uyumlu · Reklamsız · Satılmaz</div>
+        </div>
+        <div>
+          <div class="company-item-label">Platform</div>
+          <div class="company-item-value">iOS · Android (App Store & Google Play)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">İletişim</div>
+    <h2 class="section-title">Bize <em>ulaş.</em></h2>
+    <p class="section-body">
+      Soru, öneri, şikayet veya iş birliği için doğru adrese yazman yeterli.
+    </p>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="contact-type">Genel Destek</div>
+        <a class="contact-value" href="mailto:destek@takiltr.com">destek@takiltr.com</a>
+        <div class="contact-desc">Hesap, teknik sorunlar, geri bildirim</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-type">Şikayet & İtiraz</div>
+        <a class="contact-value" href="mailto:sikayet@takiltr.com">sikayet@takiltr.com</a>
+        <div class="contact-desc">Puan itirazı, kullanıcı şikayeti</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-type">Web</div>
+        <a class="contact-value" href="https://takiltr.com/privacy-policy.html">takiltr.com</a>
+        <div class="contact-desc">Gizlilik politikası & kullanım koşulları</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <hr class="divider" />
+  <footer>
+    <div class="footer-left">takıl</div>
+    <div class="footer-links">
+      <a href="https://takiltr.com/privacy-policy.html">Gizlilik Politikası</a>
+      <a href="https://takiltr.com/terms.html">Kullanım Koşulları</a>
+      <a href="mailto:destek@takiltr.com">İletişim</a>
+    </div>
+    <div class="footer-copy">© 2025–2026 OLMAS Systems · Tüm hakları saklıdır.</div>
+  </footer>
+
+</body>
+</html>
