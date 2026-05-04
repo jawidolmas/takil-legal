@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>takıl — Kampüs Öncüleri</title>
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/jawidolmas/takil-legal/main/favicon.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #ffffff;
+      --bg-soft:  #f5f5f7;
+      --border:   #d2d2d7;
+      --border-l: #e8e8ed;
+      --text-1:   #1d1d1f;
+      --text-2:   #6e6e73;
+      --text-3:   #aeaeb2;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-1);
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      height: 52px;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .nav-logo {
+      font-size: 18px; font-weight: 600; letter-spacing: -0.5px;
+      color: var(--text-1); text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 28px; }
+
+    .nav-links a {
+      font-size: 13px; color: var(--text-2);
+      text-decoration: none; transition: color 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--text-1); }
+
+    /* HERO */
+    .hero {
+      min-height: 100svh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 100px 24px 80px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.3px;
+      color: var(--text-2);
+      background: var(--bg-soft);
+      border: 1px solid var(--border-l);
+      border-radius: 100px;
+      padding: 5px 14px;
+      margin-bottom: 36px;
+    }
+
+    .hero h1 {
+      font-size: clamp(44px, 7vw, 88px);
+      font-weight: 700; line-height: 1.04;
+      letter-spacing: -2.5px;
+      color: var(--text-1); max-width: 820px;
+    }
+
+    .hero h1 em { font-style: normal; color: var(--text-2); }
+
+    .hero-sub {
+      margin-top: 24px; font-size: 17px; font-weight: 400;
+      color: var(--text-2); max-width: 520px; line-height: 1.6;
+    }
+
+    .hero-cta {
+      margin-top: 40px;
+      display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center;
+      background: var(--text-1); color: #fff;
+      font-size: 14px; font-weight: 500;
+      padding: 12px 24px; border-radius: 980px;
+      text-decoration: none; transition: opacity 0.15s;
+      cursor: pointer; border: none; font-family: inherit;
+    }
+
+    .btn-primary:hover { opacity: 0.82; }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center;
+      background: transparent; color: var(--text-1);
+      font-size: 14px; font-weight: 500;
+      padding: 12px 24px; border-radius: 980px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: border-color 0.15s;
+      cursor: pointer;
+    }
+
+    .btn-ghost:hover { border-color: var(--text-2); }
+
+    /* LAYOUT */
+    .divider {
+      border: none; border-top: 1px solid var(--border-l);
+      max-width: 960px; margin: 0 auto;
+    }
+
+    section { max-width: 960px; margin: 0 auto; padding: 96px 24px; }
+
+    .section-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 700; line-height: 1.08;
+      letter-spacing: -1.2px;
+      color: var(--text-1); margin-bottom: 20px;
+    }
+
+    .section-title em { font-style: normal; color: var(--text-2); }
+
+    .section-body {
+      font-size: 16px; color: var(--text-2);
+      max-width: 560px; line-height: 1.7;
+    }
+
+    /* BENEFITS GRID */
+    .benefits-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border-l);
+      border-radius: 18px; overflow: hidden; margin-top: 48px;
+    }
+
+    .benefit-item {
+      padding: 36px 28px;
+      border-right: 1px solid var(--border-l);
+      border-bottom: 1px solid var(--border-l);
+      transition: background 0.15s;
+    }
+
+    .benefit-item:hover { background: var(--bg-soft); }
+    .benefit-item:nth-child(3n) { border-right: none; }
+    .benefit-item:nth-child(n+4) { border-bottom: none; }
+
+    .benefit-icon { display: block; margin-bottom: 18px; color: var(--text-3); }
+    .benefit-title { font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 8px; }
+    .benefit-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* VIBE / WHO */
+    .vibe-wrap {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 24px; margin-top: 48px;
+    }
+
+    .vibe-card {
+      background: var(--bg-soft);
+      border: 1px solid var(--border-l);
+      border-radius: 16px; padding: 32px 28px;
+    }
+
+    .vibe-card-title {
+      font-size: 13px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: var(--text-3); margin-bottom: 20px;
+    }
+
+    .vibe-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+
+    .vibe-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 13px; color: var(--text-2); line-height: 1.55;
+    }
+
+    .vibe-list li::before {
+      content: '';
+      display: block; flex-shrink: 0;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--text-3);
+      margin-top: 7px;
+    }
+
+    /* PROCESS */
+    .process-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--border-l);
+      border-radius: 18px; overflow: hidden; margin-top: 48px;
+    }
+
+    .process-step {
+      padding: 32px 24px;
+      border-right: 1px solid var(--border-l);
+    }
+
+    .process-step:last-child { border-right: none; }
+
+    .step-num {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 12px;
+    }
+
+    .step-title { font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 8px; }
+    .step-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+    /* TERMS BOX */
+    .terms-box {
+      background: var(--bg-soft);
+      border: 1px solid var(--border-l);
+      border-radius: 20px; padding: 48px;
+      margin-top: 48px;
+    }
+
+    .terms-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 24px; margin-bottom: 36px; padding-bottom: 36px;
+      border-bottom: 1px solid var(--border-l);
+    }
+
+    .terms-header-text h3 {
+      font-size: 20px; font-weight: 700; letter-spacing: -0.4px;
+      color: var(--text-1); margin-bottom: 6px;
+    }
+
+    .terms-header-text p {
+      font-size: 13px; color: var(--text-2); max-width: 420px; line-height: 1.6;
+    }
+
+    .terms-badge {
+      flex-shrink: 0;
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--bg); border: 1px solid var(--border-l);
+      border-radius: 100px; padding: 6px 14px;
+      font-size: 11px; font-weight: 600; color: var(--text-2);
+      white-space: nowrap;
+    }
+
+    .terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .terms-item {
+      background: var(--bg);
+      border: 1px solid var(--border-l);
+      border-radius: 12px; padding: 20px 22px;
+    }
+
+    .terms-item-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 8px;
+    }
+
+    .terms-item-text {
+      font-size: 13px; color: var(--text-2); line-height: 1.6;
+    }
+
+    /* FORM SECTION */
+    .form-wrap {
+      background: var(--bg-soft);
+      border: 1px solid var(--border-l);
+      border-radius: 20px; padding: 56px;
+      margin-top: 48px;
+    }
+
+    .form-header { margin-bottom: 40px; }
+
+    .form-header h3 {
+      font-size: 26px; font-weight: 700; letter-spacing: -0.6px;
+      color: var(--text-1); margin-bottom: 10px;
+    }
+
+    .form-header p { font-size: 14px; color: var(--text-2); line-height: 1.6; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+
+    .form-label {
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.3px; color: var(--text-1);
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      padding: 11px 14px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text-1);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: var(--text-1);
+      box-shadow: 0 0 0 3px rgba(29,29,31,0.06);
+    }
+
+    .form-input::placeholder { color: var(--text-3); }
+
+    .form-select-wrap { position: relative; }
+
+    .form-select-wrap::after {
+      content: '';
+      position: absolute; right: 14px; top: 50%;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid var(--text-3);
+      pointer-events: none;
+    }
+
+    /* KVKK */
+    .kvkk-box {
+      margin-top: 20px;
+      background: var(--bg);
+      border: 1px solid var(--border-l);
+      border-radius: 12px; padding: 20px 22px;
+    }
+
+    .kvkk-title {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 12px;
+    }
+
+    .kvkk-text {
+      font-size: 12px; color: var(--text-2);
+      line-height: 1.7; margin-bottom: 16px;
+    }
+
+    .kvkk-text a { color: var(--text-1); }
+
+    .checkbox-group { display: flex; flex-direction: column; gap: 10px; }
+
+    .checkbox-label {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 12px; color: var(--text-2);
+      line-height: 1.6; cursor: pointer;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      flex-shrink: 0;
+      width: 15px; height: 15px;
+      margin-top: 2px;
+      accent-color: var(--text-1);
+      cursor: pointer;
+    }
+
+    .form-footer {
+      margin-top: 28px;
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    }
+
+    .form-note { font-size: 12px; color: var(--text-3); max-width: 360px; line-height: 1.6; }
+
+    /* ERROR */
+    .field-error { font-size: 11px; color: #c0392b; display: none; }
+    .form-input.error, .form-select.error { border-color: #c0392b; }
+
+    /* SUCCESS */
+    .success-state { display: none; text-align: center; padding: 60px 24px; }
+    .success-state.visible { display: block; }
+
+    .success-icon {
+      width: 56px; height: 56px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border-l);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px; color: var(--text-2);
+    }
+
+    .success-title {
+      font-size: 24px; font-weight: 700; letter-spacing: -0.5px;
+      color: var(--text-1); margin-bottom: 10px;
+    }
+
+    .success-text { font-size: 14px; color: var(--text-2); line-height: 1.7; }
+
+    /* AMBASSADORS PLACEHOLDER */
+    .ambassadors-placeholder {
+      border: 1px dashed var(--border);
+      border-radius: 18px; padding: 56px 24px;
+      text-align: center; margin-top: 48px;
+    }
+
+    .placeholder-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 12px;
+    }
+
+    .placeholder-text { font-size: 14px; color: var(--text-3); }
+
+    /* FOOTER */
+    footer {
+      max-width: 960px; margin: 0 auto;
+      padding: 40px 24px;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap; gap: 14px;
+    }
+
+    .footer-left { font-size: 15px; font-weight: 600; color: var(--text-1); }
+    .footer-links { display: flex; gap: 20px; }
+
+    .footer-links a {
+      font-size: 12px; color: var(--text-3);
+      text-decoration: none; transition: color 0.15s;
+    }
+
+    .footer-links a:hover { color: var(--text-2); }
+    .footer-copy { font-size: 11px; color: var(--text-3); width: 100%; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      section { padding: 64px 20px; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .benefit-item { border-right: none; border-bottom: 1px solid var(--border-l); }
+      .benefit-item:last-child { border-bottom: none; }
+      .vibe-wrap { grid-template-columns: 1fr; }
+      .process-row { grid-template-columns: 1fr 1fr; }
+      .process-step:nth-child(2n) { border-right: none; }
+      .process-step:nth-child(n+3) { border-top: 1px solid var(--border-l); }
+      .terms-box { padding: 28px 20px; }
+      .terms-header { flex-direction: column; }
+      .terms-grid { grid-template-columns: 1fr; }
+      .form-wrap { padding: 28px 20px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-footer { flex-direction: column; align-items: flex-start; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="https://takiltr.com">takıl</a>
+    <div class="nav-links">
+      <a href="#program">Program</a>
+      <a href="#sen-kimsin">Sen Kimsin?</a>
+      <a href="#nasil">Nasıl?</a>
+      <a href="#kosullar">Koşullar</a>
+      <a href="#katil">bize takıl</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">Kampüs Öncüsü Programı</div>
+    <h1>Kampüsün<br><em>senin elinle</em><br>şekilleniyor.</h1>
+    <p class="hero-sub">
+      takıl, OGÜ öğrencilerini etkinlikler aracılığıyla bir araya getiriyor.
+      Şimdi bu hareketi birlikte büyütecek Kampüs Öncülerini arıyoruz.
+    </p>
+    <div class="hero-cta">
+      <a href="#katil" class="btn-primary">Hemen Katıl</a>
+      <a href="#program" class="btn-ghost">Daha Fazla Keşfet</a>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- PROGRAM / BENEFITS -->
+  <section id="program">
+    <div class="section-label">Neden Kampüs Öncüsü?</div>
+    <h2 class="section-title">Sadece bir uygulama<br><em>değil, bir hareket.</em></h2>
+    <p class="section-body">
+      takıl'ı birlikte inşa ediyoruz. Kampüs Öncüleri bu süreçte sahnenin tam ortasında —
+      arkadaşlarına ilham veren, etkinlikleri başlatan, topluluğu şekillendiren kişiler.
+    </p>
+
+    <div class="benefits-grid">
+      <div class="benefit-item">
+        <span class="benefit-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+        </span>
+        <div class="benefit-title">Kampüsünün Yüzü Ol</div>
+        <div class="benefit-desc">takiltr.com/ambassadors sayfasında ve sosyal medyada adın ve profilin yer alacak. Gerçek, somut bir görünürlük.</div>
+      </div>
+      <div class="benefit-item">
+        <span class="benefit-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </span>
+        <div class="benefit-title">Ürünü Birlikte Şekillendir</div>
+        <div class="benefit-desc">Yeni özellikler çıkmadan önce sen görürsün. Fikirlerinin takıl'a yansıdığını gözünle izlersin.</div>
+      </div>
+      <div class="benefit-item">
+        <span class="benefit-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </span>
+        <div class="benefit-title">Gerçek Bağlantılar Kur</div>
+        <div class="benefit-desc">Kurucuyla ve diğer Kampüs Öncüleriyle doğrudan çalışırsın. takıl ailesi küçük ama etkisi büyük.</div>
+      </div>
+      <div class="benefit-item">
+        <span class="benefit-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </span>
+        <div class="benefit-title">Etkinliklerde Öne Çık</div>
+        <div class="benefit-desc">Kampüsündeki etkinlikleri sen başlatırsın. Yüzlerce öğrencinin sosyal hayatını doğrudan etkilersin.</div>
+      </div>
+      <div class="benefit-item">
+        <span class="benefit-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </span>
+        <div class="benefit-title">İlk Günden Beri Orada Ol</div>
+        <div class="benefit-desc">takıl henüz büyümenin başında. Bu yolculuğun en başından parçası olmak eşsiz bir his.</div>
+      </div>
+      <div class="benefit-item">
+        <span class="benefit-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        </span>
+        <div class="benefit-title">Özgeçmişinde Parlasın</div>
+        <div class="benefit-desc">Pazarlama, topluluk yönetimi, etkinlik organizasyonu. Büyüyen bir girişimde gerçek bir deneyim.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- WHO ARE YOU -->
+  <section id="sen-kimsin">
+    <div class="section-label">Sen Kimsin?</div>
+    <h2 class="section-title">Seni arıyoruz<br><em>eğer...</em></h2>
+    <p class="section-body">
+      Mükemmel bir özgeçmiş aramıyoruz. takıl'a inanan, kampüsünü seven, etrafına enerji veren birini arıyoruz.
+    </p>
+
+    <div class="vibe-wrap">
+      <div class="vibe-card">
+        <div class="vibe-card-title">Bunlar sende varsa</div>
+        <ul class="vibe-list">
+          <li>OGÜ öğrencisisin ve takıl'ı aktif olarak kullanıyorsun</li>
+          <li>Kampüste tanıdığın çok, farklı çevrelerle rahatça iletişim kuruyorsun</li>
+          <li>Bir etkinlik fikri aklına gelince beklemeden harekete geçiyorsun</li>
+          <li>İnsanlara bir şeyler anlatmak, onları heyecanlandırmak sana doğal geliyor</li>
+          <li>Kampüs hayatını daha eğlenceli hale getirme konusunda içten bir isteğin var</li>
+        </ul>
+      </div>
+      <div class="vibe-card">
+        <div class="vibe-card-title">Bir de bunlar varsa süper</div>
+        <ul class="vibe-list">
+          <li>takıl'da yüksek bir Güven Endeksin ve güçlü bir Vibe Profilin var</li>
+          <li>Öğrenci kulüplerinde ya da herhangi bir organizasyonda aktif rol aldın</li>
+          <li>Instagram, TikTok veya başka platformlarda içerik üretiyorsun</li>
+          <li>Daha önce bir etkinlik organize ettin, insanları bir araya getirdin</li>
+          <li>Bir fikri hayata geçirmek için öne çıktın</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- HOW IT WORKS -->
+  <section id="nasil">
+    <div class="section-label">Nasıl Çalışıyor?</div>
+    <h2 class="section-title">Dört adım,<br><em>hepsi bu.</em></h2>
+
+    <div class="process-row">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-title">Formu Doldur</div>
+        <div class="step-desc">Aşağıdaki kısa formu doldur. Beş dakika sürer, fazla düşünme.</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-title">Seni Tanıyalım</div>
+        <div class="step-desc">takıl'daki profilini ve etkinlik geçmişine bir göz atacağız.</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-title">Bir Kahve İçelim</div>
+        <div class="step-desc">Seni biraz daha yakından tanımak için kısa ve samimi bir sohbet ayarlayabiliriz.</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-title">Aramıza Katıl</div>
+        <div class="step-desc">Tüm adaylara geri döneceğiz. Seçilenler özel bir karşılama ve yönlendirme alacak.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- TERMS & CONDITIONS -->
+  <section id="kosullar">
+    <div class="section-label">Program Koşulları</div>
+    <h2 class="section-title">Şeffaf olmak<br><em>istiyoruz.</em></h2>
+    <p class="section-body">
+      Kampüs Öncüsü olmak tamamen gönüllülük esasına dayanıyor. Ama birlikte iyi bir şey inşa edebilmek için bazı temel beklentilerimiz var. Bunları katılmadan önce bir kez oku.
+    </p>
+
+    <div class="terms-box">
+      <div class="terms-header">
+        <div class="terms-header-text">
+          <h3>Kampüs Öncüsü Program Koşulları</h3>
+          <p>Bu koşullar, programa kabul edildiğin andan itibaren geçerli olur ve program boyunca bağlayıcılığını korur.</p>
+        </div>
+        <div class="terms-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Gizli tutulacak
+        </div>
+      </div>
+
+      <div class="terms-grid">
+        <div class="terms-item">
+          <div class="terms-item-label">Etkinlik Katılımı</div>
+          <div class="terms-item-text">Her ay belirli sayıda takıl etkinliğine katılman veya etkinlik oluşturman bekleniyor. Detaylar programa kabul sürecinde seninle paylaşılır.</div>
+        </div>
+        <div class="terms-item">
+          <div class="terms-item-label">Geri Bildirim</div>
+          <div class="terms-item-text">Düzenli olarak kullanıcı deneyimi geri bildirimi paylaşman ve zaman zaman düzenlenen "takıl UX Hangout" sohbetlerine katılman bekleniyor.</div>
+        </div>
+        <div class="terms-item">
+          <div class="terms-item-label">Marka Temsili</div>
+          <div class="terms-item-text">Kampüste ve sosyal medyada takıl'ı pozitif ve dürüst bir şekilde temsil etmeni bekliyoruz. Bunu zaten yapmak isteyeceğini biliyoruz.</div>
+        </div>
+        <div class="terms-item">
+          <div class="terms-item-label">Gizlilik</div>
+          <div class="terms-item-text">Ekiple paylaşılan, henüz kamuoyuyla paylaşılmamış bilgiler (yeni özellikler, planlar vb.) üçüncü kişilerle paylaşılamaz.</div>
+        </div>
+        <div class="terms-item">
+          <div class="terms-item-label">Topluluk Kuralları</div>
+          <div class="terms-item-text">takıl topluluk kurallarına ve OGÜ'nün etik prensiplerine her zaman uyulması gerekiyor. Bu zaten herkes için geçerli.</div>
+        </div>
+        <div class="terms-item">
+          <div class="terms-item-label">Ayrılmak</div>
+          <div class="terms-item-text">Bu koşulların dışına çıkılması durumunda programdaki görev sona erdirilebilir. Gönüllülük esaslı olduğu için dilediğinde de ayrılabilirsin.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- AMBASSADOR PROFILES PLACEHOLDER -->
+  <section>
+    <div class="section-label">Kampüs Öncülerimiz</div>
+    <h2 class="section-title">Öncülerimizle<br><em>tanış.</em></h2>
+    <div class="ambassadors-placeholder">
+      <div class="placeholder-label">Yakında burada</div>
+      <div class="placeholder-text">Seçilen Kampüs Öncülerinin profilleri burada yer alacak.</div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- APPLICATION FORM -->
+  <section id="katil">
+    <div class="section-label">Katıl</div>
+    <h2 class="section-title">Hazır mısın?<br><em>Biz hazırız.</em></h2>
+
+    <div class="form-wrap">
+      <div id="form-container">
+        <div class="form-header">
+          <h3>Kampüs Öncüsü Başvuru Formu</h3>
+          <p>Beş dakika ayır, formu doldur. Biz de en kısa sürede sana döneceğiz.</p>
+        </div>
+
+        <form id="ambassador-form" novalidate>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="ad">Ad</label>
+              <input class="form-input" type="text" id="ad" name="ad" placeholder="Adın" autocomplete="given-name" />
+              <span class="field-error" id="ad-error">Bu alan zorunludur.</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="soyad">Soyad</label>
+              <input class="form-input" type="text" id="soyad" name="soyad" placeholder="Soyadın" autocomplete="family-name" />
+              <span class="field-error" id="soyad-error">Bu alan zorunludur.</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ogrenci-no">Öğrenci Numarası</label>
+              <input class="form-input" type="text" id="ogrenci-no" name="ogrenci-no" placeholder="OGÜ öğrenci numaranı gir" inputmode="numeric" />
+              <span class="field-error" id="ogrenci-no-error">Geçerli bir öğrenci numarası gir.</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="telefon">Telefon Numarası</label>
+              <input class="form-input" type="tel" id="telefon" name="telefon" placeholder="05xx xxx xx xx" autocomplete="tel" inputmode="tel" />
+              <span class="field-error" id="telefon-error">Geçerli bir telefon numarası gir.</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="fakulte">Fakülte</label>
+              <div class="form-select-wrap">
+                <select class="form-select" id="fakulte" name="fakulte">
+                  <option value="">Fakülteni seç</option>
+                  <option>Tıp Fakültesi</option>
+                  <option>Mühendislik ve Mimarlık Fakültesi</option>
+                  <option>Fen-Edebiyat Fakültesi</option>
+                  <option>İktisadi ve İdari Bilimler Fakültesi</option>
+                  <option>İlahiyat Fakültesi</option>
+                  <option>Eğitim Fakültesi</option>
+                  <option>Hukuk Fakültesi</option>
+                  <option>Diş Hekimliği Fakültesi</option>
+                  <option>Sağlık Bilimleri Fakültesi</option>
+                  <option>Güzel Sanatlar, Tasarım ve Mimarlık Fakültesi</option>
+                  <option>Beden Eğitimi ve Spor Yüksekokulu</option>
+                  <option>Diğer</option>
+                </select>
+              </div>
+              <span class="field-error" id="fakulte-error">Lütfen fakülteni seç.</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="bolum">Bölüm</label>
+              <input class="form-input" type="text" id="bolum" name="bolum" placeholder="Bölümün" />
+              <span class="field-error" id="bolum-error">Bu alan zorunludur.</span>
+            </div>
+          </div>
+
+          <!-- KVKK CONSENT -->
+          <div class="kvkk-box">
+            <div class="kvkk-title">Kişisel Verilerin Korunması (KVKK)</div>
+            <p class="kvkk-text">
+              6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında, başvuru formunda girdiğin kişisel veriler (ad, soyad, öğrenci numarası, fakülte, bölüm, telefon numarası) yalnızca Kampüs Öncüsü Programı başvurusunun değerlendirilmesi amacıyla OLMAS Systems tarafından işlenmektedir. Verilerini üçüncü taraflarla paylaşmıyor, reklam amacıyla kullanmıyoruz. Olumsuz sonuçlanan başvurulara ait veriler silinir. Detaylı bilgi için <a href="https://takiltr.com/privacy-policy.html" target="_blank">Gizlilik Politikamızı</a> inceleyebilirsin.
+            </p>
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="kvkk-consent" name="kvkk-consent" />
+                Kişisel verilerimin Kampüs Öncüsü Programı başvurusunun değerlendirilmesi amacıyla OLMAS Systems tarafından işlenmesine ve saklanmasına açık rızamı veriyorum.
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="terms-consent" name="terms-consent" />
+                Program koşullarını okudum, anladım ve kabul ediyorum.
+              </label>
+            </div>
+            <span class="field-error" id="consent-error" style="display:none; margin-top:10px;">Devam edebilmek için her iki onayı da vermen gerekiyor.</span>
+          </div>
+
+          <div class="form-footer">
+            <p class="form-note">Başvurundan sonra her adaya geri döneceğiz. Süreç yaklaşık bir hafta içinde tamamlanır.</p>
+            <button type="submit" class="btn-primary">Başvuruyu Gönder</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- SUCCESS STATE -->
+      <div class="success-state" id="success-state">
+        <div class="success-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="success-title">Başvurun alındı.</div>
+        <p class="success-text">
+          Harika, seni duyduk. Başvurun en kısa sürede değerlendirilecek.<br>
+          Sana takıl uygulaması veya e-posta üzerinden geri döneceğiz.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <footer>
+    <div class="footer-left">takıl</div>
+    <div class="footer-links">
+      <a href="https://takiltr.com/privacy-policy.html">Gizlilik Politikası</a>
+      <a href="https://takiltr.com/terms.html">Kullanım Koşulları</a>
+      <a href="mailto:destek@takiltr.com">İletişim</a>
+    </div>
+    <div class="footer-copy">© 2025–2026 OLMAS Systems · Tüm hakları saklıdır.</div>
+  </footer>
+
+  <script>
+    // ─── FORMSPREE ───────────────────────────────────────────────
+    const FORMSPREE_ID = 'mvzlkeae';
+    // ─────────────────────────────────────────────────────────────
+
+    const form = document.getElementById('ambassador-form');
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    function validateField(id, errorId, validator) {
+      const el = document.getElementById(id);
+      const err = document.getElementById(errorId);
+      const valid = validator(el.value.trim());
+      el.classList.toggle('error', !valid);
+      err.style.display = valid ? 'none' : 'block';
+      return valid;
+    }
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const checks = [
+        validateField('ad', 'ad-error', v => v.length >= 2),
+        validateField('soyad', 'soyad-error', v => v.length >= 2),
+        validateField('ogrenci-no', 'ogrenci-no-error', v => /^\d{6,12}$/.test(v)),
+        validateField('telefon', 'telefon-error', v => /^(\+90|0)?[5][0-9]{9}$/.test(v.replace(/\s/g,''))),
+        validateField('fakulte', 'fakulte-error', v => v !== ''),
+        validateField('bolum', 'bolum-error', v => v.length >= 2),
+      ];
+
+      const kvkk = document.getElementById('kvkk-consent').checked;
+      const terms = document.getElementById('terms-consent').checked;
+      const consentErr = document.getElementById('consent-error');
+      const consentOk = kvkk && terms;
+      consentErr.style.display = consentOk ? 'none' : 'block';
+
+      if (!checks.every(Boolean) || !consentOk) return;
+
+      // Send to Formspree
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Gönderiliyor…';
+
+      const data = {
+        Ad:              document.getElementById('ad').value.trim(),
+        Soyad:           document.getElementById('soyad').value.trim(),
+        'Öğrenci No':    document.getElementById('ogrenci-no').value.trim(),
+        Telefon:         document.getElementById('telefon').value.trim(),
+        Fakülte:         document.getElementById('fakulte').value,
+        Bölüm:           document.getElementById('bolum').value.trim(),
+      };
+
+      try {
+        const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        if (res.ok) {
+          document.getElementById('form-container').style.display = 'none';
+          document.getElementById('success-state').classList.add('visible');
+          window.scrollTo({ top: document.getElementById('katil').offsetTop - 80, behavior: 'smooth' });
+        } else {
+          throw new Error('Formspree error');
+        }
+      } catch {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Başvuruyu Gönder';
+        alert('Bir hata oluştu, lütfen tekrar dene.');
+      }
+    });
+
+    ['ad', 'soyad', 'bolum'].forEach(id => {
+      document.getElementById(id).addEventListener('blur', () =>
+        validateField(id, id + '-error', v => v.length >= 2));
+    });
+
+    document.getElementById('ogrenci-no').addEventListener('blur', () =>
+      validateField('ogrenci-no', 'ogrenci-no-error', v => /^\d{6,12}$/.test(v)));
+
+    document.getElementById('telefon').addEventListener('blur', () =>
+      validateField('telefon', 'telefon-error', v => /^(\+90|0)?[5][0-9]{9}$/.test(v.replace(/\s/g,''))));
+
+    document.getElementById('fakulte').addEventListener('change', () =>
+      validateField('fakulte', 'fakulte-error', v => v !== ''));
+  </script>
+
+</body>
+</html>
