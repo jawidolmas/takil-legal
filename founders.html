@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jawid OLMAS — Kurucu, OLMAS Systems</title>
+  <meta name="description" content="Jawid OLMAS — OLMAS Systems kurucusu. Kurumsal altyapı, güvenlik ve dijital dönüşüm odaklı yazılım girişimi." />
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/jawidolmas/takil-legal/refs/heads/main/favicon.png" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #ffffff;
+      --bg-soft:  #f5f5f7;
+      --bg-mid:   #ebebf0;
+      --border:   #d2d2d7;
+      --border-l: #e8e8ed;
+      --text-1:   #1d1d1f;
+      --text-2:   #6e6e73;
+      --text-3:   #aeaeb2;
+      --accent:   #0071e3;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-1);
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      height: 52px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .nav-logo {
+      font-size: 17px; font-weight: 600; letter-spacing: -0.4px;
+      color: var(--text-1); text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+
+    .nav-links a {
+      font-size: 13px; color: var(--text-2);
+      text-decoration: none; transition: color 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--text-1); }
+
+    .nav-cta {
+      display: inline-flex; align-items: center;
+      background: var(--text-1); color: #fff !important;
+      font-size: 13px !important; font-weight: 500;
+      padding: 7px 16px; border-radius: 980px;
+      text-decoration: none; transition: opacity 0.15s;
+    }
+
+    .nav-cta:hover { opacity: 0.8; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.2px;
+      color: var(--text-2);
+      background: var(--bg-soft);
+      border: 1px solid var(--border-l);
+      border-radius: 100px;
+      padding: 6px 16px;
+      margin-bottom: 40px;
+    }
+
+    .hero-eyebrow-dot {
+      width: 6px; height: 6px;
+      background: var(--accent); border-radius: 50%;
+    }
+
+    .hero h1 {
+      font-size: clamp(52px, 8vw, 96px);
+      font-weight: 700; line-height: 1.02;
+      letter-spacing: -3px;
+      color: var(--text-1); max-width: 880px;
+    }
+
+    .hero h1 em { font-style: normal; color: var(--text-2); }
+
+    .hero-sub {
+      margin-top: 28px; font-size: 18px; font-weight: 400;
+      color: var(--text-2); max-width: 500px; line-height: 1.6;
+    }
+
+    .hero-cta {
+      margin-top: 44px;
+      display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center;
+      background: var(--text-1); color: #fff;
+      font-size: 15px; font-weight: 500;
+      padding: 13px 26px; border-radius: 980px;
+      text-decoration: none; transition: opacity 0.15s;
+    }
+
+    .btn-primary:hover { opacity: 0.82; }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center;
+      background: transparent; color: var(--text-1);
+      font-size: 15px; font-weight: 500;
+      padding: 13px 26px; border-radius: 980px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: border-color 0.15s;
+    }
+
+    .btn-ghost:hover { border-color: var(--text-2); }
+
+    /* ── LAYOUT ── */
+    .divider {
+      border: none; border-top: 1px solid var(--border-l);
+      max-width: 960px; margin: 0 auto;
+    }
+
+    section { max-width: 960px; margin: 0 auto; padding: 96px 24px; }
+
+    .section-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 700; line-height: 1.06;
+      letter-spacing: -1.5px;
+      color: var(--text-1); margin-bottom: 20px;
+    }
+
+    .section-title em { font-style: normal; color: var(--text-2); }
+
+    .section-body {
+      font-size: 16px; color: var(--text-2);
+      max-width: 560px; line-height: 1.75;
+    }
+
+    /* ── ABOUT (Founder Story) ── */
+    .about-wrap {
+      display: grid; grid-template-columns: 1fr 1.6fr;
+      gap: 80px; align-items: start;
+    }
+
+    .founder-card {
+      background: var(--bg-soft);
+      border: 1px solid var(--border-l);
+      border-radius: 20px; padding: 36px 28px;
+      position: sticky; top: 76px;
+    }
+
+    .founder-avatar {
+      width: 68px; height: 68px; border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 20px;
+      border: 2px solid var(--border-l);
+      background: var(--bg-mid);
+      flex-shrink: 0;
+    }
+
+    .founder-avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      display: block;
+    }
+
+    .founder-name  { font-size: 18px; font-weight: 600; color: var(--text-1); margin-bottom: 3px; }
+    .founder-role  { font-size: 12px; color: var(--text-2); margin-bottom: 22px; }
+
+    .founder-attrs { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; }
+
+    .attr-row {
+      display: flex; flex-direction: column; gap: 2px;
+    }
+
+    .attr-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    .attr-value { font-size: 13px; color: var(--text-1); }
+
+    .founder-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .tag {
+      background: var(--bg); border: 1px solid var(--border-l);
+      border-radius: 6px; padding: 4px 10px;
+      font-size: 11px; color: var(--text-2); font-weight: 500;
+    }
+
+    .founder-story p {
+      font-size: 16px; color: var(--text-2);
+      line-height: 1.8; margin-bottom: 20px;
+    }
+
+    .founder-story p:last-child { margin-bottom: 0; }
+
+    .founder-story .pull-quote {
+      font-size: 22px; font-weight: 600;
+      color: var(--text-1); line-height: 1.3;
+      letter-spacing: -0.5px;
+      margin-bottom: 32px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border-l);
+    }
+
+    /* ── COMPANY CARD ── */
+    .company-wrap {
+      background: var(--bg-soft); border: 1px solid var(--border-l);
+      border-radius: 20px; padding: 52px;
+    }
+
+    .company-header {
+      display: flex; align-items: center; gap: 18px;
+      margin-bottom: 40px; padding-bottom: 40px;
+      border-bottom: 1px solid var(--border-l);
+    }
+
+    .company-logo {
+      width: 52px; height: 52px;
+      background: var(--text-1); border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .company-logo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .company-name    { font-size: 18px; font-weight: 600; color: var(--text-1); }
+    .company-tagline { font-size: 12px; color: var(--text-3); margin-top: 3px; }
+
+    .company-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+
+    .company-item-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 6px;
+    }
+
+    .company-item-value { font-size: 14px; color: var(--text-1); line-height: 1.55; }
+
+    /* ── FLAGSHIP PRODUCT ── */
+    .product-wrap {
+      background: var(--text-1);
+      border-radius: 24px; padding: 56px;
+      position: relative; overflow: hidden;
+    }
+
+    .product-wrap::before {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .product-eyebrow {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); margin-bottom: 16px;
+    }
+
+    .product-title {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 700; line-height: 1.04;
+      letter-spacing: -1.5px; color: #fff;
+      margin-bottom: 18px;
+    }
+
+    .product-title em { font-style: normal; color: rgba(255,255,255,0.4); }
+
+    .product-desc {
+      font-size: 16px; color: rgba(255,255,255,0.6);
+      max-width: 520px; line-height: 1.7; margin-bottom: 36px;
+    }
+
+    .product-meta {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px; overflow: hidden;
+      margin-bottom: 40px;
+    }
+
+    .product-meta-item {
+      padding: 24px 22px;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .product-meta-item:last-child { border-right: none; }
+
+    .product-meta-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: rgba(255,255,255,0.35); margin-bottom: 6px;
+    }
+
+    .product-meta-value { font-size: 14px; color: rgba(255,255,255,0.8); }
+
+    .product-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
+
+    .product-tag {
+      padding: 5px 12px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 500;
+    }
+
+    .btn-product {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #fff; color: var(--text-1);
+      font-size: 14px; font-weight: 600;
+      padding: 12px 24px; border-radius: 980px;
+      text-decoration: none; transition: opacity 0.15s;
+    }
+
+    .btn-product:hover { opacity: 0.88; }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      border: 1px solid var(--border-l);
+      border-radius: 18px; overflow: hidden;
+      margin-top: 48px;
+    }
+
+    .project-item {
+      padding: 36px 32px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border-l);
+      border-right: 1px solid var(--border-l);
+      transition: background 0.15s;
+    }
+
+    .project-item:hover { background: var(--bg-soft); }
+
+    .project-item:nth-child(2n)   { border-right: none; }
+    .project-item:nth-last-child(-n+2) { border-bottom: none; }
+
+    .project-cat {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 12px;
+    }
+
+    .project-name {
+      font-size: 17px; font-weight: 600;
+      color: var(--text-1); margin-bottom: 10px;
+      letter-spacing: -0.3px; line-height: 1.3;
+    }
+
+    .project-desc {
+      font-size: 13px; color: var(--text-2);
+      line-height: 1.65; margin-bottom: 20px;
+    }
+
+    .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .project-tag {
+      background: var(--bg-soft); border: 1px solid var(--border-l);
+      border-radius: 6px; padding: 3px 9px;
+      font-size: 11px; color: var(--text-2); font-weight: 500;
+    }
+
+    /* ── PRINCIPLES ── */
+    .principles-list { margin-top: 48px; }
+
+    .principle {
+      display: grid; grid-template-columns: 56px 1fr;
+      gap: 0;
+      padding: 36px 0;
+      border-bottom: 1px solid var(--border-l);
+      align-items: start;
+    }
+
+    .principle:first-child { border-top: 1px solid var(--border-l); }
+
+    .principle-num {
+      font-size: 13px; font-weight: 600;
+      color: var(--text-3); padding-top: 2px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .principle-title {
+      font-size: 17px; font-weight: 600;
+      color: var(--text-1); margin-bottom: 8px;
+      letter-spacing: -0.3px;
+    }
+
+    .principle-text {
+      font-size: 14px; color: var(--text-2); line-height: 1.7;
+    }
+
+    /* ── VISION CLOSING ── */
+    .vision-close {
+      background: var(--bg-soft); border: 1px solid var(--border-l);
+      border-radius: 20px; padding: 52px;
+      margin-top: 48px;
+    }
+
+    .vision-close p {
+      font-size: 17px; color: var(--text-2); line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .vision-close p:last-of-type { margin-bottom: 0; }
+
+    .vision-close .big-line {
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 700; letter-spacing: -0.5px;
+      color: var(--text-1); line-height: 1.3; margin-bottom: 28px;
+    }
+
+    /* ── CONTACT ── */
+    .contact-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border-l);
+      border-radius: 18px; overflow: hidden; margin-top: 48px;
+    }
+
+    .contact-item {
+      padding: 32px 26px;
+      border-right: 1px solid var(--border-l);
+      transition: background 0.15s;
+    }
+
+    .contact-item:last-child { border-right: none; }
+    .contact-item:hover { background: var(--bg-soft); }
+
+    .contact-type {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 10px;
+    }
+
+    .contact-value {
+      display: block;
+      font-size: 15px; font-weight: 500; color: var(--text-1);
+      text-decoration: none; margin-bottom: 6px;
+      transition: color 0.15s;
+    }
+
+    .contact-value:hover { color: var(--accent); }
+
+    .contact-note { font-size: 12px; color: var(--text-3); }
+
+    /* ── FOOTER ── */
+    footer {
+      max-width: 960px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+      padding: 32px 24px 56px;
+    }
+
+    .footer-left { font-size: 13px; font-weight: 500; color: var(--text-1); }
+
+    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+
+    .footer-links a {
+      font-size: 12px; color: var(--text-3);
+      text-decoration: none; transition: color 0.15s;
+    }
+
+    .footer-links a:hover { color: var(--text-2); }
+
+    .footer-copy { font-size: 12px; color: var(--text-3); }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 720px) {
+      nav { padding: 0 20px; }
+      .nav-links { gap: 14px; }
+      .about-wrap { grid-template-columns: 1fr; gap: 40px; }
+      .founder-card { position: static; }
+      .company-wrap { padding: 28px 20px; }
+      .company-grid { grid-template-columns: 1fr; }
+      .product-wrap { padding: 32px 24px; }
+      .product-meta { grid-template-columns: 1fr; }
+      .product-meta-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .product-meta-item:last-child { border-bottom: none; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-item  { border-right: none; }
+      .project-item:nth-last-child(-n+2) { border-bottom: 1px solid var(--border-l); }
+      .project-item:last-child { border-bottom: none; }
+      .contact-grid  { grid-template-columns: 1fr; }
+      .contact-item  { border-right: none; border-bottom: 1px solid var(--border-l); }
+      .contact-item:last-child { border-bottom: none; }
+      .vision-close  { padding: 28px 20px; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="https://takiltr.com">takıl</a>
+    <div class="nav-links">
+      <a href="#hakkimda">Hakkımda</a>
+      <a href="#projeler">Projeler</a>
+      <a href="#vizyon">Vizyon</a>
+      <a href="#iletisim">İletişim</a>
+      <a href="https://takiltr.com" class="nav-cta">takıl'a Git →</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot"></span>
+      OLMAS Systems — Kurucu
+    </div>
+    <h1>Altyapı <em>mühendisi.</em><br>Sistem <em>kurucusu.</em></h1>
+    <p class="hero-sub">
+      Kurumsal sistemler, güvenlik mimarisi ve uzun vadeli dijital dönüşüm.
+      Hızlı çözümler değil — onlarca yıl ayakta kalacak altyapı.
+    </p>
+    <div class="hero-cta">
+      <a href="#hakkimda" class="btn-primary">Daha Fazlasını Keşfet</a>
+      <a href="https://takiltr.com" class="btn-ghost">takıl'ı İncele →</a>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ABOUT -->
+  <section id="hakkimda">
+    <div class="about-wrap">
+
+      <div>
+        <div class="founder-card fade-up">
+          <div class="founder-avatar">
+            <img
+              src="https://raw.githubusercontent.com/jawidolmas/takil-legal/refs/heads/main/Image2.jpg"
+              alt="Jawid OLMAS"
+            />
+          </div>
+          <div class="founder-name">Jawid OLMAS</div>
+          <div class="founder-role">Kurucu · OLMAS Systems</div>
+          <div class="founder-attrs">
+            <div class="attr-row">
+              <span class="attr-label">Kurum</span>
+              <span class="attr-value">Eskişehir Osmangazi Üniversitesi</span>
+            </div>
+            <div class="attr-row">
+              <span class="attr-label">Bölüm</span>
+              <span class="attr-value">Bilgisayar Mühendisliği</span>
+            </div>
+            <div class="attr-row">
+              <span class="attr-label">Şirket</span>
+              <span class="attr-value">OLMAS Systems · 2024, Bursa</span>
+            </div>
+            <div class="attr-row">
+              <span class="attr-label">Güncel Ürün</span>
+              <span class="attr-value">takıl — OGÜ Etkinlik Platformu</span>
+            </div>
+          </div>
+          <div class="founder-tags">
+            <span class="tag">React Native</span>
+            <span class="tag">Expo</span>
+            <span class="tag">Supabase</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Python</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">UI/UX</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="founder-story fade-up">
+        <p class="pull-quote">
+          "Hızlı değil, doğru inşa etmek.<br>On yıl sonra da çalışacak sistemler."
+        </p>
+        <p>
+          Jawid OLMAS, bir yazılım girişiminin gerçek değerinin ilk sürümünde değil —
+          beşinci yıldaki kararlılığında yattığına inanıyor. OLMAS Systems'i bu ilke
+          üzerine kurdu: kurumların gerçekten güvenebileceği, kırılganlıktan uzak,
+          uzun vadeli altyapı.
+        </p>
+        <p>
+          Bilgisayar mühendisliği eğitimi sürerken Jawid, tamamen kendi başına sıfırdan
+          bir ürün geliştirdi. takıl; tasarımdan veritabanı mimarisine, KVKK uyumlu
+          gizlilik altyapısından App Store ve Google Play gönderim süreçlerine dek
+          dış kaynak veya hazır şablon kullanılmadan bütünüyle inşa edildi.
+        </p>
+        <p>
+          Jawid'in mühendislik geçmişi yalnızca akademiyle sınırlı değil. Gerçek
+          müşterilere hizmet veren kurumsal bir web platformu, IBAN doğrulama
+          algoritmaları ve şifreli veri depolaması içeren güvenli bankacılık yönetim
+          sistemi ve bir üretim firmasının tüm manuel kayıt süreçlerini dijitalleştiren
+          ERP aracı — bunların tamamı üretim ortamında çalışan, gerçek operasyonel
+          sorunları çözen projeler.
+        </p>
+        <p>
+          Onun için teknoloji, görünmez olduğunda en güçlü halindedir: çünkü her zaman
+          çalışıyorsa, fark edilmez. OLMAS Systems'in inşa ettiği altyapı tam da
+          bu anlayışla tasarlanır — organizasyonların hiçbir zaman endişelenmek zorunda
+          kalmadığı sistemler.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- COMPANY -->
+  <section>
+    <div class="section-label">Şirket</div>
+    <h2 class="section-title">OLMAS <em>Systems</em></h2>
+    <div class="company-wrap fade-up">
+      <div class="company-header">
+        <div class="company-logo">
+          <img
+            src="https://raw.githubusercontent.com/jawidolmas/takil-legal/refs/heads/main/android-chrome-512x512.png"
+            alt="OLMAS Systems"
+          />
+        </div>
+        <div>
+          <div class="company-name">OLMAS Systems</div>
+          <div class="company-tagline">Türkiye · Kurumsal Altyapı & Sistem Mimarisi</div>
+        </div>
+      </div>
+      <div class="company-grid">
+        <div>
+          <div class="company-item-label">Kuruluş</div>
+          <div class="company-item-value">2024, Bursa — Türkiye</div>
+        </div>
+        <div>
+          <div class="company-item-label">Odak Alanı</div>
+          <div class="company-item-value">Güvenli kimlik, ödeme ve kurumsal hizmet altyapısı</div>
+        </div>
+        <div>
+          <div class="company-item-label">Mevcut Ürün</div>
+          <div class="company-item-value">takıl — OGÜ Öğrenci Etkinlik Platformu</div>
+        </div>
+        <div>
+          <div class="company-item-label">Altyapı</div>
+          <div class="company-item-value">Supabase · AWS EU-Frankfurt · PostgreSQL</div>
+        </div>
+        <div>
+          <div class="company-item-label">Veri Politikası</div>
+          <div class="company-item-value">KVKK uyumlu · Reklamsız · Asla satılmaz</div>
+        </div>
+        <div>
+          <div class="company-item-label">Platform</div>
+          <div class="company-item-value">iOS · Android (App Store & Google Play)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- FLAGSHIP PRODUCT -->
+  <section id="projeler">
+    <div class="section-label">Amiral Gemisi Ürün</div>
+    <div class="product-wrap fade-up">
+      <div class="product-eyebrow">OLMAS Systems Tarafından</div>
+      <h2 class="product-title">takıl <em>—</em><br>OGÜ Etkinlik<br>Platformu</h2>
+      <p class="product-desc">
+        Eskişehir Osmangazi Üniversitesi öğrencilerine özel, güven odaklı sosyal etkinlik
+        platformu. Doğrulanmış OGÜ topluluğu içinde etkinlik bul, organize et ve katıl.
+      </p>
+
+      <div class="product-meta">
+        <div class="product-meta-item">
+          <div class="product-meta-label">Kapsam</div>
+          <div class="product-meta-value">OGÜ'ye özel, kapalı topluluk</div>
+        </div>
+        <div class="product-meta-item">
+          <div class="product-meta-label">Güven Sistemi</div>
+          <div class="product-meta-value">Katılım puanı & organizatör değerlendirmesi</div>
+        </div>
+        <div class="product-meta-item">
+          <div class="product-meta-label">Gizlilik</div>
+          <div class="product-meta-value">KVKK uyumlu · Reklamsız · Veri satılmaz</div>
+        </div>
+      </div>
+
+      <div class="product-tags">
+        <span class="product-tag">React Native</span>
+        <span class="product-tag">Expo</span>
+        <span class="product-tag">Supabase</span>
+        <span class="product-tag">TypeScript</span>
+        <span class="product-tag">PostgreSQL</span>
+        <span class="product-tag">EAS Build</span>
+        <span class="product-tag">Push Notifications</span>
+        <span class="product-tag">OTP Auth</span>
+      </div>
+
+      <a href="https://takiltr.com" class="btn-product">
+        takiltr.com →
+      </a>
+    </div>
+  </section>
+
+  <!-- OTHER PROJECTS -->
+  <section style="padding-top: 0;">
+    <div class="section-label" style="margin-bottom: 14px;">Diğer Projeler</div>
+    <p class="section-body" style="margin-bottom: 0;">
+      Üretim ortamına alınan veya gerçek operasyonel sorunu çözen seçilmiş çalışmalar.
+    </p>
+    <div class="projects-grid">
+
+      <div class="project-item fade-up">
+        <div class="project-cat">Web Platformu · Üretim</div>
+        <div class="project-name">OLMAS İnşaat Kurumsal Web Sitesi</div>
+        <div class="project-desc">
+          Gerçek müşteriyle canlıya alınan kurumsal web sitesi. Güvenli CV yükleme,
+          e-posta bildirimleri ve yapılandırılmış iş başvurusu iş akışı içeriyor.
+          Ücretli servise bağımlı olmadan e-posta entegrasyonu sıfırdan kuruldu;
+          manuel e-posta süreçleri tamamen dijitalleştirildi.
+        </div>
+        <div class="project-tags">
+          <span class="project-tag">Node.js</span>
+          <span class="project-tag">JavaScript</span>
+          <span class="project-tag">Cloudinary</span>
+          <span class="project-tag">EmailJS</span>
+          <span class="project-tag">HTML / CSS</span>
+        </div>
+      </div>
+
+      <div class="project-item fade-up">
+        <div class="project-cat">Güvenlik · Finans Sistemi</div>
+        <div class="project-name">Güvenli Bankacılık Hesap Yönetim Sistemi</div>
+        <div class="project-desc">
+          Checksum tabanlı IBAN ve kart numarası oluşturma algoritmaları içeren
+          bankacılık sistemi. Veriler şifreli binary depolama ile korunur;
+          veritabanı doğrudan okunamaz. Dolandırıcılık önleme kuralları
+          ve hesap tutarlılığı mantığı sıfırdan tasarlandı.
+        </div>
+        <div class="project-tags">
+          <span class="project-tag">C</span>
+          <span class="project-tag">IBAN Doğrulama (Luhn)</span>
+          <span class="project-tag">Şifreli Binary Depolama</span>
+          <span class="project-tag">Fraud Detection</span>
+        </div>
+      </div>
+
+      <div class="project-item fade-up">
+        <div class="project-cat">Otomasyon · ERP</div>
+        <div class="project-name">Üretim Şirketi Veri Yönetim Sistemi</div>
+        <div class="project-desc">
+          Bir üretim firmasının ürün ve mühendislik verilerini dijitalleştiren
+          GUI tabanlı ERP uygulaması. Manuel kayıt süreçlerinin tamamı yapılandırılmış
+          ve sorgulanabilir bir sisteme taşındı. Yerel ve ilişkisel veritabanı
+          destekli hibrit backend mimarisi.
+        </div>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">FastAPI</span>
+          <span class="project-tag">SQLite</span>
+          <span class="project-tag">PostgreSQL</span>
+          <span class="project-tag">HTML / CSS</span>
+        </div>
+      </div>
+
+      <div class="project-item fade-up">
+        <div class="project-cat">Sistem Tasarımı · CLI</div>
+        <div class="project-name">Otobüs Bileti Rezervasyon Sistemi</div>
+        <div class="project-desc">
+          Koltuk müsaitliği, bilet düzenleme ve işlem akışını yöneten komut satırı
+          tabanlı platform. Çift rezervasyon ve geçersiz işlemleri önleyen tutarlılık
+          kuralları ile tasarlandı. Veri yapıları ve sıralı işlem mantığı üzerine inşa edildi.
+        </div>
+        <div class="project-tags">
+          <span class="project-tag">C</span>
+          <span class="project-tag">Veri Yapıları</span>
+          <span class="project-tag">İşlem Mantığı</span>
+          <span class="project-tag">Sıralı İşleme</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- PRINCIPLES -->
+  <section id="vizyon">
+    <div class="section-label">Vizyon & İlkeler</div>
+    <h2 class="section-title">Sistemlere<br><em>bakış açısı.</em></h2>
+    <p class="section-body">
+      OLMAS Systems hızlı çözüm üretmez. Her mimari karar; bakım yükü,
+      bilgi transferi ve on yıllık evrim düşünülerek verilir.
+    </p>
+
+    <div class="principles-list">
+
+      <div class="principle fade-up">
+        <div class="principle-num">01</div>
+        <div>
+          <div class="principle-title">Önce Sistem, Sonra Teknoloji</div>
+          <div class="principle-text">
+            Araçlar değişir, çerçeveler evrilir; iyi sistem tasarımının ilkeleri
+            değişmez. Teknoloji, trend olduğu için değil sistemin gerektirdiği için
+            seçilir. Olgun ve kanıtlanmış çözümler varsa kullanılır —
+            yoksa aynı standarda göre sıfırdan inşa edilir.
+          </div>
+        </div>
+      </div>
+
+      <div class="principle fade-up">
+        <div class="principle-num">02</div>
+        <div>
+          <div class="principle-title">Kurumsal Zaman Ufku İçin İnşa Et</div>
+          <div class="principle-text">
+            Çoğu yazılım çeyreklik döngüler için yazılır. OLMAS Systems on yıllar için
+            yazar. Beş yıl sonra okunup anlaşılamayacak kod, bugün yazılmaz.
+            Her mimari karar; bakım yükü, bilgi transferi ve uzun vadeli evrimi
+            hesaba katar.
+          </div>
+        </div>
+      </div>
+
+      <div class="principle fade-up">
+        <div class="principle-num">03</div>
+        <div>
+          <div class="principle-title">Güvenilirlik Bir Kısıt, Hedef Değil</div>
+          <div class="principle-text">
+            Uptime bir hedef değil — baştan tasarım kısıtı olarak ele alınan bir
+            gereksinimdir. Yedeklilik, zarif bozulma, kapsamlı loglama ve otomatik
+            kurtarma birer özellik değildir; her sistemde zorunlu gereksinimdir.
+          </div>
+        </div>
+      </div>
+
+      <div class="principle fade-up">
+        <div class="principle-num">04</div>
+        <div>
+          <div class="principle-title">Dokümantasyon Bir Altyapıdır</div>
+          <div class="principle-text">
+            Belgelenmemiş sistemler kırılgandır. Dokümantasyon, kodla aynı titizlikle
+            ele alınır: versiyonlanmış, incelenmiş ve bakımı yapılmış. Karar kayıtları,
+            mimari diyagramlar ve çalışma kılavuzları isteğe bağlı değildir —
+            altyapının kendisidir.
+          </div>
+        </div>
+      </div>
+
+      <div class="principle fade-up">
+        <div class="principle-num">05</div>
+        <div>
+          <div class="principle-title">Güvenlik Tasarım Gereği, Yama Değil</div>
+          <div class="principle-text">
+            Güvenlik açıkları çoğunlukla mimari hatadır, uygulama hatası değil.
+            Sistemler, gün birden tehdit modelleri gözetilerek derinlemesine savunma
+            prensibiyle tasarlanır. Uyumluluk bir kontrol listesi değil —
+            tasarıma gömülü bir yaklaşımdır.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="vision-close fade-up">
+      <p class="big-line">
+        En hızlı çözüm değil. En viral ürün değil.<br>
+        Kurumların sessizce, her gün, yıllarca güvendiği sistemler.
+      </p>
+      <p>
+        Dijital dönüşüm, yeni araç benimsemek değil — işin nasıl yapıldığını
+        temelden yeniden düşünmektir. Teknolojiyi görünmez kılmanın tek yolu,
+        onu her zaman çalışır tutmaktır.
+      </p>
+      <p>
+        OLMAS Systems, organizasyonların endişelenmek zorunda kalmadığı altyapıyı
+        inşa eder — görmezden gelindikleri için değil, hiçbir zaman endişe
+        ettirmedikleri için. Bu, şirketin varoluş amacı.
+      </p>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- CONTACT -->
+  <section id="iletisim">
+    <div class="section-label">İletişim</div>
+    <h2 class="section-title">Konuşalım.</h2>
+    <p class="section-body">
+      Kurumsal ortaklık, altyapı danışmanlığı veya yatırım görüşmesi için
+      doğrudan ulaşabilirsiniz.
+    </p>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="contact-type">Kişisel</div>
+        <a class="contact-value" href="mailto:olmassystems@gmail.com">olmassystems@gmail.com</a>
+        <div class="contact-note">Ortaklık, yatırım ve teknik görüşmeler</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-type">takıl Destek</div>
+        <a class="contact-value" href="mailto:destek@takiltr.com">destek@takiltr.com</a>
+        <div class="contact-note">Platform hakkında sorular</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-type">Web</div>
+        <a class="contact-value" href="https://takiltr.com">takiltr.com</a>
+        <div class="contact-note">Ürün, gizlilik politikası &amp; kullanım koşulları</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <footer>
+    <div class="footer-left">Jawid OLMAS</div>
+    <div class="footer-links">
+      <a href="https://takiltr.com/privacy-policy.html">Gizlilik Politikası</a>
+      <a href="https://takiltr.com/terms.html">Kullanım Koşulları</a>
+      <a href="https://takiltr.com">takiltr.com</a>
+      <a href="mailto:jawidbay@gmail.com">İletişim</a>
+    </div>
+    <div class="footer-copy">© 2025–2026 OLMAS Systems · Tüm hakları saklıdır.</div>
+  </footer>
+
+  <script>
+    // Scroll fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Nav hide on scroll down
+    let last = 0;
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      const cur = window.pageYOffset;
+      if (cur <= 0) { nav.style.transform = 'translateY(0)'; }
+      else if (cur > last && cur > 80) { nav.style.transform = 'translateY(-100%)'; }
+      else { nav.style.transform = 'translateY(0)'; }
+      last = cur;
+    }, { passive: true });
+
+    nav.style.transition = 'transform 0.3s ease';
+  </script>
+
+</body>
+</html>
