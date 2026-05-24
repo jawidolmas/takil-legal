@@ -4,576 +4,298 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>takıl — Kampüs Öncüleri</title>
-  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/jawidolmas/takil-legal/main/favicon.png" />
+  <meta name="description" content="takıl Kampüs Öncüsü programı — OGÜ'de topluluğu büyüt, ilk günden parça ol." />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/mb-favicon.png" />
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="takil.css" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg:       #ffffff;
-      --bg-soft:  #f5f5f7;
-      --border:   #d2d2d7;
-      --border-l: #e8e8ed;
-      --text-1:   #1d1d1f;
-      --text-2:   #6e6e73;
-      --text-3:   #aeaeb2;
+      --accent:      #FF4B1F;
+      --accent-soft: rgba(255, 75, 31, 0.08);
+      --accent-mid:  rgba(255, 75, 31, 0.20);
     }
+    body { font-family: 'Bricolage Grotesque', -apple-system, sans-serif; }
 
-    html { scroll-behavior: smooth; }
+    /* ── NAV ── */
+    .nav-logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; }
+    .nav-cta, .nav-links a.nav-cta { background: var(--accent); font-weight: 700; }
 
-    body {
-      background: var(--bg);
-      color: var(--text-1);
-      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
-      font-size: 15px;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
+    /* ── HERO ── */
+    .hero-page {
+      padding: calc(var(--nav-h) + 100px) 24px 88px;
+      max-width: var(--max-w); margin: 0 auto;
     }
-
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 48px;
-      height: 52px;
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: saturate(180%) blur(20px);
-      -webkit-backdrop-filter: saturate(180%) blur(20px);
-      border-bottom: 1px solid rgba(0,0,0,0.08);
+    .hero-kicker {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; letter-spacing: 1.8px;
+      text-transform: uppercase; color: var(--accent);
+      background: var(--accent-soft); border: 1px solid var(--accent-mid);
+      border-radius: 100px; padding: 5px 14px;
+      margin-bottom: 28px; width: fit-content;
     }
-
-    .nav-logo {
-      font-size: 18px; font-weight: 600; letter-spacing: -0.5px;
-      color: var(--text-1); text-decoration: none;
+    .hero-page h1 {
+      font-size: clamp(52px, 7vw, 88px);
+      font-weight: 800; line-height: 0.96;
+      letter-spacing: -3px; color: var(--text-1);
+      max-width: 700px; margin-bottom: 28px;
     }
-
-    .nav-links { display: flex; gap: 28px; }
-
-    .nav-links a {
-      font-size: 13px; color: var(--text-2);
-      text-decoration: none; transition: color 0.15s;
+    .hero-page h1 em { font-style: italic; font-weight: 300; color: var(--text-2); }
+    .hero-page h1 .accent { color: var(--accent); }
+    .hero-page p {
+      font-size: 17px; color: var(--text-2);
+      max-width: 480px; line-height: 1.65; margin-bottom: 0;
     }
+    .hero-cta { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
 
-    .nav-links a:hover { color: var(--text-1); }
+    /* ── SECTION TITLES ── */
+    .section-title em { font-style: italic; font-weight: 300; color: var(--text-2); }
+    .section-title .accent { color: var(--accent); }
 
-    /* HERO */
-    .hero {
-      min-height: 100svh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding: 100px 24px 80px;
-    }
-
-    .hero-tag {
-      display: inline-block;
-      font-size: 12px; font-weight: 500; letter-spacing: 0.3px;
-      color: var(--text-2);
-      background: var(--bg-soft);
-      border: 1px solid var(--border-l);
-      border-radius: 100px;
-      padding: 5px 14px;
-      margin-bottom: 36px;
-    }
-
-    .hero h1 {
-      font-size: clamp(44px, 7vw, 88px);
-      font-weight: 700; line-height: 1.04;
-      letter-spacing: -2.5px;
-      color: var(--text-1); max-width: 820px;
-    }
-
-    .hero h1 em { font-style: normal; color: var(--text-2); }
-
-    .hero-sub {
-      margin-top: 24px; font-size: 17px; font-weight: 400;
-      color: var(--text-2); max-width: 520px; line-height: 1.6;
-    }
-
-    .hero-cta {
-      margin-top: 40px;
-      display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
-    }
-
-    .btn-primary {
-      display: inline-flex; align-items: center;
-      background: var(--text-1); color: #fff;
-      font-size: 14px; font-weight: 500;
-      padding: 12px 24px; border-radius: 980px;
-      text-decoration: none; transition: opacity 0.15s;
-      cursor: pointer; border: none; font-family: inherit;
-    }
-
-    .btn-primary:hover { opacity: 0.82; }
-
-    .btn-ghost {
-      display: inline-flex; align-items: center;
-      background: transparent; color: var(--text-1);
-      font-size: 14px; font-weight: 500;
-      padding: 12px 24px; border-radius: 980px;
-      text-decoration: none;
-      border: 1px solid var(--border);
-      transition: border-color 0.15s;
-      cursor: pointer;
-    }
-
-    .btn-ghost:hover { border-color: var(--text-2); }
-
-    /* LAYOUT */
-    .divider {
-      border: none; border-top: 1px solid var(--border-l);
-      max-width: 960px; margin: 0 auto;
-    }
-
-    section { max-width: 960px; margin: 0 auto; padding: 96px 24px; }
-
-    .section-label {
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 1.2px; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 14px;
-    }
-
-    .section-title {
-      font-size: clamp(32px, 4vw, 48px);
-      font-weight: 700; line-height: 1.08;
-      letter-spacing: -1.2px;
-      color: var(--text-1); margin-bottom: 20px;
-    }
-
-    .section-title em { font-style: normal; color: var(--text-2); }
-
-    .section-body {
-      font-size: 16px; color: var(--text-2);
-      max-width: 560px; line-height: 1.7;
-    }
-
-    /* BENEFITS GRID */
+    /* ── BENEFIT GRID ── */
     .benefits-grid {
       display: grid; grid-template-columns: repeat(3, 1fr);
-      border: 1px solid var(--border-l);
-      border-radius: 18px; overflow: hidden; margin-top: 48px;
+      border: 1px solid var(--border-l); border-radius: 20px;
+      overflow: hidden; margin-top: 48px;
     }
-
     .benefit-item {
-      padding: 36px 28px;
-      border-right: 1px solid var(--border-l);
-      border-bottom: 1px solid var(--border-l);
-      transition: background 0.15s;
+      padding: 36px 28px; border-right: 1px solid var(--border-l);
+      border-bottom: 1px solid var(--border-l); transition: background 0.15s;
     }
-
     .benefit-item:hover { background: var(--bg-soft); }
-    .benefit-item:nth-child(3n) { border-right: none; }
+    .benefit-item:nth-child(3n)  { border-right: none; }
     .benefit-item:nth-child(n+4) { border-bottom: none; }
+    .benefit-icon { display: block; margin-bottom: 18px; color: var(--accent); }
+    .benefit-title { font-size: 15px; font-weight: 700; color: var(--text-1); margin-bottom: 8px; letter-spacing: -0.2px; }
+    .benefit-desc  { font-size: 13px; color: var(--text-2); line-height: 1.65; }
 
-    .benefit-icon { display: block; margin-bottom: 18px; color: var(--text-3); }
-    .benefit-title { font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 8px; }
-    .benefit-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-
-    /* VIBE / WHO */
-    .vibe-wrap {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 24px; margin-top: 48px;
-    }
-
+    /* ── VIBE CARDS ── */
+    .vibe-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 48px; }
     .vibe-card {
-      background: var(--bg-soft);
-      border: 1px solid var(--border-l);
-      border-radius: 16px; padding: 32px 28px;
+      background: var(--bg-soft); border: 1px solid var(--border-l);
+      border-radius: 20px; padding: 36px 32px;
     }
-
     .vibe-card-title {
-      font-size: 13px; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 1px;
-      color: var(--text-3); margin-bottom: 20px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1.4px; color: var(--text-3); margin-bottom: 24px;
     }
-
-    .vibe-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-
+    .vibe-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
     .vibe-list li {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 13px; color: var(--text-2); line-height: 1.55;
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 14px; color: var(--text-2); line-height: 1.6;
     }
-
     .vibe-list li::before {
-      content: '';
-      display: block; flex-shrink: 0;
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--text-3);
-      margin-top: 7px;
+      content: ''; display: block; flex-shrink: 0;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); margin-top: 7px;
     }
 
-    /* PROCESS */
+    /* ── PROCESS ROW ── */
     .process-row {
       display: grid; grid-template-columns: repeat(4, 1fr);
-      border: 1px solid var(--border-l);
-      border-radius: 18px; overflow: hidden; margin-top: 48px;
+      border: 1px solid var(--border-l); border-radius: 20px;
+      overflow: hidden; margin-top: 48px;
     }
-
     .process-step {
-      padding: 32px 24px;
-      border-right: 1px solid var(--border-l);
+      padding: 36px 28px; border-right: 1px solid var(--border-l);
+      transition: background 0.15s;
     }
-
+    .process-step:hover { background: var(--bg-soft); }
     .process-step:last-child { border-right: none; }
-
-    .step-num {
-      font-size: 11px; font-weight: 700;
-      letter-spacing: 1.5px; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 12px;
+    .process-step-num {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
     }
+    .process-step-title { font-size: 15px; font-weight: 700; color: var(--text-1); margin-bottom: 10px; letter-spacing: -0.2px; }
+    .process-step-desc  { font-size: 13px; color: var(--text-2); line-height: 1.65; }
 
-    .step-title { font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 8px; }
-    .step-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-
-    /* TERMS BOX */
+    /* ── TERMS BOX ── */
     .terms-box {
-      background: var(--bg-soft);
-      border: 1px solid var(--border-l);
-      border-radius: 20px; padding: 48px;
-      margin-top: 48px;
+      background: var(--bg-soft); border: 1px solid var(--border-l);
+      border-radius: 20px; padding: 48px; margin-top: 48px;
     }
-
     .terms-header {
       display: flex; align-items: flex-start; justify-content: space-between;
       gap: 24px; margin-bottom: 36px; padding-bottom: 36px;
       border-bottom: 1px solid var(--border-l);
     }
-
     .terms-header-text h3 {
-      font-size: 20px; font-weight: 700; letter-spacing: -0.4px;
-      color: var(--text-1); margin-bottom: 6px;
+      font-size: 22px; font-weight: 800; letter-spacing: -0.5px;
+      color: var(--text-1); margin-bottom: 8px;
     }
-
-    .terms-header-text p {
-      font-size: 13px; color: var(--text-2); max-width: 420px; line-height: 1.6;
-    }
-
+    .terms-header-text p { font-size: 13px; color: var(--text-2); max-width: 420px; line-height: 1.65; }
     .terms-badge {
-      flex-shrink: 0;
-      display: inline-flex; align-items: center; gap: 6px;
+      flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px;
       background: var(--bg); border: 1px solid var(--border-l);
       border-radius: 100px; padding: 6px 14px;
-      font-size: 11px; font-weight: 600; color: var(--text-2);
-      white-space: nowrap;
+      font-size: 11px; font-weight: 700; color: var(--text-2); white-space: nowrap;
     }
-
     .terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-
     .terms-item {
-      background: var(--bg);
-      border: 1px solid var(--border-l);
-      border-radius: 12px; padding: 20px 22px;
+      background: var(--bg); border: 1px solid var(--border-l);
+      border-radius: 14px; padding: 22px 24px;
+      transition: background 0.15s;
     }
-
+    .terms-item:hover { background: var(--bg-mid); }
     .terms-item-label {
-      font-size: 10px; font-weight: 600;
-      letter-spacing: 1px; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 8px;
+      font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
     }
+    .terms-item-text { font-size: 13px; color: var(--text-2); line-height: 1.65; }
 
-    .terms-item-text {
-      font-size: 13px; color: var(--text-2); line-height: 1.6;
-    }
-
-    /* FORM SECTION */
-    .form-wrap {
-      background: var(--bg-soft);
-      border: 1px solid var(--border-l);
-      border-radius: 20px; padding: 56px;
-      margin-top: 48px;
-    }
-
-    .form-header { margin-bottom: 40px; }
-
-    .form-header h3 {
-      font-size: 26px; font-weight: 700; letter-spacing: -0.6px;
-      color: var(--text-1); margin-bottom: 10px;
-    }
-
-    .form-header p { font-size: 14px; color: var(--text-2); line-height: 1.6; }
-
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-
-    .form-group { display: flex; flex-direction: column; gap: 7px; }
-
-    .form-label {
-      font-size: 12px; font-weight: 600;
-      letter-spacing: 0.3px; color: var(--text-1);
-    }
-
-    .form-input, .form-select {
-      width: 100%;
-      padding: 11px 14px;
-      font-size: 14px;
-      font-family: inherit;
-      color: var(--text-1);
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      outline: none;
-      transition: border-color 0.15s, box-shadow 0.15s;
-      appearance: none;
-      -webkit-appearance: none;
-    }
-
-    .form-input:focus, .form-select:focus {
-      border-color: var(--text-1);
-      box-shadow: 0 0 0 3px rgba(29,29,31,0.06);
-    }
-
-    .form-input::placeholder { color: var(--text-3); }
-
-    .form-select-wrap { position: relative; }
-
-    .form-select-wrap::after {
-      content: '';
-      position: absolute; right: 14px; top: 50%;
-      transform: translateY(-50%);
-      width: 0; height: 0;
-      border-left: 4px solid transparent;
-      border-right: 4px solid transparent;
-      border-top: 5px solid var(--text-3);
-      pointer-events: none;
-    }
-
-    /* KVKK */
-    .kvkk-box {
-      margin-top: 20px;
-      background: var(--bg);
-      border: 1px solid var(--border-l);
-      border-radius: 12px; padding: 20px 22px;
-    }
-
-    .kvkk-title {
-      font-size: 11px; font-weight: 700;
-      letter-spacing: 1px; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 12px;
-    }
-
-    .kvkk-text {
-      font-size: 12px; color: var(--text-2);
-      line-height: 1.7; margin-bottom: 16px;
-    }
-
-    .kvkk-text a { color: var(--text-1); }
-
-    .checkbox-group { display: flex; flex-direction: column; gap: 10px; }
-
-    .checkbox-label {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 12px; color: var(--text-2);
-      line-height: 1.6; cursor: pointer;
-    }
-
-    .checkbox-label input[type="checkbox"] {
-      flex-shrink: 0;
-      width: 15px; height: 15px;
-      margin-top: 2px;
-      accent-color: var(--text-1);
-      cursor: pointer;
-    }
-
-    .form-footer {
-      margin-top: 28px;
-      display: flex; align-items: center;
-      justify-content: space-between; flex-wrap: wrap; gap: 16px;
-    }
-
-    .form-note { font-size: 12px; color: var(--text-3); max-width: 360px; line-height: 1.6; }
-
-    /* ERROR */
-    .field-error { font-size: 11px; color: #c0392b; display: none; }
-    .form-input.error, .form-select.error { border-color: #c0392b; }
-
-    /* SUCCESS */
-    .success-state { display: none; text-align: center; padding: 60px 24px; }
-    .success-state.visible { display: block; }
-
-    .success-icon {
-      width: 56px; height: 56px;
-      background: var(--bg-soft);
-      border: 1px solid var(--border-l);
-      border-radius: 16px;
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 24px; color: var(--text-2);
-    }
-
-    .success-title {
-      font-size: 24px; font-weight: 700; letter-spacing: -0.5px;
-      color: var(--text-1); margin-bottom: 10px;
-    }
-
-    .success-text { font-size: 14px; color: var(--text-2); line-height: 1.7; }
-
-    /* AMBASSADORS PLACEHOLDER */
+    /* ── PLACEHOLDER ── */
     .ambassadors-placeholder {
-      border: 1px dashed var(--border);
-      border-radius: 18px; padding: 56px 24px;
-      text-align: center; margin-top: 48px;
+      border: 2px dashed var(--border-l); border-radius: 20px;
+      padding: 72px 24px; text-align: center; margin-top: 48px;
     }
-
     .placeholder-label {
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 1.2px; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 12px;
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
     }
-
     .placeholder-text { font-size: 14px; color: var(--text-3); }
 
-    /* FOOTER */
-    footer {
-      max-width: 960px; margin: 0 auto;
-      padding: 40px 24px;
-      display: flex; align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap; gap: 14px;
+    /* ── FORM ── */
+    .form-wrap {
+      background: var(--bg-soft); border: 1px solid var(--border-l);
+      border-radius: 20px; padding: 48px; margin-top: 48px;
+    }
+    .form-header { margin-bottom: 36px; padding-bottom: 36px; border-bottom: 1px solid var(--border-l); }
+    .form-header h3 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-1); margin-bottom: 8px; }
+    .form-header p { font-size: 14px; color: var(--text-2); line-height: 1.65; }
+
+    /* ── SECTION DIVIDER ACCENT ── */
+    .accent-rule {
+      width: 40px; height: 3px; background: var(--accent);
+      border-radius: 2px; margin-bottom: 20px;
     }
 
-    .footer-left { font-size: 15px; font-weight: 600; color: var(--text-1); }
-    .footer-links { display: flex; gap: 20px; }
-
-    .footer-links a {
-      font-size: 12px; color: var(--text-3);
-      text-decoration: none; transition: color 0.15s;
-    }
-
-    .footer-links a:hover { color: var(--text-2); }
-    .footer-copy { font-size: 11px; color: var(--text-3); width: 100%; }
-
-    /* RESPONSIVE */
+    /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      nav { padding: 0 20px; }
-      .nav-links { display: none; }
-      section { padding: 64px 20px; }
+      .hero-page { padding: calc(var(--nav-h) + 56px) 20px 64px; }
+      .hero-page h1 { font-size: clamp(44px, 11vw, 64px); letter-spacing: -2px; }
       .benefits-grid { grid-template-columns: 1fr; }
-      .benefit-item { border-right: none; border-bottom: 1px solid var(--border-l); }
+      .benefit-item { border-right: none; }
+      .benefit-item:nth-child(n) { border-bottom: 1px solid var(--border-l); }
       .benefit-item:last-child { border-bottom: none; }
       .vibe-wrap { grid-template-columns: 1fr; }
       .process-row { grid-template-columns: 1fr 1fr; }
       .process-step:nth-child(2n) { border-right: none; }
-      .process-step:nth-child(n+3) { border-top: 1px solid var(--border-l); }
+      .process-step { border-bottom: 1px solid var(--border-l); }
+      .process-step:nth-child(n+3) { border-bottom: none; }
       .terms-box { padding: 28px 20px; }
       .terms-header { flex-direction: column; }
       .terms-grid { grid-template-columns: 1fr; }
       .form-wrap { padding: 28px 20px; }
-      .form-grid { grid-template-columns: 1fr; }
-      .form-footer { flex-direction: column; align-items: flex-start; }
-      footer { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
 
+  <!-- NAV -->
   <nav>
-    <a class="nav-logo" href="https://takiltr.com">takıl</a>
+    <a class="nav-logo" href="about.html">takıl</a>
     <div class="nav-links">
-      <a href="#program">Program</a>
-      <a href="#sen-kimsin">Sen Kimsin?</a>
-      <a href="#nasil">Nasıl?</a>
-      <a href="#kosullar">Koşullar</a>
-      <a href="#katil">bize takıl</a>
+      <a href="about.html">Ana Sayfa</a>
+      <a href="how-it-works.html">Nasıl Çalışır?</a>
+      <a href="#katil" class="nav-cta">Başvur →</a>
     </div>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="about.html" onclick="closeMenu()">Ana Sayfa</a>
+    <a href="how-it-works.html" onclick="closeMenu()">Nasıl Çalışır?</a>
+    <a href="#katil" onclick="closeMenu()" class="mobile-cta">Başvur →</a>
+  </div>
+
   <!-- HERO -->
-  <div class="hero">
-    <div class="hero-tag">Kampüs Öncüsü Programı</div>
-    <h1>Kampüsün<br><em>senin elinle</em><br>şekilleniyor.</h1>
-    <p class="hero-sub">
-      takıl, OGÜ öğrencilerini etkinlikler aracılığıyla bir araya getiriyor.
-      Şimdi bu hareketi birlikte büyütecek Kampüs Öncülerini arıyoruz.
-    </p>
+  <div class="hero-page">
+    <span class="hero-kicker">Kampüs Öncüsü Programı</span>
+    <h1>Kampüsün<br><em>senin elinle</em><br><span class="accent">şekilleniyor.</span></h1>
+    <p>takıl, OGÜ öğrencilerini etkinlikler aracılığıyla bir araya getiriyor. Şimdi bu hareketi birlikte büyütecek Kampüs Öncülerini arıyoruz.</p>
     <div class="hero-cta">
-      <a href="#katil" class="btn-primary">Hemen Katıl</a>
-      <a href="#program" class="btn-ghost">Daha Fazla Keşfet</a>
+      <a href="#katil" class="btn-primary">Hemen Başvur</a>
+      <a href="#program" class="btn-ghost">Programı Keşfet</a>
     </div>
   </div>
 
   <hr class="divider" />
 
-  <!-- PROGRAM / BENEFITS -->
+  <!-- NEDEN -->
   <section id="program">
-    <div class="section-label">Neden Kampüs Öncüsü?</div>
-    <h2 class="section-title">Sadece bir uygulama<br><em>değil, bir hareket.</em></h2>
-    <p class="section-body">
+    <span class="label" style="display:block; margin-bottom:16px;">Neden Kampüs Öncüsü?</span>
+    <h2 class="section-title" style="margin-bottom:16px;">Sadece bir uygulama<br><em>değil, bir hareket.</em></h2>
+    <p class="section-body" style="margin-bottom:0; max-width:520px;">
       takıl'ı birlikte inşa ediyoruz. Kampüs Öncüleri bu süreçte sahnenin tam ortasında —
       arkadaşlarına ilham veren, etkinlikleri başlatan, topluluğu şekillendiren kişiler.
     </p>
-
     <div class="benefits-grid">
       <div class="benefit-item">
-        <span class="benefit-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
-        </span>
+        <span class="benefit-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></span>
         <div class="benefit-title">Kampüsünün Yüzü Ol</div>
-        <div class="benefit-desc">takiltr.com/ambassadors sayfasında ve sosyal medyada adın ve profilin yer alacak. Gerçek, somut bir görünürlük.</div>
+        <div class="benefit-desc">takiltr.com/ambassadors sayfasında adın ve profilin yer alacak. Gerçek, somut bir görünürlük.</div>
       </div>
       <div class="benefit-item">
-        <span class="benefit-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        </span>
+        <span class="benefit-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>
         <div class="benefit-title">Ürünü Birlikte Şekillendir</div>
-        <div class="benefit-desc">Yeni özellikler çıkmadan önce sen görürsün. Fikirlerinin takıl'a yansıdığını gözünle izlersin.</div>
+        <div class="benefit-desc">Yeni özellikler çıkmadan önce sen görürsün. Fikirlerinin takıl'a yansıdığını izlersin.</div>
       </div>
       <div class="benefit-item">
-        <span class="benefit-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </span>
+        <span class="benefit-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
         <div class="benefit-title">Gerçek Bağlantılar Kur</div>
-        <div class="benefit-desc">Kurucuyla ve diğer Kampüs Öncüleriyle doğrudan çalışırsın. takıl ailesi küçük ama etkisi büyük.</div>
+        <div class="benefit-desc">Kurucuyla ve diğer Kampüs Öncüleriyle doğrudan çalışırsın. Küçük ama etkili bir ekip.</div>
       </div>
       <div class="benefit-item">
-        <span class="benefit-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        </span>
+        <span class="benefit-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
         <div class="benefit-title">Etkinliklerde Öne Çık</div>
-        <div class="benefit-desc">Kampüsündeki etkinlikleri sen başlatırsın. Yüzlerce öğrencinin sosyal hayatını doğrudan etkilersin.</div>
+        <div class="benefit-desc">Kampüsündeki etkinlikleri sen başlatırsın. Yüzlerce öğrencinin sosyal hayatını etkilersin.</div>
       </div>
       <div class="benefit-item">
-        <span class="benefit-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-        </span>
+        <span class="benefit-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></span>
         <div class="benefit-title">İlk Günden Beri Orada Ol</div>
         <div class="benefit-desc">takıl henüz büyümenin başında. Bu yolculuğun en başından parçası olmak eşsiz bir his.</div>
       </div>
       <div class="benefit-item">
-        <span class="benefit-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-        </span>
+        <span class="benefit-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>
         <div class="benefit-title">Özgeçmişinde Parlasın</div>
-        <div class="benefit-desc">Pazarlama, topluluk yönetimi, etkinlik organizasyonu. Büyüyen bir girişimde gerçek bir deneyim.</div>
+        <div class="benefit-desc">Pazarlama, topluluk yönetimi, etkinlik organizasyonu. Büyüyen bir girişimde gerçek deneyim.</div>
       </div>
     </div>
   </section>
 
   <hr class="divider" />
 
-  <!-- WHO ARE YOU -->
+  <!-- SEN KİMSİN -->
   <section id="sen-kimsin">
-    <div class="section-label">Sen Kimsin?</div>
-    <h2 class="section-title">Seni arıyoruz<br><em>eğer...</em></h2>
-    <p class="section-body">
+    <span class="label" style="display:block; margin-bottom:16px;">Sen Kimsin?</span>
+    <h2 class="section-title" style="margin-bottom:16px;">Seni arıyoruz<br><em>eğer...</em></h2>
+    <p class="section-body" style="margin-bottom:0; max-width:520px;">
       Mükemmel bir özgeçmiş aramıyoruz. takıl'a inanan, kampüsünü seven, etrafına enerji veren birini arıyoruz.
     </p>
-
     <div class="vibe-wrap">
       <div class="vibe-card">
         <div class="vibe-card-title">Bunlar sende varsa</div>
         <ul class="vibe-list">
-          <li>OGÜ öğrencisisin ve takıl'ı aktif olarak kullanıyorsun</li>
+          <li>OGÜ öğrencisisin ve takıl'ı aktif kullanıyorsun</li>
           <li>Kampüste tanıdığın çok, farklı çevrelerle rahatça iletişim kuruyorsun</li>
           <li>Bir etkinlik fikri aklına gelince beklemeden harekete geçiyorsun</li>
           <li>İnsanlara bir şeyler anlatmak, onları heyecanlandırmak sana doğal geliyor</li>
-          <li>Kampüs hayatını daha eğlenceli hale getirme konusunda içten bir isteğin var</li>
+          <li>Kampüs hayatını daha iyi hale getirme konusunda içten bir isteğin var</li>
         </ul>
       </div>
       <div class="vibe-card">
         <div class="vibe-card-title">Bir de bunlar varsa süper</div>
         <ul class="vibe-list">
-          <li>takıl'da yüksek bir Güven Endeksin ve güçlü bir Vibe Profilin var</li>
-          <li>Öğrenci kulüplerinde ya da herhangi bir organizasyonda aktif rol aldın</li>
+          <li>takıl'da yüksek bir Güven Endeksin var</li>
+          <li>Öğrenci kulüplerinde aktif rol aldın</li>
           <li>Instagram, TikTok veya başka platformlarda içerik üretiyorsun</li>
-          <li>Daha önce bir etkinlik organize ettin, insanları bir araya getirdin</li>
+          <li>Daha önce bir etkinlik organize ettin</li>
           <li>Bir fikri hayata geçirmek için öne çıktın</li>
         </ul>
       </div>
@@ -582,91 +304,70 @@
 
   <hr class="divider" />
 
-  <!-- HOW IT WORKS -->
+  <!-- NASIL ÇALIŞIYOR -->
   <section id="nasil">
-    <div class="section-label">Nasıl Çalışıyor?</div>
-    <h2 class="section-title">Dört adım,<br><em>hepsi bu.</em></h2>
-
+    <span class="label" style="display:block; margin-bottom:16px;">Nasıl Çalışıyor?</span>
+    <h2 class="section-title" style="margin-bottom:48px;">Dört adım,<br><em>hepsi bu.</em></h2>
     <div class="process-row">
       <div class="process-step">
-        <div class="step-num">01</div>
-        <div class="step-title">Formu Doldur</div>
-        <div class="step-desc">Aşağıdaki kısa formu doldur. Beş dakika sürer, fazla düşünme.</div>
+        <div class="process-step-num">01</div>
+        <div class="process-step-title">Formu Doldur</div>
+        <div class="process-step-desc">Aşağıdaki kısa formu doldur. Beş dakika sürer, fazla düşünme.</div>
       </div>
       <div class="process-step">
-        <div class="step-num">02</div>
-        <div class="step-title">Seni Tanıyalım</div>
-        <div class="step-desc">takıl'daki profilini ve etkinlik geçmişine bir göz atacağız.</div>
+        <div class="process-step-num">02</div>
+        <div class="process-step-title">Seni Tanıyalım</div>
+        <div class="process-step-desc">takıl'daki profilini ve etkinlik geçmişine göz atacağız.</div>
       </div>
       <div class="process-step">
-        <div class="step-num">03</div>
-        <div class="step-title">Bir Kahve İçelim</div>
-        <div class="step-desc">Seni biraz daha yakından tanımak için kısa ve samimi bir sohbet ayarlayabiliriz.</div>
+        <div class="process-step-num">03</div>
+        <div class="process-step-title">Bir Kahve İçelim</div>
+        <div class="process-step-desc">Seni yakından tanımak için kısa ve samimi bir sohbet.</div>
       </div>
       <div class="process-step">
-        <div class="step-num">04</div>
-        <div class="step-title">Aramıza Katıl</div>
-        <div class="step-desc">Tüm adaylara geri döneceğiz. Seçilenler özel bir karşılama ve yönlendirme alacak.</div>
+        <div class="process-step-num">04</div>
+        <div class="process-step-title">Aramıza Katıl</div>
+        <div class="process-step-desc">Tüm adaylara geri döneceğiz. Seçilenler özel karşılama alacak.</div>
       </div>
     </div>
   </section>
 
   <hr class="divider" />
 
-  <!-- TERMS & CONDITIONS -->
+  <!-- KOŞULLAR -->
   <section id="kosullar">
-    <div class="section-label">Program Koşulları</div>
-    <h2 class="section-title">Şeffaf olmak<br><em>istiyoruz.</em></h2>
-    <p class="section-body">
-      Kampüs Öncüsü olmak tamamen gönüllülük esasına dayanıyor. Ama birlikte iyi bir şey inşa edebilmek için bazı temel beklentilerimiz var. Bunları katılmadan önce bir kez oku.
+    <span class="label" style="display:block; margin-bottom:16px;">Program Koşulları</span>
+    <h2 class="section-title" style="margin-bottom:16px;">Şeffaf olmak<br><em>istiyoruz.</em></h2>
+    <p class="section-body" style="max-width:520px;">
+      Kampüs Öncüsü olmak tamamen gönüllülük esasına dayanıyor. Ama birlikte iyi bir şey inşa edebilmek için bazı temel beklentilerimiz var.
     </p>
-
     <div class="terms-box">
       <div class="terms-header">
         <div class="terms-header-text">
-          <h3>Kampüs Öncüsü Program Koşulları</h3>
-          <p>Bu koşullar, programa kabul edildiğin andan itibaren geçerli olur ve program boyunca bağlayıcılığını korur.</p>
+          <h3>Program Koşulları</h3>
+          <p>Bu koşullar, programa kabul edildiğin andan itibaren geçerlidir.</p>
         </div>
         <div class="terms-badge">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           Gizli tutulacak
         </div>
       </div>
-
       <div class="terms-grid">
-        <div class="terms-item">
-          <div class="terms-item-label">Etkinlik Katılımı</div>
-          <div class="terms-item-text">Her ay belirli sayıda takıl etkinliğine katılman veya etkinlik oluşturman bekleniyor. Detaylar programa kabul sürecinde seninle paylaşılır.</div>
-        </div>
-        <div class="terms-item">
-          <div class="terms-item-label">Geri Bildirim</div>
-          <div class="terms-item-text">Düzenli olarak kullanıcı deneyimi geri bildirimi paylaşman ve zaman zaman düzenlenen "takıl UX Hangout" sohbetlerine katılman bekleniyor.</div>
-        </div>
-        <div class="terms-item">
-          <div class="terms-item-label">Marka Temsili</div>
-          <div class="terms-item-text">Kampüste ve sosyal medyada takıl'ı pozitif ve dürüst bir şekilde temsil etmeni bekliyoruz. Bunu zaten yapmak isteyeceğini biliyoruz.</div>
-        </div>
-        <div class="terms-item">
-          <div class="terms-item-label">Gizlilik</div>
-          <div class="terms-item-text">Ekiple paylaşılan, henüz kamuoyuyla paylaşılmamış bilgiler (yeni özellikler, planlar vb.) üçüncü kişilerle paylaşılamaz.</div>
-        </div>
-        <div class="terms-item">
-          <div class="terms-item-label">Topluluk Kuralları</div>
-          <div class="terms-item-text">takıl topluluk kurallarına ve OGÜ'nün etik prensiplerine her zaman uyulması gerekiyor. Bu zaten herkes için geçerli.</div>
-        </div>
-        <div class="terms-item">
-          <div class="terms-item-label">Ayrılmak</div>
-          <div class="terms-item-text">Bu koşulların dışına çıkılması durumunda programdaki görev sona erdirilebilir. Gönüllülük esaslı olduğu için dilediğinde de ayrılabilirsin.</div>
-        </div>
+        <div class="terms-item"><div class="terms-item-label">Etkinlik Katılımı</div><div class="terms-item-text">Her ay belirli sayıda takıl etkinliğine katılman veya etkinlik oluşturman bekleniyor.</div></div>
+        <div class="terms-item"><div class="terms-item-label">Geri Bildirim</div><div class="terms-item-text">Düzenli kullanıcı deneyimi geri bildirimi paylaşman ve UX sohbetlerine katılman bekleniyor.</div></div>
+        <div class="terms-item"><div class="terms-item-label">Marka Temsili</div><div class="terms-item-text">Kampüste ve sosyal medyada takıl'ı pozitif ve dürüst bir şekilde temsil etmeni bekliyoruz.</div></div>
+        <div class="terms-item"><div class="terms-item-label">Gizlilik</div><div class="terms-item-text">Ekiple paylaşılan, henüz kamuoyuyla paylaşılmamış bilgiler üçüncü kişilerle paylaşılamaz.</div></div>
+        <div class="terms-item"><div class="terms-item-label">Topluluk Kuralları</div><div class="terms-item-text">takıl topluluk kurallarına ve OGÜ'nün etik prensiplerine her zaman uyulması gerekiyor.</div></div>
+        <div class="terms-item"><div class="terms-item-label">Ayrılmak</div><div class="terms-item-text">Koşulların dışına çıkılması durumunda görev sona erdirilebilir. Gönüllülük esaslı olduğu için dilediğinde ayrılabilirsin.</div></div>
       </div>
     </div>
   </section>
 
   <hr class="divider" />
 
-  <!-- AMBASSADOR PROFILES PLACEHOLDER -->
+  <!-- ÖNCÜLER -->
   <section>
-    <div class="section-label">Kampüs Öncülerimiz</div>
+    <span class="label" style="display:block; margin-bottom:16px;">Kampüs Öncülerimiz</span>
     <h2 class="section-title">Öncülerimizle<br><em>tanış.</em></h2>
     <div class="ambassadors-placeholder">
       <div class="placeholder-label">Yakında burada</div>
@@ -676,16 +377,16 @@
 
   <hr class="divider" />
 
-  <!-- APPLICATION FORM -->
+  <!-- FORM -->
   <section id="katil">
-    <div class="section-label">Katıl</div>
-    <h2 class="section-title">Hazır mısın?<br><em>Biz hazırız.</em></h2>
+    <span class="label" style="display:block; margin-bottom:16px;">Başvur</span>
+    <h2 class="section-title" style="margin-bottom:8px;">Hazır mısın?<br><em>Biz hazırız.</em></h2>
 
     <div class="form-wrap">
       <div id="form-container">
         <div class="form-header">
           <h3>Kampüs Öncüsü Başvuru Formu</h3>
-          <p>Beş dakika ayır, formu doldur. Biz de en kısa sürede sana döneceğiz.</p>
+          <p>Beş dakika ayır, formu doldur. En kısa sürede geri döneceğiz.</p>
         </div>
 
         <form id="ambassador-form" novalidate>
@@ -738,16 +439,15 @@
             </div>
           </div>
 
-          <!-- KVKK CONSENT -->
           <div class="kvkk-box">
             <div class="kvkk-title">Kişisel Verilerin Korunması (KVKK)</div>
             <p class="kvkk-text">
-              6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında, başvuru formunda girdiğin kişisel veriler (ad, soyad, öğrenci numarası, fakülte, bölüm, telefon numarası) yalnızca Kampüs Öncüsü Programı başvurusunun değerlendirilmesi amacıyla OLMAS Systems tarafından işlenmektedir. Verilerini üçüncü taraflarla paylaşmıyor, reklam amacıyla kullanmıyoruz. Olumsuz sonuçlanan başvurulara ait veriler silinir. Detaylı bilgi için <a href="https://takiltr.com/privacy-policy.html" target="_blank">Gizlilik Politikamızı</a> inceleyebilirsin.
+              6698 sayılı KVKK kapsamında, başvuru formunda girdiğin kişisel veriler yalnızca Kampüs Öncüsü Programı başvurusunun değerlendirilmesi amacıyla işlenmektedir. Detaylı bilgi için <a href="privacy-policy.html">Gizlilik Politikamızı</a> inceleyebilirsin.
             </p>
             <div class="checkbox-group">
               <label class="checkbox-label">
                 <input type="checkbox" id="kvkk-consent" name="kvkk-consent" />
-                Kişisel verilerimin Kampüs Öncüsü Programı başvurusunun değerlendirilmesi amacıyla OLMAS Systems tarafından işlenmesine ve saklanmasına açık rızamı veriyorum.
+                Kişisel verilerimin Kampüs Öncüsü Programı başvurusunun değerlendirilmesi amacıyla OLMAS Systems tarafından işlenmesine açık rızamı veriyorum.
               </label>
               <label class="checkbox-label">
                 <input type="checkbox" id="terms-consent" name="terms-consent" />
@@ -764,7 +464,6 @@
         </form>
       </div>
 
-      <!-- SUCCESS STATE -->
       <div class="success-state" id="success-state">
         <div class="success-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -783,18 +482,31 @@
   <footer>
     <div class="footer-left">takıl</div>
     <div class="footer-links">
-      <a href="https://takiltr.com/privacy-policy.html">Gizlilik Politikası</a>
-      <a href="https://takiltr.com/terms.html">Kullanım Koşulları</a>
-      <a href="mailto:destek@takiltr.com">İletişim</a>
+      <a href="privacy-policy.html">Gizlilik Politikası</a>
+      <a href="terms.html">Kullanım Koşulları</a>
+      <a href="mailto:takil.destek@gmail.com">İletişim</a>
     </div>
     <div class="footer-copy">© 2025–2026 OLMAS Systems · Tüm hakları saklıdır.</div>
   </footer>
 
   <script>
-    // ─── FORMSPREE ───────────────────────────────────────────────
-    const FORMSPREE_ID = 'mvzlkeae';
-    // ─────────────────────────────────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMenu();
+    });
 
+    const FORMSPREE_ID = 'mvzlkeae';
     const form = document.getElementById('ambassador-form');
     const submitBtn = form.querySelector('button[type="submit"]');
 
@@ -809,7 +521,6 @@
 
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
-
       const checks = [
         validateField('ad', 'ad-error', v => v.length >= 2),
         validateField('soyad', 'soyad-error', v => v.length >= 2),
@@ -818,42 +529,34 @@
         validateField('fakulte', 'fakulte-error', v => v !== ''),
         validateField('bolum', 'bolum-error', v => v.length >= 2),
       ];
-
       const kvkk = document.getElementById('kvkk-consent').checked;
       const terms = document.getElementById('terms-consent').checked;
       const consentErr = document.getElementById('consent-error');
       const consentOk = kvkk && terms;
       consentErr.style.display = consentOk ? 'none' : 'block';
-
       if (!checks.every(Boolean) || !consentOk) return;
 
-      // Send to Formspree
       submitBtn.disabled = true;
       submitBtn.textContent = 'Gönderiliyor…';
-
       const data = {
-        Ad:              document.getElementById('ad').value.trim(),
-        Soyad:           document.getElementById('soyad').value.trim(),
-        'Öğrenci No':    document.getElementById('ogrenci-no').value.trim(),
-        Telefon:         document.getElementById('telefon').value.trim(),
-        Fakülte:         document.getElementById('fakulte').value,
-        Bölüm:           document.getElementById('bolum').value.trim(),
+        Ad: document.getElementById('ad').value.trim(),
+        Soyad: document.getElementById('soyad').value.trim(),
+        'Öğrenci No': document.getElementById('ogrenci-no').value.trim(),
+        Telefon: document.getElementById('telefon').value.trim(),
+        Fakülte: document.getElementById('fakulte').value,
+        Bölüm: document.getElementById('bolum').value.trim(),
       };
-
       try {
         const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
           method: 'POST',
           headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
         });
-
         if (res.ok) {
           document.getElementById('form-container').style.display = 'none';
           document.getElementById('success-state').classList.add('visible');
           window.scrollTo({ top: document.getElementById('katil').offsetTop - 80, behavior: 'smooth' });
-        } else {
-          throw new Error('Formspree error');
-        }
+        } else { throw new Error(); }
       } catch {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Başvuruyu Gönder';
@@ -865,13 +568,10 @@
       document.getElementById(id).addEventListener('blur', () =>
         validateField(id, id + '-error', v => v.length >= 2));
     });
-
     document.getElementById('ogrenci-no').addEventListener('blur', () =>
       validateField('ogrenci-no', 'ogrenci-no-error', v => /^\d{6,12}$/.test(v)));
-
     document.getElementById('telefon').addEventListener('blur', () =>
       validateField('telefon', 'telefon-error', v => /^(\+90|0)?[5][0-9]{9}$/.test(v.replace(/\s/g,''))));
-
     document.getElementById('fakulte').addEventListener('change', () =>
       validateField('fakulte', 'fakulte-error', v => v !== ''));
   </script>
