@@ -4,482 +4,495 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>takıl — Kampüste gerçek şeyler yap</title>
-<link rel="icon" type="image/png" href="/favicon.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="/mb-favicon.png" />
-<link rel="icon" type="image/png" sizes="192x192" href="/mb-favicon.png" />
-<link rel="icon" type="image/png" sizes="512x512" href="/mb-favicon.png" />
-<meta name="theme-color" content="#ffffff" />
+  <meta name="description" content="takıl, Eskişehir Osmangazi Üniversitesi öğrencileri için sosyal etkinlik platformu." />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/mb-favicon.png" />
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="takil.css" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* ── ROOT ───────────────────────────────────────────── */
     :root {
-      --bg:       #ffffff;
-      --bg-soft:  #f5f5f7;
-      --border:   #d2d2d7;
-      --border-l: #e8e8ed;
-      --text-1:   #1d1d1f;
-      --text-2:   #6e6e73;
-      --text-3:   #aeaeb2;
+      --accent:      #FF4B1F;
+      --accent-soft: rgba(255, 75, 31, 0.08);
+      --accent-mid:  rgba(255, 75, 31, 0.20);
     }
+    body { font-family: 'Bricolage Grotesque', -apple-system, sans-serif; }
 
-    html { scroll-behavior: smooth; }
+    /* ── NAV ─────────────────────────────────────────────── */
+    .nav-logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; }
+    .nav-cta, .nav-links a.nav-cta { background: var(--accent); font-weight: 700; }
+    .nav-cta:hover { opacity: 0.88; }
 
-    body {
-      background: var(--bg);
+    /* Hamburger */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text-1);
+      border-radius: 2px;
+      transition: transform 0.25s, opacity 0.25s;
+      transform-origin: center;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile nav overlay */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: var(--nav-h);
+      left: 0; right: 0; bottom: 0;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 150;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 32px 28px;
+      gap: 4px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -1px;
       color: var(--text-1);
-      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
-      font-size: 15px;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
+      text-decoration: none;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-l);
+      width: 100%;
+      transition: color 0.15s;
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a.mobile-cta {
+      color: var(--accent);
+      font-size: 26px;
     }
 
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 48px;
-      height: 52px;
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: saturate(180%) blur(20px);
-      -webkit-backdrop-filter: saturate(180%) blur(20px);
-      border-bottom: 1px solid rgba(0,0,0,0.08);
-    }
-
-    .nav-logo {
-      font-size: 18px; font-weight: 600; letter-spacing: -0.5px;
-      color: var(--text-1); text-decoration: none;
-    }
-
-    .nav-links { display: flex; gap: 28px; }
-
-    .nav-links a {
-      font-size: 13px; color: var(--text-2);
-      text-decoration: none; transition: color 0.15s;
-    }
-
-    .nav-links a:hover { color: var(--text-1); }
-
-    .nav-links a.nav-highlight {
-      color: var(--text-1); font-weight: 500;
-    }
-
-    /* HERO */
-    .hero {
+    /* ── HERO SPLIT ──────────────────────────────────────── */
+    .hero-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       min-height: 100svh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding: 100px 24px 80px;
     }
 
-    .hero-tag {
-      display: inline-block;
-      font-size: 12px; font-weight: 500; letter-spacing: 0.3px;
-      color: var(--text-2);
-      background: var(--bg-soft);
-      border: 1px solid var(--border-l);
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: calc(var(--nav-h) + 80px) 72px 80px 72px;
+      max-width: 560px;
+      margin-left: auto;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border: 1px solid var(--accent-mid);
       border-radius: 100px;
       padding: 5px 14px;
+      margin-bottom: 28px;
+      width: fit-content;
+    }
+
+    .hero-left h1 {
+      font-size: clamp(52px, 6vw, 88px);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -3px;
+      color: var(--text-1);
+      margin-bottom: 28px;
+    }
+    .hero-left h1 .accent { color: var(--accent); }
+    .hero-left h1 em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--text-2);
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      color: var(--text-2);
+      line-height: 1.65;
+      max-width: 380px;
       margin-bottom: 36px;
+      font-weight: 400;
     }
 
-    .hero h1 {
-      font-size: clamp(48px, 7vw, 88px);
-      font-weight: 700; line-height: 1.04;
-      letter-spacing: -2.5px;
-      color: var(--text-1); max-width: 820px;
-    }
-
-    .hero h1 em { font-style: normal; color: var(--text-2); }
-
-    .hero-sub {
-      margin-top: 24px; font-size: 17px; font-weight: 400;
-      color: var(--text-2); max-width: 480px; line-height: 1.6;
-    }
-
-    .hero-cta {
-      margin-top: 40px;
-      display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
-    }
+    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
     .btn-primary {
-      display: inline-flex; align-items: center;
-      background: var(--text-1); color: #fff;
-      font-size: 14px; font-weight: 500;
-      padding: 12px 24px; border-radius: 980px;
-      text-decoration: none; transition: opacity 0.15s;
+      background: var(--accent);
+      font-weight: 700;
+      letter-spacing: -0.2px;
     }
 
-    .btn-primary:hover { opacity: 0.82; }
-
-    .btn-ghost {
-      display: inline-flex; align-items: center;
-      background: transparent; color: var(--text-1);
-      font-size: 14px; font-weight: 500;
-      padding: 12px 24px; border-radius: 980px;
-      text-decoration: none;
-      border: 1px solid var(--border);
-      transition: border-color 0.15s;
-    }
-
-    .btn-ghost:hover { border-color: var(--text-2); }
-
-    /* LAYOUT */
-    .divider {
-      border: none; border-top: 1px solid var(--border-l);
-      max-width: 960px; margin: 0 auto;
-    }
-
-    section { max-width: 960px; margin: 0 auto; padding: 96px 24px; }
-
-    .section-label {
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 1.2px; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 14px;
-    }
-
-    .section-title {
-      font-size: clamp(32px, 4vw, 48px);
-      font-weight: 700; line-height: 1.08;
-      letter-spacing: -1.2px;
-      color: var(--text-1); margin-bottom: 20px;
-    }
-
-    .section-title em { font-style: normal; color: var(--text-2); }
-
-    .section-body {
-      font-size: 16px; color: var(--text-2);
-      max-width: 520px; line-height: 1.7;
-    }
-
-    /* MISSION */
-    .mission {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 80px; align-items: center;
-    }
-
-    .mission-visual { position: relative; height: 320px; }
-
-    .mission-card {
+    /* logo badge overlay on photo */
+    .hero-logo-badge {
       position: absolute;
-      background: var(--bg);
-      border: 1px solid var(--border-l);
-      border-radius: 18px; padding: 22px;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+      top: 20px;
+      left: 20px;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18), 0 0 0 1.5px rgba(255,255,255,0.55);
+    }
+    .hero-logo-badge img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 0;
     }
 
-    .mission-card-main { width: 240px; top: 0; left: 0; animation: float 6s ease-in-out infinite; }
-    .mission-card-sm   { width: 188px; bottom: 20px; right: 0; animation: float 6s ease-in-out 2s infinite; }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-10px); }
+    /* right photo panel */
+    .hero-photo {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0 0 0 40px;
+    }
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      display: block;
+    }
+    .hero-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(255,255,255,0.12) 0%,
+        transparent 40%
+      );
     }
 
-    .card-label {
-      font-size: 10px; font-weight: 600;
-      letter-spacing: 1px; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 10px;
+    /* ── MISSION ─────────────────────────────────────────── */
+    .mission-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .mission-statement {
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+      color: var(--text-1);
+      margin-top: 20px;
+      margin-bottom: 32px;
+    }
+    .mission-statement em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--text-2);
+    }
+    .mission-body {
+      font-size: 16px;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin-bottom: 16px;
     }
 
-    .card-title { font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 5px; }
-    .card-meta  { font-size: 12px; color: var(--text-2); }
-
-    .card-score {
-      display: inline-flex; align-items: center; gap: 5px;
-      background: var(--bg-soft); border: 1px solid var(--border-l);
-      border-radius: 100px; padding: 3px 10px;
-      font-size: 11px; font-weight: 600; color: var(--text-1);
-      margin-top: 12px;
+    /* Phone mockup */
+    .phone-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-
-    .card-pill {
-      display: inline-block;
-      background: var(--bg-soft); border: 1px solid var(--border-l);
-      border-radius: 6px; padding: 4px 10px;
-      font-size: 11px; color: var(--text-2);
-      margin: 3px 3px 0 0;
+    .phone-frame {
+      position: relative;
+      width: 248px;
+      background: #111;
+      border-radius: 44px;
+      padding: 12px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.08),
+        0 0 0 2px #1a1a1a,
+        0 32px 80px rgba(0,0,0,0.35),
+        0 8px 20px rgba(0,0,0,0.15);
+      transform: rotate(2deg);
     }
-
-    /* STATS */
-    .stats-row {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      border: 1px solid var(--border-l);
-      border-radius: 18px; overflow: hidden; margin-top: 80px;
+    .phone-screen {
+      width: 100%;
+      border-radius: 34px;
+      display: block;
+      overflow: hidden;
     }
-
-    .stat-item {
-      padding: 40px 32px; text-align: center;
-      border-right: 1px solid var(--border-l);
+    .phone-screen img {
+      width: 100%;
+      display: block;
+      border-radius: 34px;
     }
+    .phone-side-btn {
+      position: absolute;
+      background: #1a1a1a;
+      border-radius: 3px;
+    }
+    .phone-side-btn.vol-up  { width: 3px; height: 28px; left: -3px; top: 88px; }
+    .phone-side-btn.vol-dn  { width: 3px; height: 28px; left: -3px; top: 124px; }
+    .phone-side-btn.power   { width: 3px; height: 40px; right: -3px; top: 104px; }
 
-    .stat-item:last-child { border-right: none; }
-
+    /* ── STATS ───────────────────────────────────────────── */
+    .stat-item { text-align: left; padding: 48px 36px; }
     .stat-num {
-      font-size: 52px; font-weight: 700; line-height: 1;
-      color: var(--text-1); letter-spacing: -2px;
+      font-size: 60px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -2.5px;
+    }
+    .stat-num.hot { color: var(--accent); }
+    .stat-desc {
+      font-size: 13px;
+      color: var(--text-2);
+      margin-top: 10px;
+      line-height: 1.5;
     }
 
-    .stat-desc { font-size: 13px; color: var(--text-2); margin-top: 8px; }
-
-    /* FEATURES */
-    .features-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      border: 1px solid var(--border-l);
-      border-radius: 18px; overflow: hidden; margin-top: 48px;
+    /* ── MANIFESTO ───────────────────────────────────────── */
+    .manifesto-block {
+      background: #0f0f0f;
+      padding: 104px 24px;
     }
-
-    .feature-item {
-      padding: 36px 28px;
-      border-right: 1px solid var(--border-l);
-      border-bottom: 1px solid var(--border-l);
-      transition: background 0.15s;
-    }
-
-    .feature-item:hover { background: var(--bg-soft); }
-    .feature-item:nth-child(3n)   { border-right: none; }
-    .feature-item:nth-child(n+4)  { border-bottom: none; }
-
-    .feature-icon { display: block; margin-bottom: 18px; color: var(--text-3); }
-
-    .feature-title { font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 8px; }
-    .feature-desc  { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-
-    /* FOUNDER */
-    .founder-wrap {
-      display: grid; grid-template-columns: 1fr 1.7fr;
-      gap: 72px; align-items: start;
-    }
-
-    .founder-card {
-      background: var(--bg-soft);
-      border: 1px solid var(--border-l);
-      border-radius: 20px; padding: 36px 28px;
-    }
-
-    /* Avatar: both founder and company logo use the same circle pattern */
-    .founder-avatar {
-      width: 64px; height: 64px; border-radius: 50%;
-      background: var(--text-1);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px; font-weight: 700; color: #fff;
-      margin-bottom: 18px; letter-spacing: -1px;
-      overflow: hidden;
-    }
-
-    .founder-avatar img {
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: center;
-      border-radius: 50%;
+    .manifesto-inner { max-width: var(--max-w); margin: 0 auto; }
+    .manifesto-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 36px;
       display: block;
     }
-
-    .founder-name { font-size: 18px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
-    .founder-role { font-size: 12px; color: var(--text-2); margin-bottom: 18px; }
-
-    .founder-bio {
-      font-size: 13px; color: var(--text-2);
-      line-height: 1.7; margin-bottom: 22px;
+    .manifesto-headline {
+      font-size: clamp(52px, 7.5vw, 104px);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -3.5px;
+      color: #fff;
+      margin-bottom: 48px;
+    }
+    .manifesto-headline .dim { color: rgba(255,255,255,0.22); }
+    .manifesto-sub {
+      font-size: 16px;
+      color: rgba(255,255,255,0.4);
+      max-width: 460px;
+      line-height: 1.7;
+      font-weight: 400;
     }
 
-    .founder-tags { display: flex; flex-wrap: wrap; gap: 7px; }
-
-    .founder-tag {
-      background: var(--bg); border: 1px solid var(--border-l);
-      border-radius: 6px; padding: 4px 10px;
-      font-size: 11px; color: var(--text-2); font-weight: 500;
+    /* ── FEATURES ────────────────────────────────────────── */
+    .features-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: end;
+      margin-bottom: 56px;
     }
+    .section-title { font-weight: 800; letter-spacing: -2px; }
+    .section-title em { font-style: italic; font-weight: 300; color: var(--text-2); }
+    .features-header-right p { font-size: 16px; color: var(--text-2); line-height: 1.7; }
+    .features-lines { border-top: 1px solid var(--border-l); }
+    .feature-line {
+      display: grid;
+      grid-template-columns: 52px 1fr 1.2fr;
+      gap: 32px;
+      align-items: start;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border-l);
+      cursor: default;
+    }
+    .feature-line-num {
+      font-size: 12px; font-weight: 700; color: var(--text-3);
+      padding-top: 3px; letter-spacing: 0.5px; transition: color 0.15s;
+    }
+    .feature-line-title {
+      font-size: 17px; font-weight: 700; color: var(--text-1);
+      letter-spacing: -0.3px; line-height: 1.3; transition: color 0.15s;
+    }
+    .feature-line-desc { font-size: 14px; color: var(--text-2); line-height: 1.65; }
+    .feature-line:hover .feature-line-num   { color: var(--accent); }
+    .feature-line:hover .feature-line-title { color: var(--accent); }
 
+    /* ── FOUNDER ─────────────────────────────────────────── */
+    .founder-name { font-weight: 800; font-size: 20px; letter-spacing: -0.3px; }
     .founder-story h3 {
-      font-size: 26px; font-weight: 700; letter-spacing: -0.5px;
-      color: var(--text-1); line-height: 1.25; margin-bottom: 22px;
+      font-size: clamp(22px, 2.5vw, 30px); font-weight: 800;
+      letter-spacing: -0.8px; color: var(--text-1); line-height: 1.2; margin-bottom: 24px;
     }
+    .founder-story p { font-size: 15px; color: var(--text-2); line-height: 1.75; margin-bottom: 16px; }
 
-    .founder-story p {
-      font-size: 15px; color: var(--text-2);
-      line-height: 1.75; margin-bottom: 16px;
+    /* ── CONTACT ─────────────────────────────────────────── */
+    .contact-header h2 {
+      font-size: clamp(32px, 4vw, 52px); font-weight: 800;
+      letter-spacing: -2px; color: var(--text-1); line-height: 1.05;
+      margin-top: 16px; margin-bottom: 16px;
     }
+    .contact-header h2 em { font-style: italic; font-weight: 300; color: var(--text-2); }
+    .contact-header p { font-size: 16px; color: var(--text-2); line-height: 1.65; }
+    .contact-value:hover { color: var(--accent) !important; text-decoration: none; }
 
-    .founder-story p:last-child { margin-bottom: 0; }
-
-    /* COMPANY */
-    .company-wrap {
-      background: var(--bg-soft); border: 1px solid var(--border-l);
-      border-radius: 20px; padding: 56px;
-    }
-
-    .company-header {
-      display: flex; align-items: center; gap: 18px;
-      margin-bottom: 40px; padding-bottom: 40px;
-      border-bottom: 1px solid var(--border-l);
-    }
-
-    .company-logo {
-      width: 52px; height: 52px;
-      background: var(--text-1); border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px; font-weight: 700; color: #fff;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-
-    .company-logo img {
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: center;
-      display: block;
-    }
-
-    .company-name    { font-size: 17px; font-weight: 600; color: var(--text-1); }
-    .company-tagline { font-size: 12px; color: var(--text-3); margin-top: 2px; }
-
-    .company-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-
-    .company-item-label {
-      font-size: 10px; font-weight: 600;
-      letter-spacing: 1px; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 6px;
-    }
-
-    .company-item-value { font-size: 14px; color: var(--text-1); line-height: 1.55; }
-
-    /* CONTACT */
-    .contact-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      border: 1px solid var(--border-l);
-      border-radius: 18px; overflow: hidden; margin-top: 48px;
-    }
-
-    .contact-item {
-      padding: 32px 26px;
-      border-right: 1px solid var(--border-l);
-      transition: background 0.15s;
-    }
-
-    .contact-item:last-child { border-right: none; }
-    .contact-item:hover { background: var(--bg-soft); }
-
-    .contact-type {
-      font-size: 10px; font-weight: 600;
-      letter-spacing: 1px; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 10px;
-    }
-
-    .contact-value {
-      font-size: 14px; font-weight: 500;
-      color: var(--text-1); text-decoration: none; word-break: break-all;
-    }
-
-    .contact-value:hover { text-decoration: underline; }
-    .contact-desc { font-size: 12px; color: var(--text-3); margin-top: 5px; }
-
-    /* FOOTER */
-    footer {
-      max-width: 960px; margin: 0 auto;
-      padding: 40px 24px;
-      display: flex; align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap; gap: 14px;
-    }
-
-    .footer-left { font-size: 15px; font-weight: 600; color: var(--text-1); }
-    .footer-links { display: flex; gap: 20px; }
-
-    .footer-links a {
-      font-size: 12px; color: var(--text-3);
-      text-decoration: none; transition: color 0.15s;
-    }
-
-    .footer-links a:hover { color: var(--text-2); }
-    .footer-copy { font-size: 11px; color: var(--text-3); width: 100%; }
-
-    /* RESPONSIVE */
+    /* ── RESPONSIVE ──────────────────────────────────────── */
     @media (max-width: 768px) {
-      nav { padding: 0 20px; }
+      /* nav */
       .nav-links { display: none; }
-      section { padding: 64px 20px; }
-      .mission { grid-template-columns: 1fr; }
-      .mission-visual { display: none; }
-      .stats-row { grid-template-columns: 1fr; }
-      .stat-item { border-right: none; border-bottom: 1px solid var(--border-l); }
-      .stat-item:last-child { border-bottom: none; }
-      .features-grid { grid-template-columns: 1fr; }
-      .feature-item { border-right: none; border-bottom: 1px solid var(--border-l); }
-      .feature-item:last-child { border-bottom: none; }
-      .founder-wrap { grid-template-columns: 1fr; gap: 40px; }
-      .company-wrap { padding: 28px 20px; }
-      .company-grid { grid-template-columns: 1fr; gap: 24px; }
-      .contact-grid { grid-template-columns: 1fr; }
-      .contact-item { border-right: none; border-bottom: 1px solid var(--border-l); }
-      .contact-item:last-child { border-bottom: none; }
-      footer { flex-direction: column; align-items: flex-start; }
+      .nav-hamburger { display: flex; }
+      nav { padding: 0 20px; }
+
+      /* hero */
+      .hero-split {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        padding-top: var(--nav-h);
+      }
+      .hero-photo {
+        height: 55vw;
+        order: -1;
+        border-radius: 0 0 0 28px;
+      }
+      .hero-left {
+        padding: 36px 24px 56px;
+        max-width: 100%;
+        margin-left: 0;
+      }
+      .hero-left h1 { font-size: clamp(44px, 11vw, 64px); letter-spacing: -2px; }
+
+      /* mission */
+      .mission-layout { grid-template-columns: 1fr; gap: 40px; }
+      .phone-wrap { justify-content: center; }
+      .phone-frame { width: 200px; }
+
+      /* features */
+      .features-header { grid-template-columns: 1fr; gap: 20px; }
+      .feature-line { grid-template-columns: 40px 1fr; gap: 16px; }
+      .feature-line-desc { display: none; }
+
+      /* manifesto */
+      .manifesto-block { padding: 72px 20px; }
+      .manifesto-headline { letter-spacing: -2px; }
+
+      .stat-item { padding: 32px 20px; }
+      .stat-num { font-size: 44px; }
     }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .hero-left { padding: calc(var(--nav-h) + 56px) 40px 56px 40px; max-width: 480px; }
+      .hero-left h1 { font-size: clamp(48px, 5.5vw, 72px); }
+    }
+
   </style>
 </head>
 <body>
 
+  <!-- NAV -->
   <nav>
-    <a class="nav-logo" href="#">takıl</a>
+    <a class="nav-logo" href="about.html">takıl</a>
     <div class="nav-links">
-      <a href="#mission">Misyon</a>
-      <a href="#features">Özellikler</a>
-      <a href="#founder">Kurucu</a>
+      <a href="how-it-works.html">Nasıl Çalışır?</a>
       <a href="#contact">İletişim</a>
-      <a href="ambassadors.html" class="nav-highlight">Kampüs Öncüsü →</a>
+      <a href="ambassadors.html" class="nav-cta">Kampüs Öncüsü →</a>
     </div>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
-  <div class="hero">
-    <div class="hero-tag">OLMAS Systems</div>
-    <h1>Kampüste<br><em>gerçek bağlantılar</em><br>kuruyoruz.</h1>
-    <p class="hero-sub">
-      takıl, Eskişehir Osmangazi Üniversitesi öğrencileri için tasarlanmış
-      bir sosyal etkinlik platformudur. Etkinlik bul, katıl, organize et.
-    </p>
-    <div class="hero-cta">
-      <a href="#mission" class="btn-primary">Daha Fazla Keşfet</a>
-      <a href="https://takiltr.com/how-it-works.html" class="btn-ghost">Nasıl Çalışır? →</a>
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="how-it-works.html" onclick="closeMenu()">Nasıl Çalışır?</a>
+    <a href="ambassadors.html" onclick="closeMenu()">Kampüs Öncüsü</a>
+    <a href="#contact" onclick="closeMenu()">İletişim</a>
+    <a href="privacy-policy.html" onclick="closeMenu()">Gizlilik Politikası</a>
+    <a href="terms.html" onclick="closeMenu()">Kullanım Koşulları</a>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero-split">
+    <div class="hero-left">
+      <span class="hero-kicker">OGÜ · Eskişehir</span>
+      <h1>Kampüste<br><em>gerçek</em><br><span class="accent">bağlantılar.</span></h1>
+      <p class="hero-desc">
+        Etkinlik bul, katıl, organize et.
+        Gürültüsüz. Reklamsız. Gerçek insanlarla,
+        OGÜ'ye özel.
+      </p>
+      <div class="hero-actions">
+        <a href="#mission" class="btn-primary">Keşfet</a>
+        <a href="how-it-works.html" class="btn-ghost">Nasıl çalışır?</a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <!-- Replace with your own campus photo if preferred -->
+      <img
+        src="Img/image1.jpg"
+        alt="OGÜ kampüs öğrencileri"
+        loading="eager"
+      />
+      <div class="hero-photo-overlay"></div>
     </div>
   </div>
 
-  <hr class="divider" />
-
+  <!-- MISSION -->
   <section id="mission">
-    <div class="mission">
-      <div class="mission-text">
-        <div class="section-label">Misyonumuz</div>
-        <h2 class="section-title">Üniversite<br>hayatını <em>anlamlı</em><br>kılmak.</h2>
-        <p class="section-body">
-          Üniversite yılları, hayatın en önemli dönemlerinden biri. Ancak doğru insanları bulmak,
-          etkinlikleri keşfetmek ve güvenilir bir topluluk inşa etmek her zaman kolay değil.
-          takıl tam da bu boşluğu doldurmak için var.
+    <div class="mission-layout">
+      <div>
+        <span class="label">Misyon</span>
+        <h2 class="mission-statement">Üniversite hayatını<br><em>anlamlı</em> kılmak.</h2>
+        <p class="mission-body">
+          Üniversite yılları, hayatın en önemli dönemlerinden biri.
+          Ancak doğru insanları bulmak, etkinlikleri keşfetmek ve
+          güvenilir bir topluluk inşa etmek her zaman kolay değil.
         </p>
-        <p class="section-body" style="margin-top:16px;">
-          Katılım puanı sistemi, güvenilir bir topluluk ortamı yaratır.
-          Her etkinlik, yeni bir bağlantı fırsatıdır.
+        <p class="mission-body">
+          takıl tam da bu boşluğu doldurmak için var.
+          Katılım puanı sistemi güvenilir bir ortam yaratır —
+          her etkinlik, yeni bir bağlantı fırsatına dönüşür.
         </p>
       </div>
-      <div class="mission-visual">
-        <div class="mission-card mission-card-main">
-          <div class="card-label">Aktif Etkinlik</div>
-          <div class="card-title">Kütüphane Çalışma Grubu</div>
-          <div class="card-meta">OGÜ Merkez Kütüphane · 3 yer kaldı</div>
-          <div class="card-score">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            8.7/10 organizatör
+      <div class="phone-wrap">
+        <div class="phone-frame">
+          <div class="phone-side-btn vol-up"></div>
+          <div class="phone-side-btn vol-dn"></div>
+          <div class="phone-side-btn power"></div>
+          <div class="phone-screen">
+            <img src="img/image2.png" alt="takıl uygulama ekranı" />
           </div>
-        </div>
-        <div class="mission-card mission-card-sm">
-          <div class="card-label">İlgi Alanları</div>
-          <span class="card-pill">Çalışma</span>
-          <span class="card-pill">Teknoloji</span>
-          <span class="card-pill">Spor</span>
-          <span class="card-pill">Müzik</span>
         </div>
       </div>
     </div>
   </section>
 
-  <div style="max-width:960px; margin:0 auto; padding:0 24px;">
+  <hr class="divider" />
+
+  <!-- STATS -->
+  <section style="padding-top: 80px; padding-bottom: 80px;">
     <div class="stats-row">
       <div class="stat-item">
         <div class="stat-num">OGÜ</div>
@@ -490,70 +503,92 @@
         <div class="stat-desc">Farklı etkinlik kategorisi</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">0</div>
+        <div class="stat-num hot">0</div>
         <div class="stat-desc">Reklam. Hiç. Asla.</div>
-      </div>
-    </div>
-  </div>
-
-  <hr class="divider" style="margin-top:80px;" />
-
-  <section id="features">
-    <div class="section-label">Platform</div>
-    <h2 class="section-title">Neden <em>takıl?</em></h2>
-    <div class="features-grid">
-      <div class="feature-item">
-        <span class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
-        <div class="feature-title">Güven Sistemi</div>
-        <div class="feature-desc">Katılım puanı sistemi ile güvenilir kullanıcıları ön plana çıkarıyoruz. Organizatör değerlendirmeleri şeffaf ve manipülasyona kapalı.</div>
-      </div>
-      <div class="feature-item">
-        <span class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
-        <div class="feature-title">OGÜ'ye Özel</div>
-        <div class="feature-desc">Yalnızca geçerli OGÜ e-posta adresiyle kayıt. Kapalı topluluk yapısı, güvenli bir ortam sağlar.</div>
-      </div>
-      <div class="feature-item">
-        <span class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
-        <div class="feature-title">Anlık Duyurular</div>
-        <div class="feature-desc">Organizatörler katılımcılara doğrudan uygulama içi duyuru yapabilir. Kimse bir şeyi kaçırmaz.</div>
-      </div>
-      <div class="feature-item">
-        <span class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></span>
-        <div class="feature-title">Engelle &amp; Şikayet</div>
-        <div class="feature-desc">Rahatsız edici kullanıcıları anında engelleyebilir, şikayet edebilirsin. Ekibimiz 24 saat içinde inceler.</div>
-      </div>
-      <div class="feature-item">
-        <span class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
-        <div class="feature-title">Karanlık &amp; Açık Tema</div>
-        <div class="feature-desc">Göz yormayan arayüz tasarımı. Gece ya da gündüz, tercihine göre.</div>
-      </div>
-      <div class="feature-item">
-        <span class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
-        <div class="feature-title">Gizlilik Önce</div>
-        <div class="feature-desc">Verilerini asla satmıyoruz, reklam şirketleriyle paylaşmıyoruz. KVKK uyumlu altyapı.</div>
       </div>
     </div>
   </section>
 
+  <!-- MANIFESTO -->
+  <div class="manifesto-block">
+    <div class="manifesto-inner">
+      <span class="manifesto-tag">Neden Farklıyız</span>
+      <p class="manifesto-headline">
+        Sıfır reklam.<br>
+        <span class="dim">Sıfır veri satışı.</span><br>
+        <span class="dim">Sıfır saçmalık.</span>
+      </p>
+      <p class="manifesto-sub">
+        takıl, sade ve güvenilir bir deneyim sunmak üzere tasarlandı.
+        Her detay, kullanıcıların rahat ve sorunsuz bir şekilde kullanabilmesi için geliştirildi.
+      </p>
+    </div>
+  </div>
+
   <hr class="divider" />
 
+  <!-- FEATURES -->
+  <section id="features" style="padding-top: 96px;">
+    <div class="features-header">
+      <div class="features-header-left">
+        <span class="label">Platform</span>
+        <h2 class="section-title" style="margin-top:16px;">Neden <em>takıl?</em></h2>
+      </div>
+      <div class="features-header-right">
+        <p>Güven, gizlilik ve sadelik önce. Gürültülü sosyal medya değil, kampüse özel gerçek bir topluluk.</p>
+      </div>
+    </div>
+    <div class="features-lines">
+      <div class="feature-line">
+        <div class="feature-line-num">01</div>
+        <div class="feature-line-title">Güven Sistemi</div>
+        <div class="feature-line-desc">Katılım puanı ile güvenilir kullanıcılar öne çıkar. Organizatör değerlendirmeleri şeffaf ve manipülasyona kapalıdır.</div>
+      </div>
+      <div class="feature-line">
+        <div class="feature-line-num">02</div>
+        <div class="feature-line-title">OGÜ'ye Özel</div>
+        <div class="feature-line-desc">Yalnızca geçerli OGÜ e-postasıyla kayıt olunabilir. Kapalı topluluk yapısı güvenli bir ortam sağlar.</div>
+      </div>
+      <div class="feature-line">
+        <div class="feature-line-num">03</div>
+        <div class="feature-line-title">Anlık Duyurular</div>
+        <div class="feature-line-desc">Organizatörler katılımcılara doğrudan bildirim gönderebilir. Kimse bir şeyi kaçırmaz.</div>
+      </div>
+      <div class="feature-line">
+        <div class="feature-line-num">04</div>
+        <div class="feature-line-title">Gizlilik Önce</div>
+        <div class="feature-line-desc">Veriler asla satılmaz, reklam şirketleriyle paylaşılmaz. KVKK uyumlu altyapı, AB sunucuları.</div>
+      </div>
+      <div class="feature-line">
+        <div class="feature-line-num">05</div>
+        <div class="feature-line-title">Engelle &amp; Şikayet</div>
+        <div class="feature-line-desc">Rahatsız edici kullanıcıları anında engelle. Ekip 24 saat içinde inceler ve aksiyon alır.</div>
+      </div>
+      <div class="feature-line">
+        <div class="feature-line-num">06</div>
+        <div class="feature-line-title">Karanlık &amp; Açık Tema</div>
+        <div class="feature-line-desc">Göz yormayan arayüz. Gece ya da gündüz, tercihine göre — ve sistem temasını takip eder.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" style="margin-top: 80px;" />
+
+  <!-- FOUNDER -->
   <section id="founder">
-    <div class="section-label">Kurucu</div>
+    <span class="label" style="display:block; margin-bottom:48px;">Kurucu</span>
     <div class="founder-wrap">
       <div>
         <div class="founder-card">
           <div class="founder-avatar">
-            <img
-              src="https://raw.githubusercontent.com/jawidolmas/takil-legal/refs/heads/main/Image2.jpg"
-              alt="Jawid OLMAS"
-            />
+            <img src="https://raw.githubusercontent.com/jawidolmas/takil-legal/refs/heads/main/Image2.jpg" alt="Jawid OLMAS" />
           </div>
           <div class="founder-name">Jawid OLMAS</div>
           <div class="founder-role">Kurucu · OLMAS Systems</div>
           <div class="founder-bio">
             Eskişehir Osmangazi Üniversitesi öğrencisi. takıl'ı sıfırdan tasarlayıp geliştirdi —
-            tasarımdan veritabanına, güvenlik mimarisinden App Store gönderim hazırlığına kadar.
-            <a href="https://takiltr.com/founders.html">Daha fazlası için</a>
+            tasarımdan veritabanına, güvenlik mimarisinden App Store hazırlığına kadar.
+            <a href="founders.html">Daha fazlası →</a>
           </div>
           <div class="founder-tags">
             <span class="founder-tag">React Native</span>
@@ -567,35 +602,21 @@
       </div>
       <div class="founder-story">
         <h3>"Kampüste doğru insanı bulmak zorunda olmamalıydı."</h3>
-        <p>
-          takıl fikri, bir üniversite öğrencisinin yaşadığı en basit hayal kırıklığından doğdu:
-          çalışma arkadaşı bulmak, birlikte spor yapmak ya da yeni insanlarla tanışmak için
-          hiçbir güvenilir platform yoktu.
-        </p>
-        <p>
-          Sosyal medya çok gürültülü, genel etkinlik uygulamaları ise üniversite hayatının
-          ihtiyaçlarına yabancı. Bir üniversiteye özel, güven odaklı, sade bir platform
-          gerekliydi. takıl tam olarak o platform.
-        </p>
-        <p>
-          OLMAS Systems çatısı altında geliştirilen takıl; güvenlik, gizlilik ve kullanıcı
-          deneyimini ön planda tutarak inşa edildi. Her satır kod, kampüs hayatını gerçekten
-          daha iyi yapmak için yazıldı.
-        </p>
+        <p>takıl fikri, bir üniversite öğrencisinin yaşadığı en basit hayal kırıklığından doğdu: çalışma arkadaşı bulmak, birlikte spor yapmak ya da yeni insanlarla tanışmak için hiçbir güvenilir platform yoktu.</p>
+        <p>Sosyal medya çok gürültülü, genel etkinlik uygulamaları ise üniversite hayatının ihtiyaçlarına yabancı. Bir üniversiteye özel, güven odaklı, sade bir platform gerekliydi. takıl tam olarak o platform.</p>
+        <p>OLMAS Systems çatısı altında geliştirilen takıl; güvenlik, gizlilik ve kullanıcı deneyimini ön planda tutarak inşa edildi. Her satır kod, kampüs hayatını gerçekten daha iyi yapmak için yazıldı.</p>
       </div>
     </div>
   </section>
 
   <hr class="divider" />
 
-  <section>
+  <!-- COMPANY -->
+  <section style="padding-top:80px; padding-bottom:80px;">
     <div class="company-wrap">
       <div class="company-header">
         <div class="company-logo">
-          <img
-            src="https://raw.githubusercontent.com/jawidolmas/takil-legal/refs/heads/main/android-chrome-512x512.png"
-            alt="OLMAS Systems"
-          />
+          <img src="https://raw.githubusercontent.com/jawidolmas/takil-legal/refs/heads/main/android-chrome-512x512.png" alt="OLMAS Systems" />
         </div>
         <div>
           <div class="company-name">OLMAS Systems</div>
@@ -603,72 +624,80 @@
         </div>
       </div>
       <div class="company-grid">
-        <div>
-          <div class="company-item-label">Kuruluş</div>
-          <div class="company-item-value">2024, Bursa</div>
-        </div>
-        <div>
-          <div class="company-item-label">Odak Alanı</div>
-          <div class="company-item-value">Güvenli ödeme, kimlik, ulusal ve sosyal hizmet altyapısı oluşturmak</div>
-        </div>
-        <div>
-          <div class="company-item-label">Mevcut Ürün</div>
-          <div class="company-item-value">takıl — OGÜ Etkinlik Platformu</div>
-        </div>
-        <div>
-          <div class="company-item-label">Altyapı</div>
-          <div class="company-item-value">Supabase · AWS SYDNEY · PostgreSQL</div>
-        </div>
-        <div>
-          <div class="company-item-label">Veri Politikası</div>
-          <div class="company-item-value">KVKK uyumlu · Reklamsız · Satılmaz</div>
-        </div>
-        <div>
-          <div class="company-item-label">Platform</div>
-          <div class="company-item-value">iOS · Android (App Store &amp; Google Play)</div>
-        </div>
+        <div><div class="company-item-label">Kuruluş</div><div class="company-item-value">2024, Bursa</div></div>
+        <div><div class="company-item-label">Odak Alanı</div><div class="company-item-value">Güvenli ödeme, kimlik, ulusal ve sosyal hizmet altyapısı</div></div>
+        <div><div class="company-item-label">Mevcut Ürün</div><div class="company-item-value">takıl — OGÜ Etkinlik Platformu</div></div>
+        <div><div class="company-item-label">Altyapı</div><div class="company-item-value">Supabase · AWS Frankfurt · PostgreSQL</div></div>
+        <div><div class="company-item-label">Veri Politikası</div><div class="company-item-value">KVKK uyumlu · Reklamsız · Satılmaz</div></div>
+        <div><div class="company-item-label">Platform</div><div class="company-item-value">iOS · Android (App Store &amp; Google Play)</div></div>
       </div>
     </div>
   </section>
 
   <hr class="divider" />
 
+  <!-- CONTACT -->
   <section id="contact">
-    <div class="section-label">İletişim</div>
-    <h2 class="section-title">Bize <em>ulaş.</em></h2>
-    <p class="section-body">
-      Soru, öneri, şikayet veya iş birliği için doğru adrese yazman yeterli.
-    </p>
+    <div class="contact-header">
+      <span class="label" style="display:block; margin-bottom:16px;">İletişim</span>
+      <h2>Bize <em>ulaş.</em></h2>
+      <p>Soru, öneri, şikayet veya iş birliği için doğru adrese yazman yeterli.</p>
+    </div>
     <div class="contact-grid">
       <div class="contact-item">
         <div class="contact-type">Genel Destek</div>
-        <a class="contact-value" href="mailto:destek@takiltr.com">destek@takiltr.com</a>
+        <a class="contact-value" href="mailto:takil.destek@gmail.com">takil.destek@gmail.com</a>
         <div class="contact-desc">Hesap, teknik sorunlar, geri bildirim</div>
       </div>
       <div class="contact-item">
         <div class="contact-type">Şikayet &amp; İtiraz</div>
-        <a class="contact-value" href="mailto:sikayet@takiltr.com">sikayet@takiltr.com</a>
+        <a class="contact-value" href="mailto:takil.destek@gmail.com">takil.destek@gmail.com</a>
         <div class="contact-desc">Puan itirazı, kullanıcı şikayeti</div>
       </div>
       <div class="contact-item">
-        <div class="contact-type">Web</div>
-        <a class="contact-value" href="https://takiltr.com/privacy-policy.html">takiltr.com</a>
-        <div class="contact-desc">Gizlilik politikası &amp; kullanım koşulları</div>
+        <div class="contact-type">Hukuki</div>
+        <a class="contact-value" href="privacy-policy.html">Gizlilik Politikası</a>
+        <div class="contact-desc">KVKK, kullanım koşulları</div>
       </div>
     </div>
   </section>
 
   <hr class="divider" />
+
   <footer>
     <div class="footer-left">takıl</div>
     <div class="footer-links">
       <a href="privacy-policy.html">Gizlilik Politikası</a>
       <a href="terms.html">Kullanım Koşulları</a>
       <a href="ambassadors.html">Kampüs Öncüsü</a>
-      <a href="mailto:destek@takiltr.com">İletişim</a>
+      <a href="mailto:takil.destek@gmail.com">İletişim</a>
     </div>
     <div class="footer-copy">© 2025–2026 OLMAS Systems · Tüm hakları saklıdır.</div>
   </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+        closeMenu();
+      }
+    });
+  </script>
 
 </body>
 </html>
