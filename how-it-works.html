@@ -4,481 +4,293 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>takıl — Nasıl Çalışır?</title>
-<link rel="icon" type="image/png" href="/favicon.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="/mb-favicon.png" />
-<link rel="icon" type="image/png" sizes="192x192" href="/mb-favicon.png" />
-<link rel="icon" type="image/png" sizes="512x512" href="/mb-favicon.png" />
-<meta name="theme-color" content="#ffffff" />
+  <meta name="description" content="takıl nasıl çalışır? Kayıt, keşif, katılım, etkinlik oluşturma ve güven sistemi — beş adımda anlat." />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/mb-favicon.png" />
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="takil.css" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg:       #ffffff;
-      --bg-soft:  #f5f5f7;
-      --border:   #d2d2d7;
-      --border-l: #e8e8ed;
-      --text-1:   #1d1d1f;
-      --text-2:   #6e6e73;
-      --text-3:   #aeaeb2;
+      --accent:      #FF4B1F;
+      --accent-soft: rgba(255, 75, 31, 0.08);
+      --accent-mid:  rgba(255, 75, 31, 0.20);
     }
+    body { font-family: 'Bricolage Grotesque', -apple-system, sans-serif; overflow-x: hidden; }
 
-    html { scroll-behavior: smooth; }
+    /* ── NAV ── */
+    .nav-logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; }
+    .nav-cta, .nav-links a.nav-cta { background: var(--accent); font-weight: 700; }
 
-    body {
-      background: var(--bg);
-      color: var(--text-1);
-      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
-      font-size: 15px;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
+    /* ── HERO ── */
+    .hero-page {
+      padding: calc(var(--nav-h) + 100px) 24px 88px;
+      max-width: var(--max-w); margin: 0 auto;
     }
-
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 48px; height: 52px;
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: saturate(180%) blur(20px);
-      -webkit-backdrop-filter: saturate(180%) blur(20px);
-      border-bottom: 1px solid rgba(0,0,0,0.08);
+    .hero-kicker {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; letter-spacing: 1.8px;
+      text-transform: uppercase; color: var(--accent);
+      background: var(--accent-soft); border: 1px solid var(--accent-mid);
+      border-radius: 100px; padding: 5px 14px;
+      margin-bottom: 28px; width: fit-content;
     }
-
-    .nav-logo {
-      font-size: 18px; font-weight: 600; letter-spacing: -0.5px;
-      color: var(--text-1); text-decoration: none;
+    .hero-page h1 {
+      font-size: clamp(52px, 7vw, 88px);
+      font-weight: 800; line-height: 0.96; letter-spacing: -3px;
+      color: var(--text-1); max-width: 720px; margin-bottom: 24px;
     }
+    .hero-page h1 em { font-style: italic; font-weight: 300; color: var(--text-2); }
+    .hero-page p { font-size: 17px; color: var(--text-2); max-width: 480px; line-height: 1.65; }
 
-    .nav-back {
-      font-size: 13px; color: var(--text-2);
-      text-decoration: none; transition: color 0.15s;
-    }
-
-    .nav-back:hover { color: var(--text-1); }
-
-    /* HERO */
-    .hero {
-      padding: 130px 48px 80px;
-      max-width: 960px; margin: 0 auto;
-      border-bottom: 1px solid var(--border-l);
-    }
-
-    .hero-eyebrow {
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 1.5px; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 18px;
-    }
-
-    .hero h1 {
-      font-size: clamp(48px, 7vw, 80px);
-      font-weight: 700; line-height: 1.04;
-      letter-spacing: -2px; color: var(--text-1);
-      max-width: 700px;
-    }
-
-    .hero h1 em { font-style: normal; color: var(--text-2); }
-
-    .hero-sub {
-      margin-top: 20px; font-size: 17px;
-      color: var(--text-2); max-width: 440px; line-height: 1.6;
-    }
-
-    /* STEPS */
-    .steps-wrapper { max-width: 960px; margin: 0 auto; }
+    /* ── STEPS ── */
+    .steps-wrapper { max-width: var(--max-w); margin: 0 auto; }
 
     .step {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      padding: 80px 48px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; padding: 80px 24px;
       border-bottom: 1px solid var(--border-l);
       align-items: center;
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
     }
-
     .step.visible { opacity: 1; transform: translateY(0); }
     .step:last-child { border-bottom: none; }
-    .step:nth-child(even) .step-left  { order: 2; }
-    .step:nth-child(even) .step-right { order: 1; }
+    .step:nth-child(even) .step-vis  { order: 1; }
+    .step:nth-child(even) .step-text { order: 2; }
 
-    .step-num {
-      font-size: 11px; font-weight: 700;
-      letter-spacing: 1.5px; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 12px;
+    .step-number {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
     }
-
     .step-title {
-      font-size: clamp(28px, 3vw, 38px);
-      font-weight: 700; line-height: 1.1;
-      letter-spacing: -1px; color: var(--text-1);
-      margin-bottom: 18px;
+      font-size: clamp(30px, 3.2vw, 42px); font-weight: 800;
+      line-height: 1.05; letter-spacing: -1.2px; color: var(--text-1); margin-bottom: 18px;
     }
-
-    .step-title em { font-style: normal; color: var(--text-2); }
-
-    .step-body {
-      font-size: 15px; color: var(--text-2); line-height: 1.7;
-    }
-
+    .step-title em { font-style: italic; font-weight: 300; color: var(--text-2); }
+    .step-body { font-size: 15px; color: var(--text-2); line-height: 1.75; }
     .step-body p + p { margin-top: 12px; }
-
     .step-tag {
-      display: inline-block; margin-top: 18px;
-      font-size: 11px; font-weight: 600; letter-spacing: 0.3px;
-      padding: 4px 12px; border-radius: 100px;
-      background: var(--bg-soft); border: 1px solid var(--border-l);
-      color: var(--text-2);
+      display: inline-block; margin-top: 20px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+      padding: 5px 14px; border-radius: 100px;
+      background: var(--accent-soft); border: 1px solid var(--accent-mid);
+      color: var(--accent);
     }
 
-    /* VISUAL PANELS */
+    /* ── VISUAL PANELS ── */
     .step-visual {
-      background: var(--bg-soft);
-      border: 1px solid var(--border-l);
+      background: var(--bg-soft); border: 1px solid var(--border-l);
       border-radius: 20px; padding: 28px;
     }
-
     .vis-label {
-      font-size: 10px; font-weight: 700;
-      letter-spacing: 1.5px; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 16px;
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--text-3); margin-bottom: 16px;
     }
-
-    .vis-sep {
-      width: 100%; height: 1px;
-      background: var(--border-l); margin: 16px 0;
-    }
+    .vis-sep { width: 100%; height: 1px; background: var(--border-l); margin: 16px 0; }
 
     /* OTP */
     .vis-otp { display: flex; gap: 6px; }
-
     .vis-otp-box {
-      width: 34px; height: 42px;
-      border: 1px solid var(--border);
+      width: 34px; height: 44px; border: 1px solid var(--border);
       border-radius: 8px; background: var(--bg);
       display: flex; align-items: center; justify-content: center;
-      font-size: 16px; font-weight: 700; color: var(--text-1);
+      font-size: 16px; font-weight: 800; color: var(--text-1);
     }
-
-    .vis-otp-box.active {
-      border-color: var(--text-1);
-      background: var(--text-1);
-      color: #fff;
-    }
-
-    .vis-otp-hint {
-      font-size: 11px; color: var(--text-3); margin-top: 8px;
-    }
+    .vis-otp-box.filled { border-color: var(--accent); background: var(--accent); color: #fff; }
+    .vis-otp-hint { font-size: 11px; color: var(--text-3); margin-top: 8px; }
 
     /* Profile */
     .vis-avatar {
       width: 48px; height: 48px; border-radius: 50%;
       background: var(--text-1);
       display: flex; align-items: center; justify-content: center;
-      font-size: 17px; font-weight: 700; color: #fff;
-      margin-bottom: 12px;
+      font-size: 17px; font-weight: 800; color: #fff; margin-bottom: 12px;
     }
-
-    .vis-name { font-size: 15px; font-weight: 600; color: var(--text-1); }
+    .vis-name { font-size: 15px; font-weight: 700; color: var(--text-1); }
     .vis-detail { font-size: 12px; color: var(--text-2); margin-top: 2px; }
-
     .vis-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-
     .vis-pill {
-      font-size: 11px; font-weight: 500;
-      padding: 4px 10px; border-radius: 100px;
-      border: 1px solid var(--border-l);
-      color: var(--text-2); background: var(--bg);
+      font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 100px;
+      border: 1px solid var(--border-l); color: var(--text-2); background: var(--bg);
     }
 
     /* Event card */
     .vis-event-card {
-      background: var(--bg);
-      border: 1px solid var(--border-l);
-      border-radius: 14px; overflow: hidden;
-      margin-bottom: 12px;
+      background: var(--bg); border: 1px solid var(--border-l);
+      border-radius: 14px; overflow: hidden; margin-bottom: 12px;
     }
-
     .vis-event-top {
-      background: var(--bg-soft);
-      border-bottom: 1px solid var(--border-l);
-      padding: 10px 14px;
-      display: flex; align-items: center; justify-content: space-between;
+      background: var(--bg-soft); border-bottom: 1px solid var(--border-l);
+      padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;
     }
-
-    .vis-event-cat {
-      font-size: 10px; font-weight: 700;
-      letter-spacing: 1px; text-transform: uppercase;
-      color: var(--text-3);
-    }
-
-    .vis-event-slots {
-      font-size: 11px; font-weight: 500; color: var(--text-2);
-    }
-
+    .vis-event-cat { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); }
+    .vis-event-slots { font-size: 11px; font-weight: 600; color: var(--text-2); }
     .vis-event-body { padding: 14px; }
-
-    .vis-event-title {
-      font-size: 14px; font-weight: 600;
-      color: var(--text-1); margin-bottom: 8px;
-    }
-
-    .vis-event-meta {
-      display: flex; gap: 14px; flex-wrap: wrap;
-    }
-
+    .vis-event-title { font-size: 14px; font-weight: 700; color: var(--text-1); margin-bottom: 8px; }
+    .vis-event-meta { display: flex; gap: 14px; flex-wrap: wrap; }
     .vis-meta-item { font-size: 12px; color: var(--text-2); }
-
     .vis-join-btn {
-      width: 100%; margin-top: 14px;
-      padding: 10px; border-radius: 10px; border: none;
-      background: var(--text-1); color: #fff;
-      font-size: 13px; font-weight: 600; cursor: pointer;
+      width: 100%; margin-top: 14px; padding: 10px; border-radius: 10px; border: none;
+      background: var(--accent); color: #fff;
+      font-size: 13px; font-weight: 700; cursor: default; font-family: inherit;
     }
 
     /* Create form */
     .vis-form { display: flex; flex-direction: column; gap: 8px; }
-
+    .vis-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .vis-field {
-      background: var(--bg);
-      border: 1px solid var(--border-l);
+      background: var(--bg); border: 1px solid var(--border-l);
       border-radius: 8px; padding: 9px 12px;
       display: flex; align-items: center; justify-content: space-between;
     }
-
     .vis-field-label { font-size: 11px; color: var(--text-3); }
-    .vis-field-value { font-size: 12px; font-weight: 500; color: var(--text-1); }
+    .vis-field-value { font-size: 12px; font-weight: 600; color: var(--text-1); }
 
-    /* Score diagram */
+    /* Score */
     .score-diagram { display: flex; flex-direction: column; gap: 14px; }
-
     .score-row { display: flex; align-items: center; gap: 12px; }
-
-    .score-row-label {
-      font-size: 12px; color: var(--text-2);
-      width: 156px; flex-shrink: 0;
-    }
-
-    .score-bar-wrap {
-      flex: 1; height: 4px;
-      background: var(--border-l);
-      border-radius: 100px; overflow: hidden;
-    }
-
-    .score-bar-fill {
-      height: 100%; border-radius: 100px;
-      background: var(--text-1);
-      transition: width 1s ease 0.4s;
-    }
-
+    .score-row-label { font-size: 12px; color: var(--text-2); width: 156px; flex-shrink: 0; }
+    .score-bar-wrap { flex: 1; height: 5px; background: var(--border-l); border-radius: 100px; overflow: hidden; }
+    .score-bar-fill { height: 100%; border-radius: 100px; background: var(--accent); transition: width 1s ease 0.4s; }
     .score-bar-fill.attendance { width: 0%; }
-    .score-bar-fill.quality    { width: 0%; opacity: 0.45; }
-    .step.visible .score-bar-fill.attendance { width: 70%; }
-    .step.visible .score-bar-fill.quality    { width: 30%; }
-
-    .score-row-pct {
-      font-size: 12px; font-weight: 600;
-      color: var(--text-1); width: 32px; text-align: right; flex-shrink: 0;
-    }
-
+    .score-bar-fill.reliability { width: 0%; opacity: 0.4; }
+    .step.visible .score-bar-fill.attendance  { width: 70%; }
+    .step.visible .score-bar-fill.reliability { width: 30%; }
+    .score-row-pct { font-size: 12px; font-weight: 700; color: var(--text-1); width: 32px; text-align: right; flex-shrink: 0; }
     .score-arrow { text-align: center; color: var(--text-3); font-size: 16px; margin: 2px 0; }
-
     .score-final {
       background: var(--bg); border: 1px solid var(--border-l);
       border-radius: 12px; padding: 16px; text-align: center;
     }
-
-    .score-final-num {
-      font-size: 44px; font-weight: 700;
-      letter-spacing: -2px; color: var(--text-1); line-height: 1;
-    }
-
-    .score-final-label {
-      font-size: 11px; color: var(--text-3);
-      text-transform: uppercase; letter-spacing: 1px; margin-top: 4px;
-    }
-
+    .score-final-num { font-size: 48px; font-weight: 800; letter-spacing: -2.5px; color: var(--accent); line-height: 1; }
+    .score-final-label { font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 1px; margin-top: 6px; }
     .score-new-badge {
-      display: inline-block; margin-top: 10px;
-      font-size: 11px; font-weight: 700;
-      letter-spacing: 1px; text-transform: uppercase;
-      padding: 3px 10px; border-radius: 100px;
-      background: var(--bg-soft); border: 1px solid var(--border-l);
-      color: var(--text-2);
+      display: inline-block; margin-top: 10px; font-size: 11px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 100px;
+      background: var(--accent-soft); border: 1px solid var(--accent-mid); color: var(--accent);
     }
 
-    /* Rating */
+    /* Rating UI */
     .vis-q {
       background: var(--bg); border: 1px solid var(--border-l);
       border-radius: 10px; padding: 12px 14px; margin-bottom: 8px;
     }
-
-    .vis-q-text { font-size: 13px; color: var(--text-1); margin-bottom: 10px; }
+    .vis-q-text { font-size: 13px; color: var(--text-1); margin-bottom: 10px; font-weight: 500; }
     .vis-q-btns { display: flex; gap: 8px; }
-
     .vis-q-btn {
-      flex: 1; padding: 7px 0;
-      border-radius: 7px; border: 1px solid var(--border-l);
-      font-size: 12px; font-weight: 600;
-      text-align: center; cursor: default; color: var(--text-3);
-      background: var(--bg-soft);
+      flex: 1; padding: 7px 0; border-radius: 7px; border: 1px solid var(--border-l);
+      font-size: 12px; font-weight: 700; text-align: center; cursor: default;
+      color: var(--text-3); background: var(--bg-soft);
     }
-
-    .vis-q-btn.yes {
-      background: var(--text-1); color: #fff; border-color: var(--text-1);
-    }
+    .vis-q-btn.yes { background: var(--accent); color: #fff; border-color: var(--accent); }
 
     /* Trust items */
     .vis-trust-item {
       display: flex; align-items: flex-start; gap: 12px;
-      padding: 11px 13px;
-      background: var(--bg); border: 1px solid var(--border-l);
+      padding: 11px 13px; background: var(--bg); border: 1px solid var(--border-l);
       border-radius: 10px; margin-bottom: 8px;
     }
-
     .vis-trust-item:last-child { margin-bottom: 0; }
-
     .vis-trust-icon {
       width: 28px; height: 28px; border-radius: 7px;
-      background: var(--bg-soft);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
+      background: var(--accent-soft); border: 1px solid var(--accent-mid);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-
-    .vis-trust-icon svg { stroke: var(--text-2); }
-
-    .vis-trust-text strong {
-      display: block; font-size: 13px; font-weight: 600;
-      color: var(--text-1); margin-bottom: 1px;
-    }
-
+    .vis-trust-icon svg { stroke: var(--accent); }
+    .vis-trust-text strong { display: block; font-size: 13px; font-weight: 700; color: var(--text-1); margin-bottom: 1px; }
     .vis-trust-text { font-size: 12px; color: var(--text-2); line-height: 1.45; }
 
-    /* CTA */
+    /* ── CTA ── */
     .cta-section {
       border-top: 1px solid var(--border-l);
-      max-width: 960px; margin: 0 auto;
-      padding: 96px 48px; text-align: center;
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 96px 24px; text-align: center;
     }
-
-    .cta-eyebrow {
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 1.5px; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 18px;
+    .cta-kicker {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
+      color: var(--accent); background: var(--accent-soft); border: 1px solid var(--accent-mid);
+      border-radius: 100px; padding: 5px 14px; margin-bottom: 24px;
     }
-
     .cta-title {
-      font-size: clamp(40px, 6vw, 68px);
-      font-weight: 700; line-height: 1.06;
-      letter-spacing: -2px; color: var(--text-1);
-      margin-bottom: 14px;
+      font-size: clamp(44px, 6.5vw, 72px); font-weight: 800; line-height: 0.97;
+      letter-spacing: -2.5px; color: var(--text-1); margin-bottom: 16px;
     }
-
-    .cta-title em { font-style: normal; color: var(--text-2); }
-
-    .cta-sub {
-      font-size: 16px; color: var(--text-2); margin-bottom: 44px;
-    }
-
+    .cta-title em { font-style: italic; font-weight: 300; color: var(--text-2); }
+    .cta-sub { font-size: 16px; color: var(--text-2); margin-bottom: 44px; }
     .cta-badges { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-
     .store-badge {
-      display: flex; align-items: center; gap: 10px;
-      padding: 12px 22px; border-radius: 980px;
-      text-decoration: none; transition: opacity 0.15s;
+      display: flex; align-items: center; gap: 10px; padding: 12px 24px;
+      border-radius: 980px; text-decoration: none; transition: opacity 0.15s;
     }
-
-    .store-badge.apple { background: var(--text-1); color: #fff; }
+    .store-badge.apple  { background: var(--text-1); color: #fff; }
     .store-badge.google { background: var(--bg-soft); border: 1px solid var(--border); color: var(--text-1); }
     .store-badge:hover { opacity: 0.82; }
-
     .badge-icon { width: 22px; text-align: center; flex-shrink: 0; }
-
     .badge-icon svg { display: block; }
-
     .badge-top  { font-size: 10px; opacity: 0.7; }
-    .badge-main { font-size: 15px; font-weight: 700; }
+    .badge-main { font-size: 15px; font-weight: 800; }
+    .cta-note   { margin-top: 16px; font-size: 12px; color: var(--text-3); }
 
-    .cta-note { margin-top: 16px; font-size: 12px; color: var(--text-3); }
-
-    /* FOOTER */
-    footer {
-      border-top: 1px solid var(--border-l);
-      max-width: 960px; margin: 0 auto;
-      padding: 36px 48px;
-      display: flex; align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap; gap: 14px;
-    }
-
-    .footer-left { font-size: 15px; font-weight: 600; color: var(--text-1); }
-    .footer-links { display: flex; gap: 20px; }
-
-    .footer-links a {
-      font-size: 12px; color: var(--text-3);
-      text-decoration: none; transition: color 0.15s;
-    }
-
-    .footer-links a:hover { color: var(--text-2); }
-    .footer-copy { font-size: 11px; color: var(--text-3); width: 100%; }
-
-    /* RESPONSIVE */
+    /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-  nav { padding: 0 20px; }
-
-  .hero { padding: 100px 20px 60px; }
-
-  .step {
-    grid-template-columns: 1fr;
-    gap: 32px;
-    padding: 60px 20px;
-  }
-  .step:nth-child(even) .step-left  { order: 1; }
-  .step:nth-child(even) .step-right { order: 2; }
-
-  footer {
-    padding: 32px 20px;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .footer-links { flex-wrap: wrap; gap: 14px; }
-
-  .vis-otp { flex-wrap: wrap; }
-  .vis-otp-box { width: 30px; height: 38px; font-size: 14px; }
-
-  .score-row { gap: 8px; }
-  .score-row-label { width: auto; min-width: 110px; font-size: 11px; }
-
-  .vis-event-meta { flex-direction: column; gap: 4px; }
-
-  .cta-section { padding: 72px 20px; }
-  .cta-badges { flex-direction: column; align-items: center; }
-  .store-badge { width: 100%; max-width: 260px; justify-content: center; }
-
-  .vis-trust-text { font-size: 11px; }
-}
+      .hero-page { padding: calc(var(--nav-h) + 56px) 20px 64px; }
+      .hero-page h1 { font-size: clamp(44px, 11vw, 64px); letter-spacing: -2px; }
+      .step { grid-template-columns: 1fr; gap: 32px; padding: 60px 20px; }
+      .step:nth-child(even) .step-vis  { order: 2; }
+      .step:nth-child(even) .step-text { order: 1; }
+      /* prevent any child from causing horizontal scroll */
+      .step-visual { overflow: hidden; }
+      .vis-otp { flex-wrap: wrap; gap: 4px; }
+      .vis-otp-box { width: 30px; height: 38px; font-size: 14px; }
+      .score-row { flex-wrap: nowrap; }
+      .score-row-label { width: auto; min-width: 0; max-width: 120px; font-size: 11px; }
+      .score-row-pct { width: 28px; font-size: 11px; }
+      .vis-form-row { grid-template-columns: 1fr; }
+      .cta-section { padding: 72px 20px; }
+      .cta-badges { flex-direction: column; align-items: center; }
+      .store-badge { width: 100%; max-width: 260px; justify-content: center; }
+    }
   </style>
 </head>
 <body>
 
+  <!-- NAV -->
   <nav>
-    <a href="https://takiltr.com/" class="nav-logo">takıl</a>
-    <a href="https://takiltr.com/" class="nav-back">← Ana Sayfa</a>
+    <a class="nav-logo" href="about.html">takıl</a>
+    <div class="nav-links">
+      <a href="about.html">Ana Sayfa</a>
+      <a href="ambassadors.html">Kampüs Öncüsü</a>
+      <a href="about.html#contact" class="nav-cta">İletişim →</a>
+    </div>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
-  <div class="hero">
-    <div class="hero-eyebrow">Nasıl Çalışır</div>
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="about.html" onclick="closeMenu()">Ana Sayfa</a>
+    <a href="ambassadors.html" onclick="closeMenu()">Kampüs Öncüsü</a>
+    <a href="about.html#contact" onclick="closeMenu()" class="mobile-cta">İletişim →</a>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero-page">
+    <span class="hero-kicker">Nasıl Çalışır</span>
     <h1>Beş adımda<br><em>üniversite hayatına</em><br>takıl.</h1>
-    <p class="hero-sub">OGÜ'ye özel, güven odaklı, sade. Kayıt ol, keşfet, katıl — ya da kendin oluştur.</p>
+    <p>OGÜ'ye özel, güven odaklı, sade. Kayıt ol, keşfet, katıl — ya da kendin oluştur.</p>
   </div>
 
   <div class="steps-wrapper">
 
     <!-- STEP 1 -->
     <div class="step">
-      <div class="step-left">
-        <div class="step-num">Adım 01</div>
+      <div class="step-text">
+        <div class="step-number">Adım 01</div>
         <h2 class="step-title">Kayıt &amp;<br><em>Profil</em></h2>
         <div class="step-body">
           <p>OGÜ e-postanla giriş yap — şifre yok, karmaşık form yok. E-postana gelen 8 haneli kodu gir, hepsi bu.</p>
@@ -486,14 +298,14 @@
         </div>
         <span class="step-tag">@ogu.edu.tr · @ogrenci.ogu.edu.tr</span>
       </div>
-      <div class="step-right">
+      <div class="step-vis">
         <div class="step-visual">
           <div class="vis-label">OTP Girişi</div>
           <div class="vis-otp">
-            <div class="vis-otp-box active">4</div>
-            <div class="vis-otp-box active">7</div>
-            <div class="vis-otp-box active">2</div>
-            <div class="vis-otp-box active">9</div>
+            <div class="vis-otp-box filled">4</div>
+            <div class="vis-otp-box filled">7</div>
+            <div class="vis-otp-box filled">2</div>
+            <div class="vis-otp-box filled">9</div>
             <div class="vis-otp-box">_</div>
             <div class="vis-otp-box">_</div>
             <div class="vis-otp-box">_</div>
@@ -510,6 +322,7 @@
             <div class="vis-pill">Spor</div>
             <div class="vis-pill">Çalışma</div>
             <div class="vis-pill">Müzik</div>
+            <div class="vis-pill">Diğer</div>
           </div>
         </div>
       </div>
@@ -517,7 +330,7 @@
 
     <!-- STEP 2 -->
     <div class="step">
-      <div class="step-left">
+      <div class="step-vis">
         <div class="step-visual">
           <div class="vis-event-card">
             <div class="vis-event-top">
@@ -546,8 +359,8 @@
           </div>
         </div>
       </div>
-      <div class="step-right">
-        <div class="step-num">Adım 02</div>
+      <div class="step-text">
+        <div class="step-number">Adım 02</div>
         <h2 class="step-title">Etkinlik<br><em>Keşfet &amp; Katıl</em></h2>
         <div class="step-body">
           <p>Spor, çalışma, sosyal, gezi, müzik, teknoloji ve daha fazla kategoride OGÜ öğrencilerinin oluşturduğu etkinlikleri keşfet.</p>
@@ -559,8 +372,8 @@
 
     <!-- STEP 3 -->
     <div class="step">
-      <div class="step-left">
-        <div class="step-num">Adım 03</div>
+      <div class="step-text">
+        <div class="step-number">Adım 03</div>
         <h2 class="step-title">Etkinlik<br><em>Oluştur</em></h2>
         <div class="step-body">
           <p>Kendi etkinliğini oluştur: başlık, kategori, konum, tarih, kontenjan ve açıklama. Katılımcıların kim olduğunu anlık görürsün.</p>
@@ -568,7 +381,7 @@
         </div>
         <span class="step-tag">Önceki yoklama → yeni etkinlik</span>
       </div>
-      <div class="step-right">
+      <div class="step-vis">
         <div class="step-visual">
           <div class="vis-label">Etkinlik Oluştur</div>
           <div class="vis-form">
@@ -584,7 +397,7 @@
               <span class="vis-field-label">Konum</span>
               <span class="vis-field-value">OGÜ Merkez Kütüphane</span>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div class="vis-form-row">
               <div class="vis-field">
                 <span class="vis-field-label">Tarih</span>
                 <span class="vis-field-value">Salı</span>
@@ -605,7 +418,7 @@
 
     <!-- STEP 4 -->
     <div class="step">
-      <div class="step-left">
+      <div class="step-vis">
         <div class="step-visual">
           <div class="vis-label">Puan Bileşenleri</div>
           <div class="score-diagram">
@@ -616,7 +429,7 @@
             </div>
             <div class="score-row">
               <div class="score-row-label">Organizatör kalitesi</div>
-              <div class="score-bar-wrap"><div class="score-bar-fill quality"></div></div>
+              <div class="score-bar-wrap"><div class="score-bar-fill reliability"></div></div>
               <div class="score-row-pct">%30</div>
             </div>
             <div class="score-arrow">↓</div>
@@ -629,12 +442,12 @@
           </div>
         </div>
       </div>
-      <div class="step-right">
-        <div class="step-num">Adım 04</div>
+      <div class="step-text">
+        <div class="step-number">Adım 04</div>
         <h2 class="step-title">Katılım<br><em>Sistemi &amp; Puan</em></h2>
         <div class="step-body">
           <p>Etkinlik sonrası organizatör her katılımcıyı işaretler. Katılımcılar da organizatörü iki kısa soruyla değerlendirir: zamanında mıydı? Saygılı bir ortam mıydı?</p>
-          <p>Puanın %50'i katılım güvenilirliğinden, %50'u organizatör kalitesinden gelir — son 10 etkinlik üzerinden ağırlıklı ortalama alınır.</p>
+          <p>Puanın %70'i katılım güvenilirliğinden, %30'u organizatör kalitesinden gelir — son 10 etkinlik üzerinden ağırlıklı ortalama alınır.</p>
           <p>5 değerlendirmeye ulaşmadan puan gizlenir. "Yeni" gösterilir; sistem manipülasyona kapalıdır.</p>
         </div>
         <span class="step-tag">Şeffaf · Manipülasyona kapalı</span>
@@ -643,8 +456,8 @@
 
     <!-- STEP 5 -->
     <div class="step">
-      <div class="step-left">
-        <div class="step-num">Adım 05</div>
+      <div class="step-text">
+        <div class="step-number">Adım 05</div>
         <h2 class="step-title">Güven &amp;<br><em>Gizlilik</em></h2>
         <div class="step-body">
           <p>takıl yalnızca OGÜ öğrencilerine açık. Kapalı topluluk yapısı sistemi güvenli tutar. E-posta adresin hiçbir zaman başkasına gösterilmez.</p>
@@ -652,7 +465,7 @@
         </div>
         <span class="step-tag">KVKK uyumlu · Reklamsız</span>
       </div>
-      <div class="step-right">
+      <div class="step-vis">
         <div class="step-visual">
           <div class="vis-label">Organizatör Değerlendirmesi</div>
           <div class="vis-q">
@@ -696,22 +509,22 @@
 
   <!-- CTA -->
   <div class="cta-section">
-    <div class="cta-eyebrow">Hazır mısın?</div>
+    <div class="cta-kicker">Hazır mısın?</div>
     <h2 class="cta-title">Hemen<br><em>İndir.</em></h2>
     <p class="cta-sub">Yalnızca Eskişehir Osmangazi Üniversitesi öğrencilerine açık.</p>
     <div class="cta-badges">
       <a href="#" class="store-badge apple">
         <div class="badge-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
         </div>
         <div>
           <div class="badge-top">İndir</div>
           <div class="badge-main">App Store</div>
         </div>
       </a>
-      <a href="#" class="store-badge google">
+      <a href="https://play.google.com/store/apps/details?id=com.jawidolmas.takil" class="store-badge google">
         <div class="badge-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--text-1)"><path d="M3.18 23.76c.3.17.64.24.99.2L14.9 12 3.18.04c-.35-.04-.69.03-.99.2C1.61.72 1 1.63 1 2.67v18.66c0 1.04.61 1.95 2.18 2.43zM17.6 9.06l-2.35-1.36-3.36 3.3 3.36 3.3 2.38-1.38c.68-.39 1.08-.98 1.08-1.93 0-.95-.41-1.54-1.11-1.93zM4.46 22.48L14.17 12 4.46 1.52 4.46 22.48z"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--text-1)" aria-hidden="true"><path d="M3.18 23.76c.3.17.64.24.99.2L14.9 12 3.18.04c-.35-.04-.69.03-.99.2C1.61.72 1 1.63 1 2.67v18.66c0 1.04.61 1.95 2.18 2.43zM17.6 9.06l-2.35-1.36-3.36 3.3 3.36 3.3 2.38-1.38c.68-.39 1.08-.98 1.08-1.93 0-.95-.41-1.54-1.11-1.93zM4.46 22.48L14.17 12 4.46 1.52 4.46 22.48z"/></svg>
         </div>
         <div>
           <div class="badge-top">İndir</div>
@@ -722,22 +535,40 @@
     <div class="cta-note">iOS ve Android · Ücretsiz · Reklamsız</div>
   </div>
 
+  <hr class="divider" />
+
   <footer>
     <div class="footer-left">takıl</div>
     <div class="footer-links">
-      <a href="https://takiltr.com/privacy-policy.html">Gizlilik Politikası</a>
-      <a href="https://takiltr.com/terms.html">Kullanım Koşulları</a>
-      <a href="https://takiltr.com/#">Hakkımızda</a>
-      <a href="mailto:destek@takiltr.com">İletişim</a>
+      <a href="privacy-policy.html">Gizlilik Politikası</a>
+      <a href="terms.html">Kullanım Koşulları</a>
+      <a href="about.html">Hakkımızda</a>
+      <a href="mailto:takil.destek@gmail.com">İletişim</a>
     </div>
     <div class="footer-copy">© 2025–2026 OLMAS Systems · Tüm hakları saklıdır.</div>
   </footer>
 
   <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMenu();
+    });
+
     const steps = document.querySelectorAll('.step');
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.1 });
     steps.forEach(s => observer.observe(s));
   </script>
 
