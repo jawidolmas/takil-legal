@@ -388,9 +388,11 @@
       .mission-layout { grid-template-columns: 1fr; gap: 40px; }
       .phone-wrap { justify-content: center; }
       .phone-frame { width: 200px; }
+      
 
       /* features */
-      .features-header { grid-template-columns: 1fr; gap: 20px; }
+      .features-header { grid-template-columns: 1fr; gap: 20px; 
+      .feature-chevron { display: flex; }}
       @media (max-width: 768px) {
         .feature-line {
           grid-template-columns: 40px 1fr 28px;
@@ -444,7 +446,7 @@
       .feature-chevron { display: none; }
       .feature-line-desc { display: block; }
     }
-
+    .feature-chevron { display: none; }
   </style>
 </head>
 <body>
