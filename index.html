@@ -3,11 +3,91 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>takıl — Kampüste gerçek şeyler yap</title>
-  <meta name="description" content="takıl, Eskişehir Osmangazi Üniversitesi öğrencileri için sosyal etkinlik platformu." />
+  <title>takıl — OGÜ Etkinlik Uygulaması | Eskişehir Osmangazi Üniversitesi</title>
+  <meta name="description" content="takıl, Eskişehir Osmangazi Üniversitesi öğrencilerine özel sosyal etkinlik uygulaması. OGÜ'de etkinlik bul, katıl, organize et. Ücretsiz. Reklamsız. Güvenli." />
+  <meta name="keywords" content="OGÜ etkinlik uygulaması, Eskişehir Osmangazi Üniversitesi sosyal uygulama, kampüs etkinlik, üniversite etkinlik platformu, OGÜ öğrenci uygulaması, Eskişehir etkinlik" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://takiltr.com/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://takiltr.com/" />
+  <meta property="og:site_name" content="takıl" />
+  <meta property="og:locale" content="tr_TR" />
+  <meta property="og:title" content="takıl — OGÜ Etkinlik Uygulaması" />
+  <meta property="og:description" content="Eskişehir Osmangazi Üniversitesi öğrencilerine özel etkinlik platformu. Etkinlik bul, katıl, organize et. Ücretsiz. Reklamsız." />
+  <meta property="og:image" content="https://takiltr.com/Img/image1.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="takıl — OGÜ Etkinlik Uygulaması" />
+  <meta name="twitter:description" content="Eskişehir Osmangazi Üniversitesi öğrencilerine özel etkinlik platformu. Etkinlik bul, katıl, organize et." />
+  <meta name="twitter:image" content="https://takiltr.com/Img/image1.jpg" />
+
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/mb-favicon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/mb-favicon.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/mb-favicon.png" />
   <meta name="theme-color" content="#ffffff" />
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://takiltr.com/#website",
+        "url": "https://takiltr.com/",
+        "name": "takıl",
+        "description": "Eskişehir Osmangazi Üniversitesi öğrencilerine özel etkinlik ve sosyal platform",
+        "inLanguage": "tr",
+        "publisher": { "@id": "https://takiltr.com/#organization" }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://takiltr.com/#organization",
+        "name": "OLMAS Systems",
+        "url": "https://takiltr.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://takiltr.com/mb-favicon.png",
+          "width": 512,
+          "height": 512
+        },
+        "email": "destek@takiltr.com",
+        "foundingDate": "2024",
+        "foundingLocation": {
+          "@type": "Place",
+          "addressLocality": "Eskişehir",
+          "addressCountry": "TR"
+        },
+        "sameAs": [
+          "https://play.google.com/store/apps/details?id=com.jawidolmas.takil"
+        ]
+      },
+      {
+        "@type": "MobileApplication",
+        "name": "takıl",
+        "description": "Eskişehir Osmangazi Üniversitesi öğrencilerine özel etkinlik ve sosyal platform. OGÜ'de etkinlik bul, katıl, organize et. Ücretsiz. Reklamsız.",
+        "applicationCategory": "SocialNetworkingApplication",
+        "operatingSystem": ["iOS", "Android"],
+        "url": "https://takiltr.com/",
+        "downloadUrl": "https://play.google.com/store/apps/details?id=com.jawidolmas.takil",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "TRY"
+        },
+        "author": { "@id": "https://takiltr.com/#organization" },
+        "inLanguage": "tr",
+        "screenshot": "https://takiltr.com/Img/image3.png"
+      }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&display=swap" rel="stylesheet">
@@ -462,9 +542,9 @@
       <span class="hero-kicker">OGÜ · Eskişehir</span>
       <h1>Kampüste<br><em>gerçek</em><br><span class="accent">bağlantılar.</span></h1>
       <p class="hero-desc">
-        Etkinlik bul, katıl, organize et.
-        Gürültüsüz. Reklamsız. Gerçek insanlarla,
-        OGÜ'ye özel.
+        OGÜ'ye özel etkinlik uygulaması —
+        etkinlik bul, katıl, organize et.
+        Gürültüsüz. Reklamsız. Gerçek insanlarla.
       </p>
       <div class="hero-actions">
         <a href="#mission" class="btn-primary">Keşfet</a>
@@ -474,7 +554,7 @@
     <div class="hero-photo">
       <img
         src="Img/image1.jpg"
-        alt="OGÜ kampüs öğrencileri"
+        alt="OGÜ kampüs öğrencileri etkinliğe katılıyor — takıl Eskişehir Osmangazi Üniversitesi etkinlik uygulaması"
         loading="eager"
       />
       <div class="hero-photo-overlay"></div>
@@ -493,7 +573,7 @@
           güvenilir bir topluluk inşa etmek her zaman kolay değil.
         </p>
         <p class="mission-body">
-          takıl tam da bu boşluğu doldurmak için var.
+          takıl OGÜ etkinlik uygulaması tam da bu boşluğu doldurmak için var.
           Katılım puanı sistemi güvenilir bir ortam yaratır —
           her etkinlik, yeni bir bağlantı fırsatına dönüşür.
         </p>
@@ -504,7 +584,7 @@
           <div class="phone-side-btn vol-dn"></div>
           <div class="phone-side-btn power"></div>
           <div class="phone-screen">
-            <img src="Img/image3.png" alt="takıl uygulama ekranı" />
+            <img src="Img/image3.png" alt="takıl OGÜ etkinlik uygulaması ekranı — etkinlik listesi ve katılım sistemi" />
           </div>
         </div>
       </div>
@@ -609,7 +689,7 @@
       <div>
         <div class="founder-card">
           <div class="founder-avatar">
-            <img src="https://raw.githubusercontent.com/jawidolmas/takil-legal/refs/heads/main/Image2.jpg" alt="Jawid OLMAS" />
+            <img src="Img/founder.jpg" alt="Jawid OLMAS" />
           </div>
           <div class="founder-name">Jawid OLMAS</div>
           <div class="founder-role">Kurucu · OLMAS Systems</div>
@@ -644,7 +724,7 @@
     <div class="company-wrap">
       <div class="company-header">
         <div class="company-logo">
-          <img src="https://raw.githubusercontent.com/jawidolmas/takil-legal/refs/heads/main/android-chrome-512x512.png" alt="OLMAS Systems" />
+          <img src="Img/olmas.png" alt="OLMAS Systems" />
         </div>
         <div>
           <div class="company-name">OLMAS Systems</div>
@@ -719,7 +799,7 @@
       document.body.style.overflow = '';
     }
 
-   
+
     document.addEventListener('click', (e) => {
       if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
         closeMenu();
