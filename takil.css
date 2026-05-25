@@ -806,3 +806,38 @@ footer {
   .stat-num { font-size: 40px; }
   .section-title { letter-spacing: -1px; }
 }
+
+/* ── MOBILE MENU BRAND FOOTER ── */
+.mobile-menu-brand {
+  margin-top: auto;
+  padding-top: 24px;
+  padding-bottom: 8px;
+  border-top: 1px solid var(--border-l);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.mmb-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.mmb-name {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1;
+  color: var(--text-2);
+}
+.mmb-name .mmb-accent {
+  color: var(--accent);
+}
+.mmb-sub {
+  font-size: 11px;
+  color: var(--text-3);
+  font-weight: 500;
+  margin-top: 2px;
+}
