@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="takil.css" />
   <style>
 
-    /* ── ROOT ───────────────────────────────────────────── */
+    /* ── ROOT ── */
     :root {
       --accent:      #FF4B1F;
       --accent-soft: rgba(255, 75, 31, 0.08);
@@ -86,7 +86,7 @@
       font-size: 26px;
     }
 
-    /* ── HERO SPLIT ──────────────────────────────────────── */
+    /* ── HERO SPLIT ── */
     .hero-split {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -193,7 +193,7 @@
       );
     }
 
-    /* ── MISSION ─────────────────────────────────────────── */
+    /* ── MISSION ──── */
     .mission-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -260,7 +260,7 @@
     .phone-side-btn.vol-dn  { width: 3px; height: 28px; left: -3px; top: 124px; }
     .phone-side-btn.power   { width: 3px; height: 40px; right: -3px; top: 104px; }
 
-    /* ── STATS ───────────────────────────────────────────── */
+    /* ── STATS ────── */
     .stat-item { text-align: left; padding: 48px 36px; }
     .stat-num {
       font-size: 60px;
@@ -431,6 +431,10 @@
     <a href="#contact" onclick="closeMenu()">İletişim</a>
     <a href="privacy-policy.html" onclick="closeMenu()">Gizlilik Politikası</a>
     <a href="terms.html" onclick="closeMenu()">Kullanım Koşulları</a>
+  <div class="mobile-menu-brand">
+  <span class="mmb-name"><span class="mmb-accent">OLMAS</span> Systems</span>
+  <span class="mmb-sub">© 2025–2026 · Tüm hakları saklıdır</span>
+  </div>
   </div>
 
   <!-- HERO -->
@@ -449,7 +453,6 @@
       </div>
     </div>
     <div class="hero-photo">
-      <!-- Replace with your own campus photo if preferred -->
       <img
         src="Img/image1.jpg"
         alt="OGÜ kampüs öğrencileri"
@@ -691,7 +694,7 @@
       document.body.style.overflow = '';
     }
 
-    // Close on outside click
+   
     document.addEventListener('click', (e) => {
       if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
         closeMenu();
