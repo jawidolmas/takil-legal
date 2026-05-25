@@ -391,8 +391,41 @@
 
       /* features */
       .features-header { grid-template-columns: 1fr; gap: 20px; }
-      .feature-line { grid-template-columns: 40px 1fr; gap: 16px; }
-      .feature-line-desc { display: none; }
+      @media (max-width: 768px) {
+        .feature-line {
+          grid-template-columns: 40px 1fr 28px;
+          gap: 16px;
+          cursor: pointer;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .feature-line-desc {
+          display: none;
+          grid-column: 2 / 4;
+          padding-top: 6px;
+          padding-bottom: 4px;
+          font-size: 13px;
+          color: var(--text-2);
+          line-height: 1.65;
+        }
+        .feature-line.open .feature-line-desc { display: block; }
+        .feature-chevron {
+          width: 28px; height: 28px;
+          border-radius: 50%;
+          border: 1px solid var(--border-l);
+          background: var(--bg-soft);
+          display: flex; align-items: center; justify-content: center;
+          flex-shrink: 0; margin-top: 0;
+          transition: background 0.15s, transform 0.25s;
+          color: var(--text-3);
+          font-size: 16px; font-weight: 300; line-height: 1;
+        }
+        .feature-line.open .feature-chevron {
+          background: var(--accent);
+          color: #fff;
+          transform: rotate(45deg);
+          border-color: var(--accent);
+        }
+      }
 
       /* manifesto */
       .manifesto-block { padding: 72px 20px; }
@@ -402,9 +435,12 @@
       .stat-num { font-size: 44px; }
     }
 
+    /* iPad photo width */
     @media (min-width: 769px) and (max-width: 1024px) {
-      .hero-left { padding: calc(var(--nav-h) + 56px) 40px 56px 40px; max-width: 480px; }
+      .hero-left { padding: calc(var(--nav-h) + 56px) 40px 56px 40px; max-width: 480px; margin-left: 0; }
       .hero-left h1 { font-size: clamp(48px, 5.5vw, 72px); }
+      .hero-photo img { object-position: center 20%; }
+      .hero-split { min-height: 90svh; }
     }
 
   </style>
@@ -546,31 +582,37 @@
         <div class="feature-line-num">01</div>
         <div class="feature-line-title">Güven Sistemi</div>
         <div class="feature-line-desc">Katılım puanı ile güvenilir kullanıcılar öne çıkar. Organizatör değerlendirmeleri şeffaf ve manipülasyona kapalıdır.</div>
+        <div class="feature-chevron">+</div>
       </div>
       <div class="feature-line">
         <div class="feature-line-num">02</div>
         <div class="feature-line-title">OGÜ'ye Özel</div>
         <div class="feature-line-desc">Yalnızca geçerli OGÜ e-postasıyla kayıt olunabilir. Kapalı topluluk yapısı güvenli bir ortam sağlar.</div>
+         <div class="feature-chevron">+</div>
       </div>
       <div class="feature-line">
         <div class="feature-line-num">03</div>
         <div class="feature-line-title">Anlık Duyurular</div>
         <div class="feature-line-desc">Organizatörler katılımcılara doğrudan bildirim gönderebilir. Kimse bir şeyi kaçırmaz.</div>
+         <div class="feature-chevron">+</div>
       </div>
       <div class="feature-line">
         <div class="feature-line-num">04</div>
         <div class="feature-line-title">Gizlilik Önce</div>
         <div class="feature-line-desc">Veriler asla satılmaz, reklam şirketleriyle paylaşılmaz. KVKK uyumlu altyapı, AB sunucuları.</div>
+         <div class="feature-chevron">+</div>
       </div>
       <div class="feature-line">
         <div class="feature-line-num">05</div>
         <div class="feature-line-title">Engelle &amp; Şikayet</div>
         <div class="feature-line-desc">Rahatsız edici kullanıcıları anında engelle. Ekip 24 saat içinde inceler ve aksiyon alır.</div>
+          <div class="feature-chevron">+</div>
       </div>
       <div class="feature-line">
         <div class="feature-line-num">06</div>
         <div class="feature-line-title">Karanlık &amp; Açık Tema</div>
         <div class="feature-line-desc">Göz yormayan arayüz. Gece ya da gündüz, tercihine göre — ve sistem temasını takip eder.</div>
+          <div class="feature-chevron">+</div>
       </div>
     </div>
   </section>
@@ -700,6 +742,12 @@
         closeMenu();
       }
     });
+document.querySelectorAll('.feature-line').forEach(line => {
+  line.addEventListener('click', () => {
+    if (window.innerWidth > 768) return;
+    line.classList.toggle('open');
+  });
+});
   </script>
 
 </body>
