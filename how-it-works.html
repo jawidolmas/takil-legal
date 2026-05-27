@@ -234,19 +234,86 @@
     }
     .cta-title em { font-style: italic; font-weight: 300; color: var(--text-2); }
     .cta-sub { font-size: 16px; color: var(--text-2); margin-bottom: 44px; }
-    .cta-badges { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .cta-badges { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; align-items: flex-start; }
+    .apple-col  { display: flex; flex-direction: column; align-items: center; gap: 8px; }
     .store-badge {
       display: flex; align-items: center; gap: 10px; padding: 12px 24px;
       border-radius: 980px; text-decoration: none; transition: opacity 0.15s;
+      min-width: 200px; height: 56px; box-sizing: border-box;
     }
     .store-badge.apple  { background: var(--text-1); color: #fff; }
     .store-badge.google { background: var(--bg-soft); border: 1px solid var(--border); color: var(--text-1); }
-    .store-badge:hover { opacity: 0.82; }
+    .store-badge:not(.apple-soon):hover { opacity: 0.82; }
     .badge-icon { width: 22px; text-align: center; flex-shrink: 0; }
     .badge-icon svg { display: block; }
     .badge-top  { font-size: 10px; opacity: 0.7; }
     .badge-main { font-size: 15px; font-weight: 800; }
     .cta-note   { margin-top: 16px; font-size: 12px; color: var(--text-3); }
+
+    /* ── APPLE SOON + WAITLIST ── */
+    .store-badge-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .apple-soon { opacity: 0.62; cursor: default; pointer-events: none; position: relative; }
+    .badge-soon-pill {
+      font-size: 9px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase;
+      background: var(--accent); color: #fff; padding: 2px 7px; border-radius: 100px;
+      margin-left: 4px; flex-shrink: 0;
+    }
+    .ios-waitlist-btn {
+      font-family: inherit; font-size: 12px; font-weight: 700; letter-spacing: 0.2px;
+      color: var(--accent); background: var(--accent-soft); border: 1px solid var(--accent-mid);
+      border-radius: 100px; padding: 6px 16px; cursor: pointer; transition: opacity 0.15s;
+      margin-top: 4px;
+    }
+    .ios-waitlist-btn:hover { opacity: 0.75; }
+
+    /* ── WAITLIST MODAL ── */
+    .wl-overlay {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.55); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .wl-overlay.open { display: flex; }
+    .wl-modal {
+      background: var(--bg); border: 1px solid var(--border-l);
+      border-radius: 20px; padding: 36px 32px; max-width: 400px; width: 100%;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.18);
+      animation: wl-in 0.22s ease;
+    }
+    @keyframes wl-in { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+    .wl-icon {
+      width: 44px; height: 44px; background: var(--text-1); border-radius: 11px;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
+    }
+    .wl-icon img { width: 24px; height: 24px; object-fit: contain; filter: invert(1); display: block; }
+    .wl-title { font-size: 22px; font-weight: 800; letter-spacing: -0.6px; color: var(--text-1); margin-bottom: 6px; }
+    .wl-sub { font-size: 14px; color: var(--text-2); line-height: 1.6; margin-bottom: 24px; }
+    .wl-form { display: flex; flex-direction: column; gap: 10px; }
+    .wl-input {
+      font-family: inherit; font-size: 14px; padding: 12px 16px;
+      border: 1px solid var(--border); border-radius: 10px;
+      background: var(--bg-soft); color: var(--text-1); outline: none;
+      transition: border-color 0.15s;
+    }
+    .wl-input:focus { border-color: var(--accent); }
+    .wl-input::placeholder { color: var(--text-3); }
+    .wl-submit {
+      font-family: inherit; font-size: 14px; font-weight: 700;
+      background: var(--accent); color: #fff; border: none;
+      border-radius: 10px; padding: 13px; cursor: pointer; transition: opacity 0.15s;
+    }
+    .wl-submit:hover { opacity: 0.85; }
+    .wl-submit:disabled { opacity: 0.5; cursor: default; }
+    .wl-close {
+      display: block; text-align: center; margin-top: 12px;
+      font-size: 13px; color: var(--text-3); cursor: pointer; background: none;
+      border: none; font-family: inherit; width: 100%;
+    }
+    .wl-success {
+      text-align: center; padding: 12px 0;
+      font-size: 15px; font-weight: 600; color: var(--text-1); display: none;
+    }
+    .wl-success span { font-size: 28px; display: block; margin-bottom: 8px; }
+    .wl-privacy { font-size: 11px; color: var(--text-3); text-align: center; margin-top: 6px; }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
@@ -255,7 +322,6 @@
       .step { grid-template-columns: 1fr; gap: 32px; padding: 60px 20px; }
       .step:nth-child(even) .step-vis  { order: 2; }
       .step:nth-child(even) .step-text { order: 1; }
-      /* prevent any child from causing horizontal scroll */
       .step-visual { overflow: hidden; }
       .vis-otp { flex-wrap: wrap; gap: 4px; }
       .vis-otp-box { width: 30px; height: 38px; font-size: 14px; }
@@ -289,10 +355,10 @@
     <a href="index.html" onclick="closeMenu()">Ana Sayfa</a>
     <a href="ambassadors.html" onclick="closeMenu()">Kampüs Öncüsü</a>
     <a href="index.html#contact" onclick="closeMenu()" class="mobile-cta">İletişim →</a>
-   <div class="mobile-menu-brand">
-  <span class="mmb-name"><span class="mmb-accent">OLMAS</span> Systems</span>
-  <span class="mmb-sub">© 2025–2026 · Tüm hakları saklıdır</span>
-  </div>
+    <div class="mobile-menu-brand">
+      <span class="mmb-name"><span class="mmb-accent">OLMAS</span> Systems</span>
+      <span class="mmb-sub">© 2025–2026 · Tüm hakları saklıdır</span>
+    </div>
   </div>
 
   <!-- HERO -->
@@ -530,18 +596,22 @@
     <h2 class="cta-title">Hemen<br><em>İndir.</em></h2>
     <p class="cta-sub">Yalnızca Eskişehir Osmangazi Üniversitesi öğrencilerine açık.</p>
     <div class="cta-badges">
-      <a href="#" class="store-badge apple">
-        <div class="badge-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      <div class="apple-col">
+        <div class="store-badge apple apple-soon">
+          <div class="badge-icon">
+            <img src="Img/apple-logo.png" alt="Apple" style="width:20px;height:20px;object-fit:contain;display:block;filter:invert(1);">
+          </div>
+          <div>
+            <div class="badge-top">Yakında</div>
+            <div class="badge-main">App Store</div>
+          </div>
+          <span class="badge-soon-pill">iOS</span>
         </div>
-        <div>
-          <div class="badge-top">İndir</div>
-          <div class="badge-main">App Store</div>
-        </div>
-      </a>
+        <button class="ios-waitlist-btn" onclick="openWaitlist()">Çıkınca haber ver →</button>
+      </div>
       <a href="https://play.google.com/store/apps/details?id=com.jawidolmas.takil" class="store-badge google">
         <div class="badge-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--text-1)" aria-hidden="true"><path d="M3.18 23.76c.3.17.64.24.99.2L14.9 12 3.18.04c-.35-.04-.69.03-.99.2C1.61.72 1 1.63 1 2.67v18.66c0 1.04.61 1.95 2.18 2.43zM17.6 9.06l-2.35-1.36-3.36 3.3 3.36 3.3 2.38-1.38c.68-.39 1.08-.98 1.08-1.93 0-.95-.41-1.54-1.11-1.93zM4.46 22.48L14.17 12 4.46 1.52 4.46 22.48z"/></svg>
+          <img src="Img/google-play.png" alt="Google Play" style="width:22px;height:24px;object-fit:contain;display:block;">
         </div>
         <div>
           <div class="badge-top">İndir</div>
@@ -564,6 +634,74 @@
     </div>
     <div class="footer-copy">© 2025–2026 OLMAS Systems · Tüm hakları saklıdır.</div>
   </footer>
+
+  <!-- iOS WAITLIST MODAL -->
+  <div class="wl-overlay" id="wlOverlay" onclick="handleOverlayClick(event)">
+    <div class="wl-modal">
+      <div class="wl-icon"><img src="Img/apple-logo.png" alt="Apple"></div>
+      <div class="wl-title">iOS için bekleme listesi</div>
+      <p class="wl-sub">takıl App Store'a çıktığında seni haberdar edelim. E-postanı bırak, gerisini biz hallederiz.</p>
+      <div id="wlFormWrap">
+        <div class="wl-form" id="wlForm">
+          <input class="wl-input" type="email" id="wlEmail" placeholder="E-posta adresin" required autocomplete="email">
+          <button class="wl-submit" type="button" id="wlSubmitBtn" onclick="submitWaitlist()">Beni listele →</button>
+        </div>
+        <p class="wl-privacy">E-posta adresin yalnızca iOS çıkış bildirimi için kullanılır. Spam yok.</p>
+      </div>
+      <div class="wl-success" id="wlSuccess">
+        <span>🎉</span>
+        Kaydedildi! App Store'a çıktığında haber vereceğiz.
+      </div>
+      <button class="wl-close" onclick="closeWaitlist()">Kapat</button>
+    </div>
+  </div>
+
+  <script>
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzCdSGIU9zqh-SR6Af675CkZ_d-p2edeP1K_hd2XQvcRHnsb-4B3xNmWOx7tAxA8DFdWg/exec";
+
+    function openWaitlist() {
+      document.getElementById('wlOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeWaitlist() {
+      document.getElementById('wlOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function handleOverlayClick(e) {
+      if (e.target === document.getElementById('wlOverlay')) closeWaitlist();
+    }
+
+    async function submitWaitlist() {
+      const emailInput = document.getElementById('wlEmail');
+      const btn = document.getElementById('wlSubmitBtn');
+      const email = emailInput.value.trim();
+
+      if (!email || !email.includes('@')) {
+        emailInput.focus();
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Gönderiliyor...';
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email })
+        });
+
+        // no-cors means we can't read the response — but data lands in the sheet
+        document.getElementById('wlFormWrap').style.display = 'none';
+        document.getElementById('wlSuccess').style.display = 'block';
+
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = 'Hata — tekrar dene';
+      }
+    }
+  </script>
 
   <script>
     const hamburger = document.getElementById('hamburger');
