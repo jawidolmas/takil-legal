@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ödülün — takıl</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/takil.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+
+  <style>
+    :root {
+      --accent:      #FF4B1F;
+      --accent-soft: rgba(255, 75, 31, 0.08);
+      --accent-mid:  rgba(255, 75, 31, 0.20);
+    }
+    body { font-family: 'Bricolage Grotesque', -apple-system, sans-serif; }
+
+    .nav-logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; }
+
+    .voucher-wrap {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: calc(var(--nav-h) + 40px) 20px 60px;
+    }
+
+    .voucher-card {
+      width: 100%;
+      max-width: 420px;
+      border: 1px solid var(--border-l);
+      border-radius: 24px;
+      padding: 40px 32px;
+      text-align: center;
+      background: var(--bg-soft);
+    }
+
+    .voucher-kicker {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    .voucher-title {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+      color: var(--text-1);
+    }
+
+    .voucher-sub {
+      font-size: 14px;
+      color: var(--text-2);
+      margin-bottom: 28px;
+    }
+
+    .qr-box {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      display: inline-flex;
+      margin-bottom: 24px;
+      box-shadow: 0 0 0 1px var(--border-l);
+      animation: qr-pulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes qr-pulse {
+      0%, 100% { box-shadow: 0 0 0 1px var(--border-l); }
+      50%      { box-shadow: 0 0 0 1px var(--accent-mid), 0 0 24px var(--accent-soft); }
+    }
+
+    .qr-box canvas { display: block; }
+
+    .voucher-note {
+      font-size: 13px;
+      color: var(--text-3);
+      line-height: 1.6;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+
+    .status-used    { background: rgba(0,0,0,0.06); color: var(--text-2); }
+    .status-expired { background: rgba(0,0,0,0.06); color: var(--text-2); }
+    .status-invalid { background: rgba(0,0,0,0.06); color: var(--text-2); }
+
+    .big-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      line-height: 1;
+    }
+
+    .voucher-loading {
+      color: var(--text-3);
+      font-size: 14px;
+    }
+
+    .prizes-link {
+      display: inline-block;
+      margin-top: 28px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .prizes-link:hover { opacity: 0.8; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="/">takıl</a>
+    <div class="nav-links">
+      <a href="/how-it-works/">Nasıl Çalışır?</a>
+      <a href="/prizes/">Ödüller</a>
+    </div>
+  </nav>
+
+  <div class="voucher-wrap">
+    <div class="voucher-card" id="voucherCard">
+      <div class="voucher-loading" id="loadingState">Yükleniyor...</div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-left">takıl</div>
+    <div class="footer-links">
+      <a href="/privacy-policy.html">Gizlilik Politikası</a>
+      <a href="/terms.html">Kullanım Koşulları</a>
+      <a href="mailto:destek@takiltr.com">İletişim</a>
+    </div>
+    <div class="footer-copy">© 2025–2026 OLMAS Systems · Tüm hakları saklıdır.</div>
+  </footer>
+
+  <script>
+    const SUPABASE_URL = 'https://dxuhfxjrcofniibqtjjn.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4dWhmeGpyY29mbmlpYnF0ampuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNTU5MTUsImV4cCI6MjA5MjYzMTkxNX0.qyepBC4xN0UR1Xqd9f6UJCKSlmHrzZP0u6blENgI7II';
+
+    function getTokenFromUrl() {
+      const parts = window.location.pathname.split('/').filter(Boolean);
+      const fromPath = parts.length > 1 && parts[0] === 'voucher' ? parts[1] : null;
+      const fromQuery = new URLSearchParams(window.location.search).get('token');
+      return fromPath || fromQuery;
+    }
+
+    function renderError(message) {
+      document.getElementById('voucherCard').innerHTML = `
+        <div class="big-icon">⚠️</div>
+        <div class="voucher-title">${message}</div>
+        <a class="prizes-link" href="/prizes/">Tüm ödülleri gör →</a>
+      `;
+    }
+
+    function renderUsed() {
+      document.getElementById('voucherCard').innerHTML = `
+        <div class="big-icon">✅</div>
+        <span class="status-badge status-used">Kullanıldı</span>
+        <div class="voucher-title">Bu ödül zaten kullanıldı</div>
+        <div class="voucher-sub">Afiyet olsun! Yeni ödüller için kampanyaları takip et.</div>
+        <a class="prizes-link" href="/prizes/">Tüm ödülleri gör →</a>
+      `;
+    }
+
+    function renderExpired() {
+      document.getElementById('voucherCard').innerHTML = `
+        <div class="big-icon">⌛</div>
+        <span class="status-badge status-expired">Süresi Doldu</span>
+        <div class="voucher-title">Bu ödülün süresi doldu</div>
+        <div class="voucher-sub">Yeni kampanyalar için ödüller sayfasına göz at.</div>
+        <a class="prizes-link" href="/prizes/">Tüm ödülleri gör →</a>
+      `;
+    }
+
+    function renderValid(data) {
+      const label = data.reward_value || data.reward_type || 'Ödülün';
+      document.getElementById('voucherCard').innerHTML = `
+        <span class="voucher-kicker">takıl ödülü</span>
+        <div class="voucher-title">${label}</div>
+        <div class="voucher-sub">QR kodunu kasaya göster. Sadece bir kez kullanılabilir.</div>
+        <div class="qr-box"><canvas id="qrCanvas"></canvas></div>
+        <div class="voucher-note">Bu sayfayı istediğin kadar açabilirsin.<br>Kod kullanıldığında bu sayfa otomatik güncellenir.</div>
+        <br>
+        <a class="prizes-link" href="/prizes/">Diğer ödülleri keşfet →</a>
+      `;
+      QRCode.toCanvas(document.getElementById('qrCanvas'), data.token, {
+        width: 220,
+        margin: 1,
+        color: { dark: '#0a0a0a', light: '#ffffff' }
+      });
+    }
+
+    async function loadVoucher() {
+      const token = getTokenFromUrl();
+      if (!token) {
+        renderError('Geçersiz bağlantı');
+        return;
+      }
+
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/get_voucher_by_token`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          },
+          body: JSON.stringify({ p_token: token }),
+        });
+
+        const data = await res.json();
+
+        if (!data.found) {
+          renderError('Bu ödül bulunamadı');
+          return;
+        }
+
+        if (data.status === 'REDEEMED') {
+          renderUsed();
+        } else if (data.status === 'EXPIRED') {
+          renderExpired();
+        } else if (data.status === 'ASSIGNED') {
+          renderValid(data);
+        } else {
+          renderError('Bu ödül kullanılamıyor');
+        }
+      } catch (err) {
+        console.error(err);
+        renderError('Bir hata oluştu, tekrar dene');
+      }
+    }
+
+    loadVoucher();
+  </script>
+
+</body>
+</html>
