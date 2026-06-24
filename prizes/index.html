@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ödüller — takıl</title>
+  <meta name="description" content="takıl'da kampanyalara katıl, ödüller kazan." />
+  <link rel="icon" type="image/png" href="../favicon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../takil.css" />
+
+  <style>
+    :root {
+      --accent:      #FF4B1F;
+      --accent-soft: rgba(255, 75, 31, 0.08);
+      --accent-mid:  rgba(255, 75, 31, 0.20);
+      --lime:        #d7e5bb;
+      --lime-soft:   rgba(215, 229, 187, 0.15);
+    }
+    body { font-family: 'Bricolage Grotesque', -apple-system, sans-serif; }
+
+    /* ── Hero ── */
+    .prizes-hero {
+      padding: calc(var(--nav-h, 60px) + 72px) 20px 56px;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .prizes-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+    .prizes-kicker-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+    .prizes-title {
+      font-size: clamp(36px, 7vw, 56px);
+      font-weight: 800;
+      letter-spacing: -2px;
+      color: var(--text-1, #0e0e0e);
+      margin-bottom: 14px;
+      line-height: 1.05;
+    }
+    .prizes-title em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .prizes-sub {
+      font-size: 15px;
+      color: var(--text-2, #555);
+      line-height: 1.65;
+    }
+
+    /* ── How it works strip ── */
+    .how-strip {
+      max-width: 880px;
+      margin: 0 auto 56px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border-l, #e8e8e8);
+      border: 1px solid var(--border-l, #e8e8e8);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .how-step {
+      background: var(--bg-soft, #fafafa);
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .how-step-num {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .how-step-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-1, #0e0e0e);
+      letter-spacing: -0.2px;
+    }
+    .how-step-desc {
+      font-size: 12px;
+      color: var(--text-3, #888);
+      line-height: 1.5;
+    }
+
+    /* ── Grid ── */
+    .prizes-grid {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 20px 100px;
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    /* ── Card ── */
+    .prize-card {
+      border: 1px solid var(--border-l, #e8e8e8);
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--bg-soft, #fafafa);
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.15s;
+    }
+    .prize-card:hover {
+      border-color: var(--accent-mid);
+    }
+
+    /* top reward banner */
+    .prize-reward-band {
+      background: var(--accent);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .prize-reward-band svg {
+      width: 18px; height: 18px;
+      stroke: #fff;
+      flex-shrink: 0;
+    }
+    .prize-reward-value {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.3px;
+      flex: 1;
+    }
+    .prize-remaining-pill {
+      font-size: 11px;
+      font-weight: 700;
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      padding: 3px 9px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .prize-remaining-pill.low {
+      background: rgba(255,255,255,0.35);
+    }
+
+    /* card body */
+    .prize-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+    .prize-name {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+      color: var(--text-1, #0e0e0e);
+    }
+    .prize-desc {
+      font-size: 13px;
+      color: var(--text-2, #555);
+      line-height: 1.55;
+    }
+
+    /* requirements */
+    .prize-requirements {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border-l, #e8e8e8);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .req-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-3, #888);
+      padding: 10px 14px 6px;
+      background: var(--bg-page, #fff);
+    }
+    .req-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 14px;
+      background: var(--bg-page, #fff);
+      border-top: 1px solid var(--border-l, #e8e8e8);
+    }
+    .req-row svg {
+      width: 13px; height: 13px;
+      stroke: var(--accent);
+      flex-shrink: 0;
+    }
+    .req-row span {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-2, #555);
+    }
+
+    /* deadline */
+    .prize-deadline {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-3, #888);
+    }
+    .prize-deadline svg {
+      width: 13px; height: 13px;
+      stroke: var(--text-3, #888);
+    }
+    .prize-deadline.urgent {
+      color: var(--accent);
+    }
+    .prize-deadline.urgent svg {
+      stroke: var(--accent);
+    }
+
+    /* cta */
+    .prize-cta {
+      display: block;
+      text-align: center;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 12px;
+      border-radius: 10px;
+      text-decoration: none;
+      letter-spacing: -0.1px;
+      transition: background 0.15s;
+      margin-top: auto;
+    }
+    .prize-cta:hover {
+      background: var(--accent-mid);
+    }
+
+    /* states */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--text-3, #888);
+    }
+    .empty-state svg {
+      width: 36px; height: 36px;
+      stroke: var(--text-3, #ccc);
+      margin-bottom: 16px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .empty-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-2, #555);
+      margin-bottom: 6px;
+    }
+    .empty-sub {
+      font-size: 13px;
+      color: var(--text-3, #888);
+    }
+    .loading-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--text-3, #888);
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .how-strip {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="/">takıl</a>
+    <div class="nav-links">
+      <a href="/how-it-works/">Nasıl Çalışır?</a>
+      <a href="/prizes/" style="color: var(--accent);">Ödüller</a>
+    </div>
+  </nav>
+
+  <div class="prizes-hero">
+    <div class="prizes-kicker">
+      <span class="prizes-kicker-dot"></span>
+      Aktif kampanyalar
+    </div>
+    <h1 class="prizes-title">Katıl,<br>kazan, <em>tekrar katıl.</em></h1>
+    <p class="prizes-sub">Her etkinlik seni ödüle bir adım daha yaklaştırır. Şartları gör, uygulamayı aç, kazan.</p>
+  </div>
+
+  <div class="how-strip">
+    <div class="how-step">
+      <span class="how-step-num">Adım 1</span>
+      <span class="how-step-label">Etkinliğe katıl</span>
+      <span class="how-step-desc">Uygulamadan etkinlik bul, katıl, değerlendir.</span>
+    </div>
+    <div class="how-step">
+      <span class="how-step-num">Adım 2</span>
+      <span class="how-step-label">Şartları tamamla</span>
+      <span class="how-step-desc">Aşağıdaki kampanya şartlarını yerine getir.</span>
+    </div>
+    <div class="how-step">
+      <span class="how-step-num">Adım 3</span>
+      <span class="how-step-label">Ödülünü al</span>
+      <span class="how-step-desc">Ekip seni uygulama içinden bilgilendirir.</span>
+    </div>
+  </div>
+
+  <div class="prizes-grid" id="prizesGrid">
+    <div class="loading-state">Kampanyalar yükleniyor...</div>
+  </div>
+
+  <footer>
+    <div class="footer-left">takıl</div>
+    <div class="footer-links">
+      <a href="/privacy-policy.html">Gizlilik Politikası</a>
+      <a href="/terms.html">Kullanım Koşulları</a>
+      <a href="mailto:destek@takiltr.com">İletişim</a>
+    </div>
+    <div class="footer-copy">© 2025–2026 OLMAS Systems · Tüm hakları saklıdır.</div>
+  </footer>
+
+  <script>
+    const SUPABASE_URL = 'https://dxuhfxjrcofniibqtjjn.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4dWhmeGpyY29mbmlpYnF0ampuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNTU5MTUsImV4cCI6MjA5MjYzMTkxNX0.qyepBC4xN0UR1Xqd9f6UJCKSlmHrzZP0u6blENgI7II';
+
+    const ICONS = {
+      gift: `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13"/><path d="M3 12h18"/><path d="M16 8a3 3 0 1 0-3-3 3 3 0 0 0-3 3"/></svg>`,
+      coffee: `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>`,
+      check: `<svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+      clock: `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+      empty: `<svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13"/><path d="M3 12h18"/></svg>`,
+    };
+
+    function iconForRewardType(type) {
+      if (!type) return ICONS.gift;
+      return type.toUpperCase().includes('COFFEE') ? ICONS.coffee : ICONS.gift;
+    }
+    
+    function ruleLabel(key, value) {
+      const map = {
+        minimum_attendance_rating_avg:    `Katılımcı puanın en az ${value} olmalı`,
+        minimum_organizer_rating_avg:     `Organizatör puanın en az ${value} olmalı`,
+        minimum_joined_activities_count:  `En az ${value} etkinliğe katıl`,
+        minimum_created_activities_count: `En az ${value} etkinlik oluştur`,
+        minimum_account_age_days:         `Hesabın en az ${value} gündür açık olmalı`,
+        email_verified:                   `E-posta doğrulanmış olmalı`,
+      };
+      return map[key] || `${key}: ${value}`;
+    }
+
+    function daysUntil(dateStr) {
+      const diff = new Date(dateStr) - new Date();
+      return Math.ceil(diff / (1000 * 60 * 60 * 24));
+    }
+
+    async function fetchCampaigns() {
+      const headers = {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+      };
+      const [campaignsRes, rulesRes, rewardsRes] = await Promise.all([
+        fetch(`${SUPABASE_URL}/rest/v1/campaigns?is_active=eq.true&order=created_at.desc`, { headers }),
+        fetch(`${SUPABASE_URL}/rest/v1/campaign_rules?select=*`, { headers }),
+        fetch(`${SUPABASE_URL}/rest/v1/campaign_rewards?select=*`, { headers }),
+      ]);
+      const campaigns = await campaignsRes.json();
+      const rules     = await rulesRes.json();
+      const rewards   = await rewardsRes.json();
+      return campaigns.map(c => ({
+        ...c,
+        rules:   rules.find(r => r.campaign_id === c.id)?.rules || {},
+        rewards: rewards.filter(r => r.campaign_id === c.id),
+      }));
+    }
+
+    function renderCard(campaign) {
+      const reward       = campaign.rewards[0];
+      const rewardLabel  = reward?.reward_value || reward?.reward_type || 'Ödül';
+      const maxR         = campaign.max_rewards;
+      const claimed      = campaign.claimed_rewards ?? 0;
+      const remaining    = maxR != null ? Math.max(maxR - claimed, 0) : null;
+      const isLow        = remaining != null && remaining <= 2;
+
+      const remainingText = remaining != null
+        ? `${remaining} / ${maxR} kaldı`
+        : 'Sınırsız';
+
+      // requirements
+      const ruleEntries = Object.entries(campaign.rules || {});
+      const reqRows = ruleEntries.length
+        ? ruleEntries.map(([k, v]) => `
+            <div class="req-row">${ICONS.check}<span>${ruleLabel(k, v)}</span></div>
+          `).join('')
+        : `<div class="req-row">${ICONS.check}<span>Herkes katılabilir</span></div>`;
+
+      // deadline
+      let deadlineHtml = '';
+      if (campaign.end_at) {
+        const days    = daysUntil(campaign.end_at);
+        const urgent  = days <= 7;
+        const label   = days <= 0
+          ? 'Kampanya sona erdi'
+          : days === 1
+            ? 'Son 1 gün!'
+            : days <= 7
+              ? `Son ${days} gün`
+              : `${new Date(campaign.end_at).toLocaleDateString('tr-TR')} tarihine kadar`;
+        deadlineHtml = `
+          <div class="prize-deadline ${urgent ? 'urgent' : ''}">
+            ${ICONS.clock}<span>${label}</span>
+          </div>`;
+      }
+
+      return `
+        <div class="prize-card">
+          <div class="prize-reward-band">
+            ${iconForRewardType(reward?.reward_type)}
+            <span class="prize-reward-value">${rewardLabel}</span>
+            <span class="prize-remaining-pill ${isLow ? 'low' : ''}">${remainingText}</span>
+          </div>
+          <div class="prize-body">
+            <div class="prize-name">${campaign.title}</div>
+            ${campaign.description ? `<div class="prize-desc">${campaign.description}</div>` : ''}
+            <div class="prize-requirements">
+              <div class="req-label">Şartlar</div>
+              ${reqRows}
+            </div>
+            ${deadlineHtml}
+            <a class="prize-cta" href="https://takiltr.com" target="_blank">
+              Uygulamayı aç &rarr;
+            </a>
+          </div>
+        </div>
+      `;
+    }
+
+    async function loadPrizes() {
+      const grid = document.getElementById('prizesGrid');
+      try {
+        const campaigns = await fetchCampaigns();
+        if (!campaigns.length) {
+          grid.innerHTML = `
+            <div class="empty-state">
+              ${ICONS.empty}
+              <div class="empty-title">Aktif kampanya yok</div>
+              <div class="empty-sub">Yakında yenileri geliyor. Uygulamayı takipte tut.</div>
+            </div>`;
+          return;
+        }
+        grid.innerHTML = campaigns.map(renderCard).join('');
+      } catch (err) {
+        console.error(err);
+        grid.innerHTML = `
+          <div class="empty-state">
+            ${ICONS.empty}
+            <div class="empty-title">Yüklenemedi</div>
+            <div class="empty-sub">Sayfayı yenile, tekrar dene.</div>
+          </div>`;
+      }
+    }
+
+    loadPrizes();
+  </script>
+</body>
+</html>
