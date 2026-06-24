@@ -105,10 +105,12 @@
     .status-invalid { background: rgba(0,0,0,0.06); color: var(--text-2); }
 
     .big-icon {
-      font-size: 48px;
       margin-bottom: 16px;
-      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
+    .big-icon svg { display: block; }
 
     .voucher-loading {
       color: var(--text-3);
@@ -166,7 +168,7 @@
 
     function renderError(message) {
       document.getElementById('voucherCard').innerHTML = `
-        <div class="big-icon">⚠️</div>
+        <div class="big-icon"><svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="26" cy="26" r="24" stroke="#FF4B1F" stroke-width="2.5"/><line x1="26" y1="16" x2="26" y2="30" stroke="#FF4B1F" stroke-width="2.5" stroke-linecap="round"/><circle cx="26" cy="36" r="1.5" fill="#FF4B1F"/></svg></div>
         <div class="voucher-title">${message}</div>
         <a class="prizes-link" href="/prizes/">Tüm ödülleri gör →</a>
       `;
@@ -174,7 +176,7 @@
 
     function renderUsed() {
       document.getElementById('voucherCard').innerHTML = `
-        <div class="big-icon">✅</div>
+        <div class="big-icon"><svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="26" cy="26" r="24" stroke="#8a8a8e" stroke-width="2.5"/><polyline points="16,27 23,34 36,19" stroke="#8a8a8e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <span class="status-badge status-used">Kullanıldı</span>
         <div class="voucher-title">Bu ödül zaten kullanıldı</div>
         <div class="voucher-sub">Afiyet olsun! Yeni ödüller için kampanyaları takip et.</div>
@@ -184,7 +186,7 @@
 
     function renderExpired() {
       document.getElementById('voucherCard').innerHTML = `
-        <div class="big-icon">⌛</div>
+        <div class="big-icon"><svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="26" cy="26" r="24" stroke="#8a8a8e" stroke-width="2.5"/><polyline points="26,16 26,27 33,31" stroke="#8a8a8e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <span class="status-badge status-expired">Süresi Doldu</span>
         <div class="voucher-title">Bu ödülün süresi doldu</div>
         <div class="voucher-sub">Yeni kampanyalar için ödüller sayfasına göz at.</div>
