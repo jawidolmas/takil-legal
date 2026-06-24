@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/takil.css" />
 
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
     :root {
@@ -198,15 +198,17 @@
         <span class="voucher-kicker">takıl ödülü</span>
         <div class="voucher-title">${label}</div>
         <div class="voucher-sub">QR kodunu kasaya göster. Sadece bir kez kullanılabilir.</div>
-        <div class="qr-box"><canvas id="qrCanvas"></canvas></div>
+        <div class="qr-box"><div id="qrCanvas"></div></div>
         <div class="voucher-note">Bu sayfayı istediğin kadar açabilirsin.<br>Kod kullanıldığında bu sayfa otomatik güncellenir.</div>
         <br>
         <a class="prizes-link" href="/prizes/">Diğer ödülleri keşfet →</a>
       `;
-      QRCode.toCanvas(document.getElementById('qrCanvas'), data.token, {
+      new QRCode(document.getElementById('qrCanvas'), {
+        text: data.token,
         width: 220,
-        margin: 1,
-        color: { dark: '#0a0a0a', light: '#ffffff' }
+        height: 220,
+        colorDark: '#0a0a0a',
+        colorLight: '#ffffff',
       });
     }
 
