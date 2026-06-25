@@ -367,15 +367,19 @@
       if (!type) return ICONS.gift;
       return type.toUpperCase().includes('COFFEE') ? ICONS.coffee : ICONS.gift;
     }
-    
+
     function ruleLabel(key, value) {
       const map = {
-        minimum_attendance_rating_avg:    `Katılımcı puanın en az ${value} olmalı`,
-        minimum_organizer_rating_avg:     `Organizatör puanın en az ${value} olmalı`,
-        minimum_joined_activities_count:  `En az ${value} etkinliğe katıl`,
-        minimum_created_activities_count: `En az ${value} etkinlik oluştur`,
-        minimum_account_age_days:         `Hesabın en az ${value} gündür açık olmalı`,
-        email_verified:                   `E-posta doğrulanmış olmalı`,
+        min_spend:          `En az ${value}₺ harcama yapmalısın`,
+        transaction_count:  `En az ${value} işlem yapmalısın`,
+        referral_count:     `En az ${value} kişi davet etmelisin`,
+        attendance_count:   `En az ${value} etkinliğe katılmalısın`,
+        first_time:         `Sadece ilk kullanımda geçerli`,
+        department:         `Bölüm: ${value}`,
+        faculty:            `Fakülte: ${value}`,
+        date_restriction:   `Tarih kısıtlaması: ${value}`,
+        manual_approval:    `Manuel onay gerekir`,
+        custom:             `${value}`,
       };
       return map[key] || `${key}: ${value}`;
     }
