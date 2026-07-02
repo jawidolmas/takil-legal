@@ -157,7 +157,7 @@
 
   <script>
     const SUPABASE_URL = 'https://dxuhfxjrcofniibqtjjn.supabase.co';
-    const ANN_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4dWhmeGpyY29mbmlpYnF0ampuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNTU5MTUsImV4cCI6MjA5MjYzMTkxNX0.qyepBC4xN0UR1Xqd9f6UJCKSlmHrzZP0u6blENgI7II';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4dWhmeGpyY29mbmlpYnF0ampuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNTU5MTUsImV4cCI6MjA5MjYzMTkxNX0.qyepBC4xN0UR1Xqd9f6UJCKSlmHrzZP0u6blENgI7II';
 
     function getTokenFromUrl() {
       const parts = window.location.pathname.split('/').filter(Boolean);
@@ -226,8 +226,8 @@
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'apikey': ANN_KEY,
-            'Authorization': `Bearer ${ANN_KEY}`,
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
           },
           body: JSON.stringify({ p_token: token }),
         });
