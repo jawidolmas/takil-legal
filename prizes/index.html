@@ -585,6 +585,12 @@
     const SUPABASE_URL = 'https://dxuhfxjrcofniibqtjjn.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4dWhmeGpyY29mbmlpYnF0ampuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNTU5MTUsImV4cCI6MjA5MjYzMTkxNX0.qyepBC4xN0UR1Xqd9f6UJCKSlmHrzZP0u6blENgI7II';
 
+    // Populated once in fetchCampaigns() — used to resolve min_title_tier
+    // conditions to real title names, and as a fallback label source for
+    // any rule_key this page doesn't have a hand-written sentence for yet.
+    let titlesCache = [];
+    let ruleDefsCache = [];
+
     const ICONS = {
       gift: `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13"/><path d="M3 12h18"/><path d="M16 8a3 3 0 1 0-3-3 3 3 0 0 0-3 3"/></svg>`,
       coffee: `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>`,
@@ -608,20 +614,35 @@
       return ICONS.gift;
     }
 
-    function ruleLabel(key, value) {
+    // "5 — Kampüs Lideri" style name lookup for min_title_tier conditions
+    function titleTierName(track, milestone) {
+      const t = titlesCache.find(x => x.category === track && x.milestone_count === milestone);
+      return t ? t.name_tr : `${track} ${milestone}`;
+    }
+
+    // Hand-written sentences for the rule types we know about today.
+    // Anything not in this map falls back to the DB's own label_tr from
+    // rule_definitions, so a brand-new rule type never renders blank —
+    // it just won't have a polished sentence until someone adds one here.
+    function ruleLabel(cond) {
+      const v = cond.threshold_value;
       const map = {
-        min_spend:          `En az ${value}₺ harcama yapmalısın`,
-        transaction_count:  `En az ${value} işlem yapmalısın`,
-        referral_count:     `En az ${value} kişi davet etmelisin`,
-        attendance_count:   `En az ${value} etkinliğe katılmalısın`,
-        first_time:         `Sadece ilk kullanımda geçerli`,
-        department:         `Bölüm: ${value}`,
-        faculty:            `Fakülte: ${value}`,
-        date_restriction:   `Tarih kısıtlaması: ${value}`,
-        manual_approval:    `Manuel onay gerekir`,
-        custom:             `${value}`,
+        joined_activities_count:            `En az ${v} etkinliğe katılmalısın`,
+        created_activities_count:           `En az ${v} etkinlik oluşturmalısın`,
+        joined_distinct_categories_count:   `En az ${v} farklı kategoriden etkinliğe katılmalısın`,
+        created_distinct_categories_count:  `En az ${v} farklı kategoride etkinlik oluşturmalısın`,
+        joined_distinct_departments_count:  `Katıldığın etkinlikler en az ${v} farklı bölümden organizatöre ait olmalı`,
+        created_distinct_departments_count: `Etkinliklerine en az ${v} farklı bölümden katılımcı gelmeli`,
+        minimum_attendance_rating_avg:      `Katılım puanın en az ${v} olmalı`,
+        minimum_organizer_rating_avg:       `Organizatör puanın en az ${v} olmalı`,
+        minimum_account_age_days:           `Hesabın en az ${v} gün önce oluşturulmuş olmalı`,
       };
-      return map[key] || `${key}: ${value}`;
+      if (cond.rule_key === 'min_title_tier') {
+        return `En az "${titleTierName(cond.extra_params?.track, cond.extra_params?.milestone)}" unvanına sahip olmalısın`;
+      }
+      if (map[cond.rule_key]) return map[cond.rule_key];
+      const def = ruleDefsCache.find(r => r.key === cond.rule_key);
+      return def ? `${def.label_tr}${v != null ? ': ' + v : ''}` : `${cond.rule_key}: ${v}`;
     }
 
     function daysUntil(dateStr) {
@@ -640,21 +661,25 @@
         'apikey': SUPABASE_ANON_KEY,
         'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
       };
-      const [campaignsRes, rulesRes, rewardsRes, sponsorsRes] = await Promise.all([
+      const [campaignsRes, conditionsRes, rewardsRes, sponsorsRes, titlesRes, ruleDefsRes] = await Promise.all([
         fetch(`${SUPABASE_URL}/rest/v1/campaigns?is_active=eq.true&order=created_at.desc`, { headers }),
-        fetch(`${SUPABASE_URL}/rest/v1/campaign_rules?select=*`, { headers }),
+        fetch(`${SUPABASE_URL}/rest/v1/campaign_rule_conditions?select=*`, { headers }),
         fetch(`${SUPABASE_URL}/rest/v1/campaign_rewards?select=*`, { headers }),
         fetch(`${SUPABASE_URL}/rest/v1/sponsors?select=id,name,logo_url&active=eq.true`, { headers }),
+        fetch(`${SUPABASE_URL}/rest/v1/titles?select=category,milestone_count,name_tr`, { headers }),
+        fetch(`${SUPABASE_URL}/rest/v1/rule_definitions?select=key,label_tr`, { headers }),
       ]);
-      const campaigns = await campaignsRes.json();
-      const rules     = await rulesRes.json();
-      const rewards   = await rewardsRes.json();
-      const sponsors  = await sponsorsRes.json();
+      const campaigns  = await campaignsRes.json();
+      const conditions = await conditionsRes.json();
+      const rewards    = await rewardsRes.json();
+      const sponsors   = await sponsorsRes.json();
+      titlesCache      = await titlesRes.json();
+      ruleDefsCache    = await ruleDefsRes.json();
       return campaigns.map(c => ({
         ...c,
-        rules:   rules.find(r => r.campaign_id === c.id)?.rules || {},
-        rewards: rewards.filter(r => r.campaign_id === c.id),
-        sponsor: sponsors.find(s => s.id === c.sponsor_id) || null,
+        conditions: conditions.filter(r => r.campaign_id === c.id),
+        rewards:    rewards.filter(r => r.campaign_id === c.id),
+        sponsor:    sponsors.find(s => s.id === c.sponsor_id) || null,
       }));
     }
 
@@ -671,10 +696,9 @@
         : 'Sınırsız';
 
       // requirements
-      const ruleEntries = Object.entries(campaign.rules || {});
-      const reqRows = ruleEntries.length
-        ? ruleEntries.map(([k, v]) => `
-            <div class="req-row"><span class="req-badge">${ICONS.check}</span><span>${escapeHtml(ruleLabel(k, v))}</span></div>
+      const reqRows = (campaign.conditions || []).length
+        ? campaign.conditions.map(cond => `
+            <div class="req-row"><span class="req-badge">${ICONS.check}</span><span>${escapeHtml(ruleLabel(cond))}</span></div>
           `).join('')
         : `<div class="req-row"><span class="req-badge">${ICONS.check}</span><span>Herkes katılabilir</span></div>`;
 
@@ -716,7 +740,10 @@
           <div class="prize-reward-band">
             <span class="prize-reward-icon">${iconForRewardType(reward?.reward_type)}</span>
             <span class="prize-reward-value">${rewardLabel}</span>
-            <span class="prize-remaining-pill ${isLow ? 'low' : ''}">${remainingText}</span>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+              ${campaign.cost_in_tp ? `<span class="prize-remaining-pill" style="background:var(--lime-soft);color:var(--lime-ink);border-color:transparent;">${campaign.cost_in_tp} TP</span>` : ''}
+              <span class="prize-remaining-pill ${isLow ? 'low' : ''}">${remainingText}</span>
+            </div>
           </div>
           <div class="prize-seam"><span class="seam-notch l"></span><span class="seam-notch r"></span></div>
           ${sponsorHtml}
