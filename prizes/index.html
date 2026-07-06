@@ -299,6 +299,11 @@
       color: var(--accent-3);
       border-color: #fff;
     }
+    .prize-remaining-pill.soldout {
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.55);
+      border-color: rgba(255,255,255,0.15);
+    }
 
     /* perforated seam — the tear line between ticket stub and body */
     .prize-seam {
@@ -689,11 +694,14 @@
       const maxR         = campaign.max_rewards;
       const claimed      = campaign.claimed_rewards ?? 0;
       const remaining    = maxR != null ? Math.max(maxR - claimed, 0) : null;
-      const isLow        = remaining != null && remaining <= 2;
+      const isSoldOut    = remaining === 0;
+      const isLow        = remaining != null && remaining > 0 && remaining <= 2;
 
-      const remainingText = remaining != null
-        ? `N° ${String(remaining).padStart(2, '0')}/${maxR}`
-        : 'Sınırsız';
+      const remainingText = remaining == null
+        ? 'Sınırsız'
+        : isSoldOut
+          ? 'Tükendi'
+          : `${remaining}/${maxR}`;
 
       // requirements
       const reqRows = (campaign.conditions || []).length
@@ -742,7 +750,7 @@
             <span class="prize-reward-value">${rewardLabel}</span>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
               ${campaign.cost_in_tp ? `<span class="prize-remaining-pill" style="background:var(--lime-soft);color:var(--lime-ink);border-color:transparent;">${campaign.cost_in_tp} TP</span>` : ''}
-              <span class="prize-remaining-pill ${isLow ? 'low' : ''}">${remainingText}</span>
+              <span class="prize-remaining-pill ${isLow ? 'low' : ''} ${isSoldOut ? 'soldout' : ''}">${remainingText}</span>
             </div>
           </div>
           <div class="prize-seam"><span class="seam-notch l"></span><span class="seam-notch r"></span></div>
