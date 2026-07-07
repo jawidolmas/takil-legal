@@ -589,10 +589,7 @@
   <script>
     const SUPABASE_URL = 'https://dxuhfxjrcofniibqtjjn.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4dWhmeGpyY29mbmlpYnF0ampuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNTU5MTUsImV4cCI6MjA5MjYzMTkxNX0.qyepBC4xN0UR1Xqd9f6UJCKSlmHrzZP0u6blENgI7II';
-
-    // Populated once in fetchCampaigns() — used to resolve min_title_tier
-    // conditions to real title names, and as a fallback label source for
-    // any rule_key this page doesn't have a hand-written sentence for yet.
+    
     let titlesCache = [];
     let ruleDefsCache = [];
 
@@ -625,10 +622,6 @@
       return t ? t.name_tr : `${track} ${milestone}`;
     }
 
-    // Hand-written sentences for the rule types we know about today.
-    // Anything not in this map falls back to the DB's own label_tr from
-    // rule_definitions, so a brand-new rule type never renders blank —
-    // it just won't have a polished sentence until someone adds one here.
     function ruleLabel(cond) {
       const v = cond.threshold_value;
       const map = {
