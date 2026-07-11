@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="../takil.css" />
 
   <style>
-    /* ── Local design tokens  */
+    /* ── Local design tokens (mirrors prizes/index.html for a shared feel) ── */
     :root {
       --accent:      #FF4B1F;
       --accent-2:    #E8380C;
@@ -489,7 +489,25 @@
       <a href="/how-it-works/">Nasıl Çalışır?</a>
       <a href="/prizes/">Ödüller</a>
     </div>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/" onclick="closeMenu()">Ana Sayfa</a>
+    <a href="/how-it-works/" onclick="closeMenu()">Nasıl Çalışır?</a>
+    <a href="/prizes/" onclick="closeMenu()">Ödüller</a>
+    <a href="/ambassadors/" onclick="closeMenu()">Kampüs Öncüsü</a>
+    <a href="/index.html#contact" onclick="closeMenu()">İletişim</a>
+    <a href="/privacy-policy.html" onclick="closeMenu()">Gizlilik Politikası</a>
+    <a href="/terms.html" onclick="closeMenu()">Kullanım Koşulları</a>
+    <div class="mobile-menu-brand">
+      <span class="mmb-name"><span class="mmb-accent">OLMAS</span> Systems</span>
+      <span class="mmb-sub">© 2025–2026 · Tüm hakları saklıdır</span>
+    </div>
+  </div>
 
   <div class="wrap" id="wrap">
     <div class="skel-card">
@@ -711,6 +729,22 @@
     }
 
     loadSponsor();
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMenu();
+    });
   </script>
 </body>
 </html>
