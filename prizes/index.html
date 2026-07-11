@@ -526,7 +526,24 @@
       <a href="/how-it-works/">Nasıl Çalışır?</a>
       <a href="/prizes/" style="color: var(--accent);">Ödüller</a>
     </div>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/" onclick="closeMenu()">Ana Sayfa</a>
+    <a href="/how-it-works/" onclick="closeMenu()">Nasıl Çalışır?</a>
+    <a href="/ambassadors/" onclick="closeMenu()">Kampüs Öncüsü</a>
+    <a href="/index.html#contact" onclick="closeMenu()">İletişim</a>
+    <a href="/privacy-policy.html" onclick="closeMenu()">Gizlilik Politikası</a>
+    <a href="/terms.html" onclick="closeMenu()">Kullanım Koşulları</a>
+    <div class="mobile-menu-brand">
+      <span class="mmb-name"><span class="mmb-accent">OLMAS</span> Systems</span>
+      <span class="mmb-sub">© 2025–2026 · Tüm hakları saklıdır</span>
+    </div>
+  </div>
 
   <div class="prizes-hero">
     <div class="prizes-kicker">
@@ -589,7 +606,10 @@
   <script>
     const SUPABASE_URL = 'https://dxuhfxjrcofniibqtjjn.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4dWhmeGpyY29mbmlpYnF0ampuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNTU5MTUsImV4cCI6MjA5MjYzMTkxNX0.qyepBC4xN0UR1Xqd9f6UJCKSlmHrzZP0u6blENgI7II';
-    
+
+    // Populated once in fetchCampaigns() — used to resolve min_title_tier
+    // conditions to real title names, and as a fallback label source for
+    // any rule_key this page doesn't have a hand-written sentence for yet.
     let titlesCache = [];
     let ruleDefsCache = [];
 
@@ -622,6 +642,10 @@
       return t ? t.name_tr : `${track} ${milestone}`;
     }
 
+    // Hand-written sentences for the rule types we know about today.
+    // Anything not in this map falls back to the DB's own label_tr from
+    // rule_definitions, so a brand-new rule type never renders blank —
+    // it just won't have a polished sentence until someone adds one here.
     function ruleLabel(cond) {
       const v = cond.threshold_value;
       const map = {
@@ -790,6 +814,22 @@
     }
 
     loadPrizes();
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMenu();
+    });
   </script>
 </body>
 </html>
