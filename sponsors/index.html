@@ -585,11 +585,15 @@
     function renderCampaignCard(campaign, index) {
       const reward      = campaign.rewards[0];
       const rewardLabel = escapeHtml(reward?.reward_value || reward?.reward_type || 'Ödül');
-      const maxR        = campaign.max_rewards;
+      // Real stock = sum of this campaign's reward_row quantities (what
+      // sync_reward_codes() actually created reward_codes for), not the
+      // retired campaigns.max_rewards cap — same model as the admin panel
+      // and mobile app now use.
+      const totalStock  = campaign.rewards.reduce((s, r) => s + (r.quantity || 0), 0);
       const claimed     = campaign.claimed_rewards ?? 0;
-      const remaining   = maxR != null ? Math.max(maxR - claimed, 0) : null;
+      const remaining   = Math.max(totalStock - claimed, 0);
       const isSoldOut   = remaining === 0;
-      const remainingText = remaining == null ? 'Sınırsız' : isSoldOut ? 'Tükendi' : `${remaining}/${maxR}`;
+      const remainingText = isSoldOut ? 'Tükendi' : `${remaining}/${totalStock}`;
 
       let deadlineHtml = '';
       if (campaign.end_at) {
@@ -655,8 +659,8 @@
         }));
 
         const totalRemaining = enriched.reduce((sum, c) => {
-          if (c.max_rewards == null) return sum;
-          return sum + Math.max(c.max_rewards - (c.claimed_rewards ?? 0), 0);
+          const stock = c.rewards.reduce((s, r) => s + (r.quantity || 0), 0);
+          return sum + Math.max(stock - (c.claimed_rewards ?? 0), 0);
         }, 0);
 
         const initials = (sponsor.name || '?').substring(0, 2).toUpperCase();
