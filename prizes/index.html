@@ -710,17 +710,18 @@
     function renderCard(campaign, index) {
       const reward       = campaign.rewards[0];
       const rewardLabel  = escapeHtml(reward?.reward_value || reward?.reward_type || 'Ödül');
-      const maxR         = campaign.max_rewards;
+      // Real stock = sum of this campaign's reward_row quantities (what
+      // sync_reward_codes() actually created reward_codes for), not the
+      // retired campaigns.max_rewards cap — same model as the admin panel,
+      // mobile app, and sponsor page now use. Confirmed with Jawid: no
+      // "unlimited" prize concept exists yet, so there's no null case here.
+      const totalStock   = campaign.rewards.reduce((s, r) => s + (r.quantity || 0), 0);
       const claimed      = campaign.claimed_rewards ?? 0;
-      const remaining    = maxR != null ? Math.max(maxR - claimed, 0) : null;
+      const remaining    = Math.max(totalStock - claimed, 0);
       const isSoldOut    = remaining === 0;
-      const isLow        = remaining != null && remaining > 0 && remaining <= 2;
+      const isLow        = remaining > 0 && remaining <= 2;
 
-      const remainingText = remaining == null
-        ? 'Sınırsız'
-        : isSoldOut
-          ? 'Tükendi'
-          : `${remaining}/${maxR}`;
+      const remainingText = isSoldOut ? 'Tükendi' : `${remaining}/${totalStock}`;
 
       // requirements
       const reqRows = (campaign.conditions || []).length
