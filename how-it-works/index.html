@@ -216,6 +216,45 @@
     .vis-trust-text strong { display: block; font-size: 13px; font-weight: 700; color: var(--text-1); margin-bottom: 1px; }
     .vis-trust-text { font-size: 12px; color: var(--text-2); line-height: 1.45; }
 
+    /* Phone mockup (app screenshots) */
+    .phone-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .phone-frame {
+      position: relative;
+      width: 248px;
+      background: #111;
+      border-radius: 44px;
+      padding: 12px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.08),
+        0 0 0 2px #1a1a1a,
+        0 32px 80px rgba(0,0,0,0.35),
+        0 8px 20px rgba(0,0,0,0.15);
+      transform: rotate(2deg);
+    }
+    .phone-screen {
+      width: 100%;
+      border-radius: 34px;
+      display: block;
+      overflow: hidden;
+    }
+    .phone-screen img {
+      width: 100%;
+      display: block;
+      border-radius: 34px;
+    }
+    .phone-side-btn {
+      position: absolute;
+      background: #1a1a1a;
+      border-radius: 3px;
+    }
+    .phone-side-btn.vol-up  { width: 3px; height: 28px; left: -3px; top: 88px; }
+    .phone-side-btn.vol-dn  { width: 3px; height: 28px; left: -3px; top: 124px; }
+    .phone-side-btn.power   { width: 3px; height: 40px; right: -3px; top: 104px; }
+
     /* ── CTA ── */
     .cta-section {
       border-top: 1px solid var(--border-l);
@@ -323,6 +362,8 @@
       .step:nth-child(even) .step-vis  { order: 2; }
       .step:nth-child(even) .step-text { order: 1; }
       .step-visual { overflow: hidden; }
+      .phone-wrap { justify-content: center; }
+      .phone-frame { width: 200px; }
       .vis-otp { flex-wrap: wrap; gap: 4px; }
       .vis-otp-box { width: 30px; height: 38px; font-size: 14px; }
       .score-row { flex-wrap: nowrap; }
@@ -354,8 +395,11 @@
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
     <a href="/" onclick="closeMenu()">Ana Sayfa</a>
+    <a href="/prizes/" onclick="closeMenu()">Ödüller</a>
     <a href="/ambassadors/" onclick="closeMenu()">Kampüs Öncüsü</a>
-    <a href="index.html#contact" onclick="closeMenu()" class="mobile-cta">İletişim →</a>
+    <a href="/index.html#contact" onclick="closeMenu()">İletişim</a>
+    <a href="/privacy-policy.html" onclick="closeMenu()">Gizlilik Politikası</a>
+    <a href="/terms.html" onclick="closeMenu()">Kullanım Koşulları</a>
     <div class="mobile-menu-brand">
       <span class="mmb-name"><span class="mmb-accent">OLMAS</span> Systems</span>
       <span class="mmb-sub">© 2025–2026 · Tüm hakları saklıdır</span>
@@ -383,30 +427,14 @@
         <span class="step-tag">@ogrenci.ogu.edu.tr</span>
       </div>
       <div class="step-vis">
-        <div class="step-visual">
-          <div class="vis-label">OTP Girişi</div>
-          <div class="vis-otp">
-            <div class="vis-otp-box filled">4</div>
-            <div class="vis-otp-box filled">7</div>
-            <div class="vis-otp-box filled">2</div>
-            <div class="vis-otp-box filled">9</div>
-            <div class="vis-otp-box">_</div>
-            <div class="vis-otp-box">_</div>
-            <div class="vis-otp-box">_</div>
-            <div class="vis-otp-box">_</div>
-          </div>
-          <div class="vis-otp-hint">@ogrenci.ogu.edu.tr adresine gönderildi</div>
-          <div class="vis-sep"></div>
-          <div class="vis-label">Profil</div>
-          <div class="vis-avatar">EK</div>
-          <div class="vis-name">Emre K.</div>
-          <div class="vis-detail">Mühendislik Fakültesi · Bilgisayar · 2. Sınıf</div>
-          <div class="vis-pills">
-            <div class="vis-pill">Teknoloji</div>
-            <div class="vis-pill">Spor</div>
-            <div class="vis-pill">Çalışma</div>
-            <div class="vis-pill">Müzik</div>
-            <div class="vis-pill">Diğer</div>
+        <div class="phone-wrap">
+          <div class="phone-frame">
+            <div class="phone-side-btn vol-up"></div>
+            <div class="phone-side-btn vol-dn"></div>
+            <div class="phone-side-btn power"></div>
+            <div class="phone-screen">
+              <img src="/Img/profile.png" alt="takıl OGÜ etkinlik uygulaması — kayıt ve profil ekranı" />
+            </div>
           </div>
         </div>
       </div>
@@ -415,31 +443,14 @@
     <!-- STEP 2 -->
     <div class="step">
       <div class="step-vis">
-        <div class="step-visual">
-          <div class="vis-event-card">
-            <div class="vis-event-top">
-              <div class="vis-event-cat">Spor</div>
-              <div class="vis-event-slots">6/10 kişi</div>
+        <div class="phone-wrap">
+          <div class="phone-frame">
+            <div class="phone-side-btn vol-up"></div>
+            <div class="phone-side-btn vol-dn"></div>
+            <div class="phone-side-btn power"></div>
+            <div class="phone-screen">
+              <img src="/Img/explore.png" alt="takıl OGÜ etkinlik uygulaması — etkinlik keşfet ve katıl ekranı" />
             </div>
-            <div class="vis-event-body">
-              <div class="vis-event-title">Halısaha — Pazar Sabahı</div>
-              <div class="vis-event-meta">
-                <div class="vis-meta-item">OGÜ Spor Sahası</div>
-                <div class="vis-meta-item">Pazar, 10:00</div>
-                <div class="vis-meta-item">Ücretsiz</div>
-              </div>
-              <button class="vis-join-btn">Katıl</button>
-            </div>
-          </div>
-          <div class="vis-pills" style="margin-top:4px;">
-            <div class="vis-pill">Spor</div>
-            <div class="vis-pill">Çalışma</div>
-            <div class="vis-pill">Sosyal</div>
-            <div class="vis-pill">Müzik</div>
-            <div class="vis-pill">Gezi</div>
-            <div class="vis-pill">Teknoloji</div>
-            <div class="vis-pill">Yemek</div>
-            <div class="vis-pill">Diğer</div>
           </div>
         </div>
       </div>
@@ -466,34 +477,13 @@
         <span class="step-tag">Önceki yoklama → yeni etkinlik</span>
       </div>
       <div class="step-vis">
-        <div class="step-visual">
-          <div class="vis-label">Etkinlik Oluştur</div>
-          <div class="vis-form">
-            <div class="vis-field">
-              <span class="vis-field-label">Başlık</span>
-              <span class="vis-field-value">Kütüphane Çalışması</span>
-            </div>
-            <div class="vis-field">
-              <span class="vis-field-label">Kategori</span>
-              <span class="vis-field-value">Çalışma</span>
-            </div>
-            <div class="vis-field">
-              <span class="vis-field-label">Konum</span>
-              <span class="vis-field-value">OGÜ Merkez Kütüphane</span>
-            </div>
-            <div class="vis-form-row">
-              <div class="vis-field">
-                <span class="vis-field-label">Tarih</span>
-                <span class="vis-field-value">Salı</span>
-              </div>
-              <div class="vis-field">
-                <span class="vis-field-label">Kontenjan</span>
-                <span class="vis-field-value">8 kişi</span>
-              </div>
-            </div>
-            <div class="vis-field">
-              <span class="vis-field-label">Ücret</span>
-              <span class="vis-field-value">Ücretsiz</span>
+        <div class="phone-wrap">
+          <div class="phone-frame">
+            <div class="phone-side-btn vol-up"></div>
+            <div class="phone-side-btn vol-dn"></div>
+            <div class="phone-side-btn power"></div>
+            <div class="phone-screen">
+              <img src="/Img/create.png" alt="takıl OGÜ etkinlik uygulaması — etkinlik oluşturma ekranı" />
             </div>
           </div>
         </div>
@@ -503,25 +493,13 @@
     <!-- STEP 4 -->
     <div class="step">
       <div class="step-vis">
-        <div class="step-visual">
-          <div class="vis-label">Puan Bileşenleri</div>
-          <div class="score-diagram">
-            <div class="score-row">
-              <div class="score-row-label">Katılım güvenilirliği</div>
-              <div class="score-bar-wrap"><div class="score-bar-fill attendance"></div></div>
-              <div class="score-row-pct">%70</div>
-            </div>
-            <div class="score-row">
-              <div class="score-row-label">Organizatör kalitesi</div>
-              <div class="score-bar-wrap"><div class="score-bar-fill reliability"></div></div>
-              <div class="score-row-pct">%30</div>
-            </div>
-            <div class="score-arrow">↓</div>
-            <div class="score-final">
-              <div class="score-final-num">8.4</div>
-              <div class="score-final-label">Son 10 etkinlik ortalaması</div>
-              <div style="font-size:11px;color:var(--text-3);margin-top:10px;">5 değerlendirmeye ulaşmadan:</div>
-              <div class="score-new-badge">Yeni</div>
+        <div class="phone-wrap">
+          <div class="phone-frame">
+            <div class="phone-side-btn vol-up"></div>
+            <div class="phone-side-btn vol-dn"></div>
+            <div class="phone-side-btn power"></div>
+            <div class="phone-screen">
+              <img src="/Img/rate.png" alt="takıl OGÜ etkinlik uygulaması — katılım sistemi ve puan ekranı" />
             </div>
           </div>
         </div>
@@ -550,40 +528,14 @@
         <span class="step-tag">KVKK uyumlu · Reklamsız</span>
       </div>
       <div class="step-vis">
-        <div class="step-visual">
-          <div class="vis-label">Organizatör Değerlendirmesi</div>
-          <div class="vis-q">
-            <div class="vis-q-text">Etkinlik zamanında başladı mı?</div>
-            <div class="vis-q-btns">
-              <div class="vis-q-btn yes">Evet</div>
-              <div class="vis-q-btn">Hayır</div>
+        <div class="phone-wrap">
+          <div class="phone-frame">
+            <div class="phone-side-btn vol-up"></div>
+            <div class="phone-side-btn vol-dn"></div>
+            <div class="phone-side-btn power"></div>
+            <div class="phone-screen">
+              <img src="/Img/block.png" alt="takıl OGÜ etkinlik uygulaması — güven, gizlilik ve engelleme ekranı" />
             </div>
-          </div>
-          <div class="vis-q">
-            <div class="vis-q-text">Saygılı bir ortam sağlandı mı?</div>
-            <div class="vis-q-btns">
-              <div class="vis-q-btn yes">Evet</div>
-              <div class="vis-q-btn">Hayır</div>
-            </div>
-          </div>
-          <div class="vis-sep"></div>
-          <div class="vis-trust-item">
-            <div class="vis-trust-icon">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            </div>
-            <div class="vis-trust-text"><strong>Yalnızca OGÜ</strong>E-postanla doğrulanan kapalı topluluk</div>
-          </div>
-          <div class="vis-trust-item">
-            <div class="vis-trust-icon">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
-            </div>
-            <div class="vis-trust-text"><strong>Engelle &amp; Şikayet</strong>24 saat içinde inceleme garantisi</div>
-          </div>
-          <div class="vis-trust-item">
-            <div class="vis-trust-icon">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <div class="vis-trust-text"><strong>Gizlilik Kontrolü</strong>Profil bilgilerini istediğin zaman gizle</div>
           </div>
         </div>
       </div>
